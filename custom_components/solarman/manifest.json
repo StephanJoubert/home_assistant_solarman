@@ -1,0 +1,10 @@
+{
+  "domain": "solarman",
+  "name": "Solarman",
+  "documentation": "https://www.example.com",
+  "version": "0.0.1",
+  "dependencies": [],
+  "codeowners": [],
+  "requirements": ["pyyaml"],
+  "iot_class": "local_polling"
+}

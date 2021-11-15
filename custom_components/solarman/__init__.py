@@ -1,0 +1,1 @@
+"""The Solarman Collector integration."""
