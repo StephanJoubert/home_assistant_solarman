@@ -112,6 +112,7 @@ parameters:
       uom: "°C"
       scale: 0.1
       rule: 1
+      offset: 1000      
       registers: [0x00B6]
       icon: 'mdi:battery'
 
@@ -329,6 +330,7 @@ parameters:
       uom: "°C"
       scale: 0.1
       rule: 2
+      offset: 1000      
       registers: [0x005A]
       icon: 'mdi:thermometer'
 
@@ -336,6 +338,7 @@ parameters:
       uom: "°C"
       scale: 0.1
       rule: 2
+      offset: 1000      
       registers: [0x005B]
       icon: 'mdi:thermometer'
 
@@ -374,6 +377,8 @@ parameters:
       rule: 1
       registers: [0x00A6]
       lookup: 
+      -  key: 0
+         value: "none"
       -  key: 1
          value: "On"
 

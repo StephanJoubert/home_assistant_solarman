@@ -8,14 +8,6 @@ import struct
 # just after the first two bytes.
 OFFSET_PARAMS = 28
 
-# Parser Rules constants
-PARSER_RULE_INT16 = 1
-PARSER_RULE_INT32 = 2
-PARSER_RULE_UINT16 = 3
-PARSER_RULE_UINT32 = 4
-PARSER_RULE_ASCII = 5
-PARSER_RULE_BITS = 6
-
 
 class ParameterParser:
     def __init__(self, path):
@@ -45,9 +37,10 @@ class ParameterParser:
             self.try_parse_unsigned(rawData,definition, start, length)
         elif rule == 4:
             self.try_parse_signed(rawData,definition, start, length)
-        elif rule == PARSER_RULE_ASCII:
+        elif rule == 5:
             self.try_parse_ascii(rawData,definition, start, length)
-
+        elif rule == 6:
+            self.try_parse_bits(rawData,definition, start, length)
         return
 
     def try_parse_signed (self, rawData, definition, start, length):
@@ -59,7 +52,7 @@ class ParameterParser:
         maxint = 0
         for r in definition['registers']:
             index = r - start   # get the decimal value of the register'
-            if (index > 0) and (index < length):
+            if (index >= 0) and (index < length):
                 maxint <<= 16
                 maxint |= 0xFFFF
                 offset = OFFSET_PARAMS + (index * 2)
@@ -69,6 +62,9 @@ class ParameterParser:
             else:
                 found = False
         if found:
+            if 'offset' in definition:
+                value = value - definition['offset']       
+                      
             if value > maxint/2:
                 value = (value - maxint) * scale
             else:
@@ -88,7 +84,7 @@ class ParameterParser:
         shift = 0
         for r in definition['registers']:
             index = r - start   # get the decimal value of the register'
-            if (index > 0) and (index < length):
+            if (index >= 0) and (index < length):
                 offset = OFFSET_PARAMS + (index * 2)
                 temp = struct.unpack('>H', rawData[offset:offset + 2])[0]
                 value += (temp & 0xFFFF) << shift
@@ -99,6 +95,9 @@ class ParameterParser:
             if 'lookup' in definition:
                 self.result[title] = self.lookup_value (value, definition['lookup'])
             else:
+                if 'offset' in definition:
+                    value = value - definition['offset']  
+                                   
                 value = value * scale
                 if self.is_integer_num (value):
                     self.result[title] = int(value)  
@@ -130,7 +129,24 @@ class ParameterParser:
         if found:
             self.result[title] = value
         return  
+    
+    def try_parse_bits (self, rawData, definition, start, length):
+        title = definition['name']         
+        found = True
+        value = []
+        for r in definition['registers']:
+            index = r - start   # get the decimal value of the register'
+            if (index >= 0) and (index < length):
+                offset = OFFSET_PARAMS + (index * 2)
+                temp = struct.unpack('>H', rawData[offset:offset + 2])[0]
+                value.append(hex(temp))
+            else:
+                found = False
 
+        if found:
+            self.result[title] = value
+        return 
+    
     def get_sensors (self):
         result = []
         for i in self._lookups['parameters']:
