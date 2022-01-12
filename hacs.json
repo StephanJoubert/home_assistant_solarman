@@ -1,0 +1,6 @@
+{
+    "name": "Solarman integration",
+    "content_in_root": false,
+    "render_readme": false,
+    "domains": ["sensor"]
+  }
