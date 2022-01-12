@@ -2,6 +2,7 @@ parameters:
  - group: solar
    items: 
     - name: "PV1 Power"
+      class: "power"
       uom: "W"
       scale: 1
       rule: 1
@@ -9,6 +10,7 @@ parameters:
       icon: 'mdi:solar-power'
 
     - name: "PV2 Power"
+      class: "power"
       uom: "W"
       scale: 1
       rule: 1
@@ -16,6 +18,7 @@ parameters:
       icon: 'mdi:solar-power'
 
     - name: "PV1 Voltage"
+      class: "voltage"
       uom: "V"
       scale: 0.1
       rule: 1
@@ -23,6 +26,7 @@ parameters:
       icon: 'mdi:solar-power'
 
     - name: "PV2 Voltage"
+      class: "voltage"
       uom: "V"
       scale: 0.1
       rule: 1
@@ -30,6 +34,7 @@ parameters:
       icon: 'mdi:solar-power'
 
     - name: "PV1 Current"
+      class: "current"
       uom: "A"
       scale: 0.1
       rule: 1
@@ -37,6 +42,7 @@ parameters:
       icon: 'mdi:solar-power'
 
     - name: "PV2 Current"
+      class: "current"
       uom: "A"
       scale: 0.1
       rule: 1
@@ -44,6 +50,7 @@ parameters:
       icon: 'mdi:solar-power'
 
     - name: "Daily Production"
+      class: "energy"
       uom: "kWh"
       scale: 0.1
       rule: 1
@@ -51,6 +58,7 @@ parameters:
       icon: 'mdi:solar-power'
 
     - name: "Total Production"
+      class: "energy"
       uom: "kWh"
       scale: 0.1
       rule: 3
@@ -58,6 +66,7 @@ parameters:
       icon: 'mdi:solar-power'
 
     - name: "Micro-inverter Power"
+      class: "power"
       uom: "W"
       scale: 1
       rule: 1
@@ -67,6 +76,7 @@ parameters:
  - group: Battery
    items: 
     - name: "Battery Status"
+      class: ""
       uom: ""
       scale: 1
       rule: 1
@@ -81,6 +91,7 @@ parameters:
       icon: 'mdi:battery'
 
     - name: "Battery Power"
+      class: "power"
       uom: "W"
       scale: 1
       rule: 2
@@ -88,6 +99,7 @@ parameters:
       icon: 'mdi:battery'
 
     - name: "Battery Voltage"
+      class: "voltage"
       uom: "V"
       scale: 0.01
       rule: 1
@@ -95,6 +107,7 @@ parameters:
       icon: 'mdi:battery'
 
     - name: "Battery SOC"
+      class: "battery"
       uom: "%"
       scale: 1
       rule: 1
@@ -102,6 +115,7 @@ parameters:
       icon: 'mdi:battery'
 
     - name: "Battery Current"
+      class: "current"
       uom: "A"
       scale: 0.01
       rule: 2
@@ -109,6 +123,7 @@ parameters:
       icon: 'mdi:battery'
 
     - name: "Battery Temperature"
+      class: "temperature"
       uom: "°C"
       scale: 0.1
       rule: 1
@@ -119,6 +134,7 @@ parameters:
  - group: Grid
    items: 
     - name: "Grid Status"
+      class: ""
       uom: ""
       scale: 1
       rule: 1
@@ -133,6 +149,7 @@ parameters:
       icon: 'mdi:transmission-tower'
 
     - name: "Total Grid Power"
+      class: "power"
       uom: "W"
       scale: 1
       rule: 2
@@ -140,6 +157,7 @@ parameters:
       icon: 'mdi:transmission-tower'
 
     - name: "Grid Voltage L1"
+      class: "voltage"
       uom: "V"
       scale: 0.1
       rule: 1
@@ -147,6 +165,7 @@ parameters:
       icon: 'mdi:transmission-tower'
 
     - name: "Grid Voltage L2"
+      class: "voltage"
       uom: "V"
       scale: 0.1
       rule: 1
@@ -154,6 +173,7 @@ parameters:
       icon: 'mdi:transmission-tower'
 
     - name: "Internal CT L1 Power"
+      class: "power"
       uom: "W"
       scale: 1
       rule: 2
@@ -161,6 +181,7 @@ parameters:
       icon: 'mdi:transmission-tower'
 
     - name: "Internal CT L2 Power"
+      class: "power"
       uom: "W"
       scale: 1
       rule: 2
@@ -168,6 +189,7 @@ parameters:
       icon: 'mdi:transmission-tower'
 
     - name: "External CT L1 Power"
+      class: "power"
       uom: "W"
       scale: 1
       rule: 2
@@ -175,6 +197,7 @@ parameters:
       icon: 'mdi:transmission-tower'
 
     - name: "External CT L2 Power"
+      class: "power"
       uom: "W"
       scale: 1
       rule: 2
@@ -182,6 +205,7 @@ parameters:
       icon: 'mdi:transmission-tower'
 
     - name: "Daily Energy Bought"
+      class: "energy"
       uom: "kWh"
       scale: 0.1
       rule: 1
@@ -189,6 +213,7 @@ parameters:
       icon: 'mdi:transmission-tower-export'
 
     - name: "Total Energy Bought"
+      class: "energy"
       uom: "kWh"
       scale: 0.1
       rule: 1
@@ -196,6 +221,7 @@ parameters:
       icon: 'mdi:transmission-tower-export'
       
     - name: "Daily Energy Sold"
+      class: "energy"
       uom: "kWh"
       scale: 0.1
       rule: 1
@@ -203,6 +229,7 @@ parameters:
       icon: 'mdi:transmission-tower-import'
 
     - name: "Total Energy Sold"
+      class: "energy"
       uom: "kWh"
       scale: 0.1
       rule: 3
@@ -211,6 +238,7 @@ parameters:
 
 
     - name: "Total Grid Production"
+      class: "energy"
       uom: "kWh"
       scale: 0.1
       rule: 4
@@ -220,6 +248,7 @@ parameters:
  - group: Upload
    items: 
     - name: "Total Load Power"
+      class: "power"
       uom: "W"
       scale: 1
       rule: 1
@@ -227,6 +256,7 @@ parameters:
       icon: 'mdi:lightning-bolt-outline'
 
     - name: "Load L1 Power"
+      class: "power"
       uom: "W"
       scale: 1
       rule: 1
@@ -234,6 +264,7 @@ parameters:
       icon: 'mdi:lightning-bolt-outline'
 
     - name: "Load L2 Power"
+      class: "power"
       uom: "W"
       scale: 1
       rule: 1
@@ -241,6 +272,7 @@ parameters:
       icon: 'mdi:lightning-bolt-outline'
 
     - name: "Load Voltage"
+      class: "voltage"
       uom: "V"
       scale: 0.1
       rule: 1
@@ -248,6 +280,7 @@ parameters:
       icon: 'mdi:lightning-bolt-outline'
 
     - name: "Daily Load Consumption"
+      class: "energy"
       uom: "kWh"
       scale: 0.1
       rule: 1
@@ -255,6 +288,7 @@ parameters:
       icon: 'mdi:lightning-bolt-outline'
 
     - name: "Total Load Consumption"
+      class: "energy"
       uom: "kWh"
       scale: 0.1
       rule: 3
@@ -262,6 +296,7 @@ parameters:
       icon: 'mdi:lightning-bolt-outline'
 
     - name: "SmartLoad Enable Status"
+      class: ""
       uom: ""
       scale: 1
       rule: 1
@@ -276,6 +311,7 @@ parameters:
  - group: Inverter
    items: 
     - name: "Running Status"
+      class: ""
       uom: ""
       scale: 1
       rule: 1
@@ -292,6 +328,7 @@ parameters:
       icon: 'mdi:home-lightning-bolt'
 
     - name: "Total Power"
+      class: "power"
       uom: "W"
       scale: 1
       rule: 2
@@ -299,6 +336,7 @@ parameters:
       icon: 'mdi:home-lightning-bolt'
 
     - name: "Current L1"
+      class: "current"
       uom: "A"
       scale: 0.01
       rule: 2
@@ -306,6 +344,7 @@ parameters:
       icon: 'mdi:home-lightning-bolt'
 
     - name: "Current L2"
+      class: "current"
       uom: "A"
       scale: 0.01
       rule: 2
@@ -313,6 +352,7 @@ parameters:
       icon: 'mdi:home-lightning-bolt'
 
     - name: "Inverter L1 Power"
+      class: "power"
       uom: "W"
       scale: 1
       rule: 2
@@ -320,6 +360,7 @@ parameters:
       icon: 'mdi:home-lightning-bolt'
 
     - name: "Inverter L2 Power"
+      class: "power"
       uom: "W"
       scale: 1
       rule: 2
@@ -327,6 +368,7 @@ parameters:
       icon: 'mdi:home-lightning-bolt'
 
     - name: "DC Temperature"
+      class: "temperature"
       uom: "°C"
       scale: 0.1
       rule: 2
@@ -335,6 +377,7 @@ parameters:
       icon: 'mdi:thermometer'
 
     - name: "AC Temperature"
+      class: "temperature"
       uom: "°C"
       scale: 0.1
       rule: 2
@@ -343,24 +386,28 @@ parameters:
       icon: 'mdi:thermometer'
 
     - name: "Inverter ID"
+      class: ""
       uom: ""
       scale: 1
       rule: 5
       registers: [0x0003,0x0004,0x0005,0x0006,0x0007]
       
     - name: "Communication Board Version No."
+      class: ""
       uom: ""
       scale: 1
       rule: 1
       registers: [0x000E]
 
     - name: "Control Board Version No."
+      class: ""
       uom: ""
       scale: 1
       rule: 1
       registers: [0x000D]
 
     - name: "Grid-connected Status"
+      class: ""
       uom: ""
       scale: 1
       rule: 1
@@ -372,6 +419,7 @@ parameters:
          value: "On-Grid"
 
     - name: "Gen-connected Status"
+      class: ""
       uom: ""
       scale: 1
       rule: 1
@@ -383,12 +431,14 @@ parameters:
          value: "On"
 
     - name: "Gen Power"
+      class: "power"
       uom: "W"
       scale: 1
       rule: 1
       registers: [0x00A6]
 
     - name: "Time of use"
+      class: ""
       uom: ""
       scale: 1
       rule: 1
@@ -400,6 +450,7 @@ parameters:
          value: "Enable"
 
     - name: "Work Mode"
+      class: ""
       uom: ""
       scale: 1
       rule: 3
@@ -420,6 +471,7 @@ parameters:
  - group: Alert
    items: 
     - name: "Alert"
+      class: ""
       uom: ""
       scale: 1
       rule: 6

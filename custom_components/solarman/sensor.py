@@ -63,6 +63,7 @@ class SunsynkSensor(Entity):
             self.p_icon = sensor['icon']
         else:
             self.p_icon = ''
+        self._device_class = sensor['class']
         self.p_name = self._inverter_name
         self.uom = sensor['uom']
         self.p_state = None
@@ -87,11 +88,11 @@ class SunsynkSensor(Entity):
 
     @property
     def device_class(self):
-        return 'energy'
+        return self._device_class
 
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         attrs = {   
             'last_reset' : datetime(1970,1,1,0,0,0,0),
             "state_class": "measurement"
@@ -110,10 +111,9 @@ class SunsynkSensor(Entity):
         self.inverter.update()
 
         val = self.inverter.get_current_val()
-        if (val is None):
-            self.p_state = None
-        else:
-            self.p_state = val[self._field_name]
+        if val is not None:
+            if self._field_name in val:           
+                self.p_state = val[self._field_name]
 
         
 

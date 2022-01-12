@@ -49,7 +49,8 @@ class Inverter:
 
         packet_data = []
         packet_data.extend (SEND_DATA_FIELD)
-        packet_data.extend(self.get_read_business_field(start, length))
+        buisiness_field = self.get_read_business_field(start, length)
+        packet_data.extend(buisiness_field)
         length = packet_data.__len__()
         packet.extend(length.to_bytes(2, "little")) 
         packet.extend(CONTROL_CODE)
@@ -61,22 +62,28 @@ class Inverter:
         for i in range(1,len(packet),1):
             checksum += packet[i]
         packet.append(checksum & 0xFF)
-        packet.append(END_OF_MESSAGE)        
+        packet.append(END_OF_MESSAGE)  
+        
+        del packet_data      
+        del buisiness_field
         return packet
  
     def send_request (self, params, start, end):
         length = end - start + 1
+        request = self.generate_request(start, length)
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             sock.connect((self._host, self._port))
-            sock.sendall(self.generate_request(start, length)) # Request param 0x3B up to 0x71
+            sock.sendall(request) # Request param 0x3B up to 0x71
             raw_msg = sock.recv(1024)
-            params.parse(raw_msg, start, length)
-        # except:
-        #     self.raw_msg = None
-        #     print ('Could not connect to the inverter on %s:%s', self._host, self._port)
+            params.parse(raw_msg, start, length) 
+            del raw_msg
+        except:
+            print ('Could not connect to the inverter on %s:%s', self._host, self._port)
         finally:
             sock.close()
+            
+            del request
         return "{}"
 
     @Throttle (MIN_TIME_BETWEEN_UPDATES)
