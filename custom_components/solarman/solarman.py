@@ -72,6 +72,7 @@ class Inverter:
         length = end - start + 1
         request = self.generate_request(start, length)
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(10)
         try:
             sock.connect((self._host, self._port))
             sock.sendall(request) # Request param 0x3B up to 0x71
@@ -84,7 +85,7 @@ class Inverter:
             sock.close()
             
             del request
-        return "{}"
+        return
 
     @Throttle (MIN_TIME_BETWEEN_UPDATES)
     def update (self):
