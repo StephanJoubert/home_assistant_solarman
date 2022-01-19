@@ -5,6 +5,7 @@
   "version": "0.0.1",
   "dependencies": [],
   "codeowners": [],
+  "issue_tracker": "https://github.com/StephanJoubert/home_assistant_solarman/issues",
   "requirements": ["pyyaml"],
   "iot_class": "local_polling"
 }
