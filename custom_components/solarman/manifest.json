@@ -1,8 +1,8 @@
 {
-  "domain": "solarman",
+  "domain": "",
   "name": "Solarman",
-  "documentation": "https://www.example.com",
-  "version": "0.0.1",
+  "documentation": "https://github.com/StephanJoubert/home_assistant_solarman/blob/main/README.md",
+  "version": "1.0.0",
   "dependencies": [],
   "codeowners": [],
   "issue_tracker": "https://github.com/StephanJoubert/home_assistant_solarman/issues",
