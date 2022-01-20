@@ -10,10 +10,13 @@ https://github.com/heinoldenhuis/home_assistant_omnik_solar
 
 # Installation
 
-## Manual
-For this is is highly recomended to use the "Samba share" add-on (you will need to enable advanced mode in your user profile).
+## HACS
+This method is prefered. 
 
-Clone the repo, and copy the "solarman" folder in "custom_components" to the "custom_components" folder in home assistant. 
+## Manual
+For this, it is highly recomended to use the "Samba share" add-on (you will need to enable advanced mode in your user profile).
+
+Clone or download the repo, and copy the "solarman" folder in "custom_components" to the "custom_components" folder in home assistant. 
 
 After that, the folder structure should look as follows:
 
@@ -69,5 +72,5 @@ Once the component is running, it will add the following entities to Home Assist
 ## Energy Dashboard
 The entities includes the device classes to enable it to be added to the [Energy Dashboard](https://www.home-assistant.io/blog/2021/08/04/home-energy-management/) introduced with Home Assistant Core 2021.8.
 
-This will allow you to create a dashboard that looks like this:
-![Dashboard](./energy.png)
+To configure the energy dashboard with the infirmation provided by this component,  see [configuring energy dashboard](energy.md)
+
