@@ -36,8 +36,18 @@ custom_components
 Then proceed to configuration.
 
 # Configuration
+## Get the IP and Serial Number to use in the configuration. 
 
-On your DHCP server, allocate a static IP for the WiFi data logger. 
+For this, find the internal IP of the logger on the DHCP server, and then open a browser and navigate to the IP. If you are prompted for a username/password, use "admin" as username and "admin" as password.
+
+Once logged in, expand the "Device information" and note the Device serial number, as well as the IP used.
+
+![WebPortal](./web_portal.png)
+
+## Check the version of the solarman logger
+If the serial number starts with 17xxxxxxx or 21xxxxxxx (protocol V5), the component should work. 
+
+3. On your DHCP server, reserve the IP for the WiFi data logger so that it will not change. 
 
 In your configuration.yaml file, add the solarman platform under "sensors"
 
@@ -48,8 +58,8 @@ In your configuration.yaml file, add the solarman platform under "sensors"
 
 sensors:
   - platform: solarman
-    name: SUNSYNK
-    inverter_host: 192.168.0.201
+    name: DEYE
+    inverter_host: 192.168.0.100
     inverter_port: 8899
     inverter_serial: 1720747149 
     scan_interval: 30
