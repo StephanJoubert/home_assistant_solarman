@@ -49,14 +49,14 @@ Once logged in, expand the "Device information" and note the Device serial numbe
 
 3. On your DHCP server, reserve the IP for the WiFi data logger so that it will not change. 
 
-4. In your configuration.yaml file, add the solarman platform under "sensors"
+4. In your configuration.yaml file, add the solarman platform under "sensor"
 
 
 ## Example:
 
 ~~~ YAML
 
-sensors:
+sensor:
   - platform: solarman
     name: DEYE 
     inverter_host: 192.168.0.100
