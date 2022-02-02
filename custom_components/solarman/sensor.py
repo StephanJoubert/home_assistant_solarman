@@ -46,7 +46,7 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
   #  Prepare the sensor entities.
   hass_sensors = []
   for sensor in inverter.get_sensors():
-      hass_sensors.append(SunsynkSensor(inverter_name, inverter, sensor))
+      hass_sensors.append(SunsynkSensor(inverter_name, inverter, sensor, inverter_sn))
   add_devices(hass_sensors)
 
 #############################################################################################################
@@ -55,7 +55,7 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
 #############################################################################################################
 
 class SunsynkSensor(Entity):
-    def __init__(self, inverter_name, inverter, sensor):
+    def __init__(self, inverter_name, inverter, sensor, sn):
         self._inverter_name = inverter_name
         self.inverter = inverter
         self._field_name = sensor['name']
@@ -67,6 +67,7 @@ class SunsynkSensor(Entity):
         self.p_name = self._inverter_name
         self.uom = sensor['uom']
         self.p_state = None
+        self._sn = sn
         return
 
  
@@ -79,6 +80,11 @@ class SunsynkSensor(Entity):
     def name(self):
         #  Return the name of the sensor. 
         return "{} {}".format(self.p_name, self._field_name)
+
+    @property
+    def unique_id(self):
+        # Return a unique_id based on the serial number
+        return "{}_{}_{}".format(self.p_name, self._sn, self._field_name)
    
     @property
     def state(self):
