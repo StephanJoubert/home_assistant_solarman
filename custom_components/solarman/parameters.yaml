@@ -81,6 +81,7 @@ parameters:
       scale: 1
       rule: 1
       registers: [0x00BD]
+      isstr: true
       lookup: 
       -  key: 0
          value: "Charge"
@@ -139,6 +140,7 @@ parameters:
       scale: 1
       rule: 1
       registers: [0x00A9]
+      isstr: true
       lookup: 
       -  key: 0
          value: "SELL"
@@ -301,6 +303,7 @@ parameters:
       scale: 1
       rule: 1
       registers: [0x00C3]
+      isstr: true
       lookup: 
       -  key: 0
          value: "OFF"
@@ -316,6 +319,7 @@ parameters:
       scale: 1
       rule: 1
       registers: [0x003B]
+      isstr: true
       lookup: 
       -  key: 0
          value: "Stand-by"
@@ -391,6 +395,7 @@ parameters:
       scale: 1
       rule: 5
       registers: [0x0003,0x0004,0x0005,0x0006,0x0007]
+      isstr: true
       
     - name: "Communication Board Version No."
       class: ""
@@ -398,6 +403,7 @@ parameters:
       scale: 1
       rule: 1
       registers: [0x000E]
+      isstr: true
 
     - name: "Control Board Version No."
       class: ""
@@ -405,6 +411,7 @@ parameters:
       scale: 1
       rule: 1
       registers: [0x000D]
+      isstr: true
 
     - name: "Grid-connected Status"
       class: ""
@@ -412,6 +419,7 @@ parameters:
       scale: 1
       rule: 1
       registers: [0x00C2]
+      isstr: true
       lookup: 
       -  key: 0
          value: "Off-Grid"
@@ -424,6 +432,7 @@ parameters:
       scale: 1
       rule: 1
       registers: [0x00A6]
+      isstr: true
       lookup: 
       -  key: 0
          value: "none"
@@ -443,6 +452,7 @@ parameters:
       scale: 1
       rule: 1
       registers: [0x00F8]
+      isstr: true
       lookup: 
       -  key: 0
          value: "Disable"
@@ -455,6 +465,7 @@ parameters:
       scale: 1
       rule: 3
       registers: [0x00F4,0x00F7]
+      isstr: true
       lookup: 
       -  key: 0
          value: "Selling First"
