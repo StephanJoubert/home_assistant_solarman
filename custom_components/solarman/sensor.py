@@ -41,89 +41,22 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
     raise vol.Invalid('configuration parameter [inverter_host] does not have a value')
   if(inverter_sn == None):
     raise vol.Invalid('configuration parameter [inverter_serial] does not have a value')
-     
+   
   inverter = Inverter(path, inverter_sn, inverter_host, inverter_port)
   #  Prepare the sensor entities.
   hass_sensors = []
   for sensor in inverter.get_sensors():
-      if 'isstr' in sensor:
+      if "isstr" in sensor:
         hass_sensors.append(SunsynkSensorText(inverter_name, inverter, sensor, inverter_sn))
       else:
         hass_sensors.append(SunsynkSensor(inverter_name, inverter, sensor, inverter_sn))
-            
   add_devices(hass_sensors)
 
 #############################################################################################################
-# This is the sensor entity seen by Home Assistant.
-#  It derives from the Entity class in HA
+# This is the entity seen by Home Assistant.
+#  It derives from the Entity class in HA and is suited for status values.
 #############################################################################################################
 
-class SunsynkSensor(Entity):
-    def __init__(self, inverter_name, inverter, sensor, sn):
-        self._inverter_name = inverter_name
-        self.inverter = inverter
-        self._field_name = sensor['name']
-        if 'icon' in sensor:
-            self.p_icon = sensor['icon']
-        else:
-            self.p_icon = ''
-        self._device_class = sensor['class']
-        self.p_name = self._inverter_name
-        self.uom = sensor['uom']
-        self.p_state = None
-        self._sn = sn
-        return
-
- 
-    @property
-    def icon(self):
-        #  Return the icon of the sensor. """
-        return self.p_icon
-    
-    @property
-    def name(self):
-        #  Return the name of the sensor. 
-        return "{} {}".format(self.p_name, self._field_name)
-
-    @property
-    def unique_id(self):
-        # Return a unique_id based on the serial number
-        return "{}_{}_{}".format(self.p_name, self._sn, self._field_name)
-   
-    @property
-    def state(self):
-        #  Return the state of the sensor. 
-        return self.p_state
-
-
-    @property
-    def device_class(self):
-        return self._device_class
-
-
-    @property
-    def extra_state_attributes(self):
-        attrs = {   
-            'last_reset' : datetime(1970,1,1,0,0,0,0),
-            "state_class": "measurement"
-        }
-        return attrs
-
-    @property
-    def unit_of_measurement(self):
-        return self.uom
-
-
-    def update(self):
-    #  Update this sensor using the data. 
-    #  Get the latest data and use it to update our sensor state. 
-    #  Retrieve the sensor data from actual interface
-        self.inverter.update()
-
-        val = self.inverter.get_current_val()
-        if val is not None:
-            if self._field_name in val:           
-                self.p_state = val[self._field_name]
 
 class SunsynkSensorText(Entity):
     def __init__(self, inverter_name, inverter, sensor, sn):
@@ -134,13 +67,7 @@ class SunsynkSensorText(Entity):
             self.p_icon = sensor['icon']
         else:
             self.p_icon = ''
-        if 'lookup' in sensor:
-            self._islookup = True
-        else:
-            self._islookup = False
-        self._device_class = sensor['class']
         self.p_name = self._inverter_name
-        self.uom = sensor['uom']
         self.p_state = None
         self._sn = sn
         return
@@ -158,13 +85,14 @@ class SunsynkSensorText(Entity):
     
     @property
     def unique_id(self):
-        return "{}_{}_{}_str".format(self.p_name, self._sn, self._field_name)
-        
+        # Return a unique_id based on the serial number
+        return "{}_{}_{}".format(self.p_name, self._sn, self._field_name)     
    
     @property
     def state(self):
         #  Return the state of the sensor. 
         return self.p_state
+
 
 
     def update(self):
@@ -177,5 +105,34 @@ class SunsynkSensorText(Entity):
         if val is not None:
             if self._field_name in val:           
                 self.p_state = val[self._field_name]
+                
+                
+#############################################################################################################
+# This is the numeric sensor entity seen by Home Assistant.
+#  It derives from the SunsynkSensorText class and add the fields required for numeric sensors
+#############################################################################################################
 
+class SunsynkSensor(SunsynkSensorText):
+    def __init__(self, inverter_name, inverter, sensor, sn):
+        SunsynkSensorText.__init__(self, inverter_name, inverter, sensor, sn)
+        self._device_class = sensor['class']
+        self.uom = sensor['uom']
+        return
         
+    @property
+    def device_class(self):
+        return self._device_class
+        
+        
+    @property
+    def extra_state_attributes(self):    
+        attrs = {   
+            'last_reset' : datetime(1970,1,1,0,0,0,0),
+            "state_class": "measurement"
+        }
+        return attrs
+
+    @property
+    def unit_of_measurement(self):
+        return self.uom
+
