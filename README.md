@@ -79,8 +79,14 @@ sensor:
 Once the component is running, it will add the following entities to Home Assistant
 ![Entities](./entities.png)
 
+## Status Entities
+Apart from the inverter-parameters, it will also add status entities to view the status of the solarman component.
+![Component-status](./component_status.png)
+
 ## Energy Dashboard
 The entities includes the device classes to enable it to be added to the [Energy Dashboard](https://www.home-assistant.io/blog/2021/08/04/home-energy-management/) introduced with Home Assistant Core 2021.8.
 
 To configure the energy dashboard with the infirmation provided by this component,  see [configuring energy dashboard](energy.md)
 
+## Customization
+This integration was tested agains the DEYE 5kW inverter, and it is possible that the parameter-definitions for other inverters may differ. If you want to try your hand at it, refer to [customizing parameters.yaml](customization.md)
