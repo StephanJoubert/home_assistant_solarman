@@ -43,7 +43,6 @@ The group just groups parameters that belong together. The induvidual parameter-
 
 ### Parameter-item
 
-(see) https://developers.home-assistant.io/docs/core/entity/
 
 |field|description|
 |:----------:|----------|
