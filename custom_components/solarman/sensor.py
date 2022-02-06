@@ -2,7 +2,8 @@
 ################################################################################
 #   Solarman local interface.
 #
-#   This component can retrieve data solarman using version 5 of the protocol.
+#   This component can retrieve data from the solarman dongle using version 5 
+#   of the protocol.
 #
 ###############################################################################
 
@@ -50,6 +51,9 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
         hass_sensors.append(SunsynkSensorText(inverter_name, inverter, sensor, inverter_sn))
       else:
         hass_sensors.append(SunsynkSensor(inverter_name, inverter, sensor, inverter_sn))
+
+  hass_sensors.append(SynsynkStatus(inverter_name, inverter, "status_lastUpdate", inverter_sn))
+  hass_sensors.append(SynsynkStatus(inverter_name, inverter, "status_connection", inverter_sn))  
   add_devices(hass_sensors)
 
 #############################################################################################################
@@ -57,44 +61,54 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
 #  It derives from the Entity class in HA and is suited for status values.
 #############################################################################################################
 
-
-class SunsynkSensorText(Entity):
-    def __init__(self, inverter_name, inverter, sensor, sn):
+class SynsynkStatus(Entity):
+    def __init__(self,inverter_name, inverter, field_name, sn):
         self._inverter_name = inverter_name
         self.inverter = inverter
-        self._field_name = sensor['name']
-        if 'icon' in sensor:
-            self.p_icon = sensor['icon']
-        else:
-            self.p_icon = ''
-        self.p_name = self._inverter_name
+        self._field_name = field_name
         self.p_state = None
-        self._sn = sn
-        return
-
- 
+        self.p_icon = 'mdi:magnify'
+        self._sn = sn        
+        return        
+    
     @property
     def icon(self):
         #  Return the icon of the sensor. """
-        return self.p_icon
-    
+        return self.p_icon    
+   
     @property
     def name(self):
         #  Return the name of the sensor. 
-        return "{} {}".format(self.p_name, self._field_name)
+        return "{} {}".format(self._inverter_name, self._field_name)
     
     @property
     def unique_id(self):
         # Return a unique_id based on the serial number
-        return "{}_{}_{}".format(self.p_name, self._sn, self._field_name)     
-   
+        return "{}_{}_{}".format(self._inverter_name, self._sn, self._field_name)   
+
     @property
     def state(self):
         #  Return the state of the sensor. 
-        return self.p_state
+        return self.p_state     
+    
+    def update(self):
+        self.p_state = getattr(self.inverter, self._field_name)
 
+#############################################################################################################
+#  Entity displaying a text field read from the inverter
+#   Overrides the Status entity, supply the configured icon, and updates the inverter parameters
+#############################################################################################################
 
+class SunsynkSensorText(SynsynkStatus):
+    def __init__(self, inverter_name, inverter, sensor, sn):
+        SynsynkStatus.__init__(self,inverter_name, inverter, sensor['name'], sn)
+        if 'icon' in sensor:
+            self.p_icon = sensor['icon']
+        else:
+            self.p_icon = ''
+        return
 
+ 
     def update(self):
     #  Update this sensor using the data. 
     #  Get the latest data and use it to update our sensor state. 
@@ -108,9 +122,10 @@ class SunsynkSensorText(Entity):
                 
                 
 #############################################################################################################
-# This is the numeric sensor entity seen by Home Assistant.
-#  It derives from the SunsynkSensorText class and add the fields required for numeric sensors
+#  Entity displaying a numeric field read from the inverter
+#   Overrides the Text sensor and supply the device class, last_reset and unit of measurement 
 #############################################################################################################
+
 
 class SunsynkSensor(SunsynkSensorText):
     def __init__(self, inverter_name, inverter, sensor, sn):

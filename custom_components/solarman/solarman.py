@@ -1,7 +1,7 @@
 import socket
 import yaml
 from homeassistant.util import Throttle
-
+from datetime import datetime
 from .parser import ParameterParser
 from .const import *
 
@@ -18,6 +18,8 @@ class Inverter:
         self._host = host
         self._port = port
         self._current_val = None
+        self.status_connection = "Disconnected"
+        self.status_lastUpdate = "N/A"
         with open(self.path +'parameters.yaml') as f:
             self.parameter_definition = yaml.full_load(f) 
 
@@ -80,10 +82,13 @@ class Inverter:
             sock.connect((self._host, self._port))
             sock.sendall(request) # Request param 0x3B up to 0x71
             raw_msg = sock.recv(1024)
+            self.status_lastUpdate = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+            self.status_connection = "Connected"
             params.parse(raw_msg, start, length) 
             del raw_msg
         except:
             print ('Could not connect to the inverter on %s:%s', self._host, self._port)
+            self.status_connection = "Disconnected"
         finally:
             sock.close()
             
