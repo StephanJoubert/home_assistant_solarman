@@ -18,6 +18,8 @@ class Inverter:
         self._host = host
         self._port = port
         self._current_val = None
+        with open(self.path +'parameters.yaml') as f:
+            self.parameter_definition = yaml.full_load(f) 
 
     def modbus(self, data):
         POLY = 0xA001
