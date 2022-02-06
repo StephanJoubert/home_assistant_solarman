@@ -1,4 +1,5 @@
 import socket
+import yaml
 from homeassistant.util import Throttle
 
 from .parser import ParameterParser
@@ -94,19 +95,17 @@ class Inverter:
 
 
     def get_statistics(self):
-        params = ParameterParser(self.path)
-        self.send_request (params, 0x0003, 0x000E)
-        # Gap from 0x00F to 0x003A
-        self.send_request (params, 0x003B, 0x0070)
-        # There is a gap from 0x0070 to 0x0096
-        self.send_request (params, 0x0096, 0x00C3)
+        params = ParameterParser(self.parameter_definition)
+        for request in self.parameter_definition['requests']:
+            start = request['start']
+            end= request['end']
+            self.send_request(params, start, end)
         
-        self.send_request (params, 0x00f4, 0x00f8)        
         self._current_val = params.get_result()
 
     def get_current_val(self):
         return self._current_val
 
     def get_sensors(self):
-        params = ParameterParser(self.path)
+        params = ParameterParser(self.parameter_definition)
         return params.get_sensors ()

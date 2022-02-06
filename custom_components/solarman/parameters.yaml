@@ -1,3 +1,13 @@
+requests:
+  - start: 0x0003
+    end:  0x000E
+  - start: 0x003B
+    end: 0x0070
+  - start: 0x0096
+    end: 0x00C3
+  - start: 0x00f4
+    end: 0x00f8
+
 parameters:
  - group: solar
    items: 

@@ -10,11 +10,9 @@ OFFSET_PARAMS = 28
 
 
 class ParameterParser:
-    def __init__(self, path):
-        self.path = path
+    def __init__(self, lookups):
         self.result = {}
-        with open(self.path +'parameters.yaml') as f:
-            self._lookups = yaml.full_load(f) 
+        self._lookups = lookups 
         return
 
     def parse (self, rawData, start, length):
