@@ -13,6 +13,7 @@ parameters:
    items: 
     - name: "PV1 Power"
       class: "power"
+      state_class: "measurement"
       uom: "W"
       scale: 1
       rule: 1
@@ -21,6 +22,7 @@ parameters:
 
     - name: "PV2 Power"
       class: "power"
+      state_class: "measurement"
       uom: "W"
       scale: 1
       rule: 1
@@ -29,6 +31,7 @@ parameters:
 
     - name: "PV1 Voltage"
       class: "voltage"
+      state_class: "measurement"
       uom: "V"
       scale: 0.1
       rule: 1
@@ -37,6 +40,7 @@ parameters:
 
     - name: "PV2 Voltage"
       class: "voltage"
+      state_class: "measurement"
       uom: "V"
       scale: 0.1
       rule: 1
@@ -53,6 +57,7 @@ parameters:
 
     - name: "PV2 Current"
       class: "current"
+      state_class: "measurement"
       uom: "A"
       scale: 0.1
       rule: 1
@@ -61,6 +66,7 @@ parameters:
 
     - name: "Daily Production"
       class: "energy"
+      state_class: "measurement"
       uom: "kWh"
       scale: 0.1
       rule: 1
@@ -69,6 +75,7 @@ parameters:
 
     - name: "Total Production"
       class: "energy"
+      state_class: "total_increasing"
       uom: "kWh"
       scale: 0.1
       rule: 3
@@ -77,6 +84,7 @@ parameters:
 
     - name: "Micro-inverter Power"
       class: "power"
+      state_class: "measurement"
       uom: "W"
       scale: 1
       rule: 1
@@ -87,6 +95,7 @@ parameters:
    items: 
     - name: "Battery Status"
       class: ""
+      state_class: "measurement"
       uom: ""
       scale: 1
       rule: 1
@@ -103,6 +112,7 @@ parameters:
 
     - name: "Battery Power"
       class: "power"
+      state_class: "measurement"
       uom: "W"
       scale: 1
       rule: 2
@@ -111,6 +121,7 @@ parameters:
 
     - name: "Battery Voltage"
       class: "voltage"
+      state_class: "measurement"
       uom: "V"
       scale: 0.01
       rule: 1
@@ -119,6 +130,7 @@ parameters:
 
     - name: "Battery SOC"
       class: "battery"
+      state_class: "measurement"
       uom: "%"
       scale: 1
       rule: 1
@@ -127,6 +139,7 @@ parameters:
 
     - name: "Battery Current"
       class: "current"
+      state_class: "measurement"
       uom: "A"
       scale: 0.01
       rule: 2
@@ -135,6 +148,7 @@ parameters:
 
     - name: "Battery Temperature"
       class: "temperature"
+      state_class: "measurement"
       uom: "°C"
       scale: 0.1
       rule: 1
@@ -146,6 +160,7 @@ parameters:
    items: 
     - name: "Grid Status"
       class: ""
+      state_class: ""
       uom: ""
       scale: 1
       rule: 1
@@ -162,6 +177,7 @@ parameters:
 
     - name: "Total Grid Power"
       class: "power"
+      state_class: "measurement"
       uom: "W"
       scale: 1
       rule: 2
@@ -170,6 +186,7 @@ parameters:
 
     - name: "Grid Voltage L1"
       class: "voltage"
+      state_class: "measurement"
       uom: "V"
       scale: 0.1
       rule: 1
@@ -178,6 +195,7 @@ parameters:
 
     - name: "Grid Voltage L2"
       class: "voltage"
+      state_class: "measurement"
       uom: "V"
       scale: 0.1
       rule: 1
@@ -186,6 +204,7 @@ parameters:
 
     - name: "Internal CT L1 Power"
       class: "power"
+      state_class: "measurement"
       uom: "W"
       scale: 1
       rule: 2
@@ -194,6 +213,7 @@ parameters:
 
     - name: "Internal CT L2 Power"
       class: "power"
+      state_class: "measurement"
       uom: "W"
       scale: 1
       rule: 2
@@ -202,6 +222,7 @@ parameters:
 
     - name: "External CT L1 Power"
       class: "power"
+      state_class: "measurement"
       uom: "W"
       scale: 1
       rule: 2
@@ -210,6 +231,7 @@ parameters:
 
     - name: "External CT L2 Power"
       class: "power"
+      state_class: "measurement"
       uom: "W"
       scale: 1
       rule: 2
@@ -218,6 +240,7 @@ parameters:
 
     - name: "Daily Energy Bought"
       class: "energy"
+      state_class: "total_increasing"
       uom: "kWh"
       scale: 0.1
       rule: 1
@@ -226,6 +249,7 @@ parameters:
 
     - name: "Total Energy Bought"
       class: "energy"
+      state_class: "total_increasing"
       uom: "kWh"
       scale: 0.1
       rule: 1
@@ -234,6 +258,7 @@ parameters:
       
     - name: "Daily Energy Sold"
       class: "energy"
+      state_class: "total_increasing"
       uom: "kWh"
       scale: 0.1
       rule: 1
@@ -242,6 +267,7 @@ parameters:
 
     - name: "Total Energy Sold"
       class: "energy"
+      state_class: "total_increasing"
       uom: "kWh"
       scale: 0.1
       rule: 3
@@ -251,6 +277,7 @@ parameters:
 
     - name: "Total Grid Production"
       class: "energy"
+      state_class: "total_increasing"
       uom: "kWh"
       scale: 0.1
       rule: 4
@@ -261,6 +288,7 @@ parameters:
    items: 
     - name: "Total Load Power"
       class: "power"
+      state_class: "measurement"      
       uom: "W"
       scale: 1
       rule: 1
@@ -269,6 +297,7 @@ parameters:
 
     - name: "Load L1 Power"
       class: "power"
+      state_class: "measurement"      
       uom: "W"
       scale: 1
       rule: 1
@@ -277,6 +306,7 @@ parameters:
 
     - name: "Load L2 Power"
       class: "power"
+      state_class: "measurement"      
       uom: "W"
       scale: 1
       rule: 1
@@ -285,6 +315,7 @@ parameters:
 
     - name: "Load Voltage"
       class: "voltage"
+      state_class: "measurement"      
       uom: "V"
       scale: 0.1
       rule: 1
@@ -293,6 +324,7 @@ parameters:
 
     - name: "Daily Load Consumption"
       class: "energy"
+      state_class: "total_increasing"      
       uom: "kWh"
       scale: 0.1
       rule: 1
@@ -301,6 +333,7 @@ parameters:
 
     - name: "Total Load Consumption"
       class: "energy"
+      state_class: "total_increasing"      
       uom: "kWh"
       scale: 0.1
       rule: 3
@@ -309,6 +342,7 @@ parameters:
 
     - name: "SmartLoad Enable Status"
       class: ""
+      state_class: ""      
       uom: ""
       scale: 1
       rule: 1
@@ -325,6 +359,7 @@ parameters:
    items: 
     - name: "Running Status"
       class: ""
+      state_class: ""      
       uom: ""
       scale: 1
       rule: 1
@@ -343,6 +378,7 @@ parameters:
 
     - name: "Total Power"
       class: "power"
+      state_class: "measurement"      
       uom: "W"
       scale: 1
       rule: 2
@@ -351,6 +387,7 @@ parameters:
 
     - name: "Current L1"
       class: "current"
+      state_class: "measurement"      
       uom: "A"
       scale: 0.01
       rule: 2
@@ -367,6 +404,7 @@ parameters:
 
     - name: "Inverter L1 Power"
       class: "power"
+      state_class: "measurement"      
       uom: "W"
       scale: 1
       rule: 2
@@ -375,6 +413,7 @@ parameters:
 
     - name: "Inverter L2 Power"
       class: "power"
+      state_class: "measurement"      
       uom: "W"
       scale: 1
       rule: 2
@@ -383,6 +422,7 @@ parameters:
 
     - name: "DC Temperature"
       class: "temperature"
+      state_class: "measurement"      
       uom: "°C"
       scale: 0.1
       rule: 2
@@ -392,6 +432,7 @@ parameters:
 
     - name: "AC Temperature"
       class: "temperature"
+      state_class: "measurement"      
       uom: "°C"
       scale: 0.1
       rule: 2
@@ -401,6 +442,7 @@ parameters:
 
     - name: "Inverter ID"
       class: ""
+      state_class: ""      
       uom: ""
       scale: 1
       rule: 5
@@ -409,6 +451,7 @@ parameters:
       
     - name: "Communication Board Version No."
       class: ""
+      state_class: ""      
       uom: ""
       scale: 1
       rule: 1
@@ -417,6 +460,7 @@ parameters:
 
     - name: "Control Board Version No."
       class: ""
+      state_class: ""      
       uom: ""
       scale: 1
       rule: 1
@@ -425,6 +469,7 @@ parameters:
 
     - name: "Grid-connected Status"
       class: ""
+      state_class: ""      
       uom: ""
       scale: 1
       rule: 1
@@ -439,6 +484,7 @@ parameters:
     - name: "Gen-connected Status"
       class: ""
       uom: ""
+      state_class: ""      
       scale: 1
       rule: 1
       registers: [0x00A6]
@@ -451,6 +497,7 @@ parameters:
 
     - name: "Gen Power"
       class: "power"
+      state_class: "measurement"      
       uom: "W"
       scale: 1
       rule: 1
@@ -458,6 +505,7 @@ parameters:
 
     - name: "Time of use"
       class: ""
+      state_class: ""      
       uom: ""
       scale: 1
       rule: 1
@@ -471,6 +519,7 @@ parameters:
 
     - name: "Work Mode"
       class: ""
+      state_class: ""      
       uom: ""
       scale: 1
       rule: 3
@@ -493,6 +542,7 @@ parameters:
    items: 
     - name: "Alert"
       class: ""
+      state_class: ""      
       uom: ""
       scale: 1
       rule: 6

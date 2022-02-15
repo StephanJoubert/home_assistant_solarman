@@ -29,6 +29,7 @@ PLATFORM_SCHEMA = vol.All(PLATFORM_SCHEMA.extend({
     vol.Required(CONF_INVERTER_HOST, default=None): cv.string,
     vol.Required(CONF_INVERTER_PORT, default=DEFAULT_PORT_INVERTER): cv.positive_int,
     vol.Required(CONF_INVERTER_SERIAL, default=None): cv.positive_int,
+    vol.Optional(CONF_LOOKUP_FILE): cv.string,
 }, extra=vol.PREVENT_EXTRA), _check_config_schema)        
 
 def setup_platform(hass, config, add_devices, discovery_info=None):
@@ -36,6 +37,7 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
   inverter_host = config.get(CONF_INVERTER_HOST)
   inverter_port = config.get(CONF_INVERTER_PORT)
   inverter_sn = config.get(CONF_INVERTER_SERIAL)
+  lookup_file = config.get(CONF_LOOKUP_FILE)
   path=hass.config.path('custom_components/solarman/')
   # Check input configuration. 
   if(inverter_host == None):
@@ -43,7 +45,7 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
   if(inverter_sn == None):
     raise vol.Invalid('configuration parameter [inverter_serial] does not have a value')
    
-  inverter = Inverter(path, inverter_sn, inverter_host, inverter_port)
+  inverter = Inverter(path, inverter_sn, inverter_host, inverter_port, lookup_file)
   #  Prepare the sensor entities.
   hass_sensors = []
   for sensor in inverter.get_sensors():
@@ -131,6 +133,10 @@ class SunsynkSensor(SunsynkSensorText):
     def __init__(self, inverter_name, inverter, sensor, sn):
         SunsynkSensorText.__init__(self, inverter_name, inverter, sensor, sn)
         self._device_class = sensor['class']
+        if 'state_class' in sensor:
+            self._state_class = sensor['state_class']
+        else:
+            self._state_class = None
         self.uom = sensor['uom']
         return
         
@@ -140,12 +146,13 @@ class SunsynkSensor(SunsynkSensorText):
         
         
     @property
-    def extra_state_attributes(self):    
-        attrs = {   
-            'last_reset' : datetime(1970,1,1,0,0,0,0),
-            "state_class": "measurement"
-        }
-        return attrs
+    def extra_state_attributes(self): 
+        if self._state_class:
+            return  {
+                'state_class': self._state_class
+            }   
+        else:
+            return None
 
     @property
     def unit_of_measurement(self):
