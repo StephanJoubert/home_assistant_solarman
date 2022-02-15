@@ -63,6 +63,7 @@ sensor:
     inverter_port: 8899
     inverter_serial: 1720747149 
     scan_interval: 30
+    lookup_file: sofar_lsw2.yaml
 ~~~
 
 ## Parameters 
@@ -74,6 +75,9 @@ sensor:
 | inverter_port | Always 8899 |
 | inverter_serial| The serial number of the data collector |
 | scan_interval | Time in seconds between refresh intervals |
+| lookup_file | ** The yaml file to use for parameter-definition |
+
+** This parameter is optional, and if not specified will revert to parameters.yaml. If you customize the parameters, create a lookup file "customize.yaml" and refer to it so that it will not be overwritten during updates. 
 
 ## Entities
 Once the component is running, it will add the following entities to Home Assistant

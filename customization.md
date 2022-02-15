@@ -2,6 +2,20 @@
 
 The hart of this component is the parameter-definition file *parameters.yaml*. By changing the file, the behaviour is totally changed.
 
+NOTE:
+In order to leave your customized file intact during upgrades, copy the most relevan yaml file to a file called "custom_parameters.yaml, and set the "lookup_file" option in configuration.yaml to point to it.
+
+~~~ YAML
+sensor:
+  - platform: ...
+    name: ...
+    inverter_host: ...
+    inverter_port: ...
+    inverter_serial: ... 
+    scan_interval: ...
+    lookup_file: custom_parameters.yaml
+~~~
+
 It has two sections:
 
 ## 1. Requests
@@ -31,6 +45,7 @@ parameters:
    items: 
     - name: "PV1 Power"
       class: "power"
+      state_class: "measurement"
       uom: "W"
       scale: 1
       rule: 1
@@ -48,18 +63,21 @@ The group just groups parameters that belong together. The induvidual parameter-
 |:----------:|----------|
 |name|The *name* field of the home-assistant entity #|
 |class|The *class* field of the home-assistant entity #|
+|state_class|The *state_class* field of the home assistant entity ##|
 |uom|The *unit_of_measurement* field of the home-assistant entity #|
 |icon|The *icon* field of the home-assistant entity #|
 || **The fields below define how the value from the logger is parsed** |
 |scale|Scaling factor for the value read from the logger|
-|rule|Method to interpret the data from the logger ##|
+|rule|Method to interpret the data from the logger ###|
 |registers|Array of register fields that comprises the value. If the value is placed in a number of registers, this  array will contain more than one item.|
 |lookup|Defines a key-value pair for values where an integer maps to a string field|
 
 
 \# (see) https://developers.home-assistant.io/docs/core/entity/
 
-\## The rule field specifies how to interpret the binary data. 
+\## see https://developers.home-assistant.io/docs/core/entity/sensor/#entities-representing-a-total-amount
+
+\### The rule field specifies how to interpret the binary data. 
 
 1. unsigned 16-bit value
 2. signed 16 bit value
