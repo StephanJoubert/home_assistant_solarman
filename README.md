@@ -63,7 +63,7 @@ sensor:
     inverter_port: 8899
     inverter_serial: 1720747149 
     scan_interval: 30
-    lookup_file: sofar_lsw2.yaml
+    lookup_file: sofar_lsw3.yaml
 ~~~
 
 ## Parameters 
