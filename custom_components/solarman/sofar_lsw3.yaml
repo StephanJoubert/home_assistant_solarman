@@ -10,6 +10,7 @@ parameters:
    items: 
     - name: "PV1 Power"
       class: "power"
+      state_class: "measurement"      
       uom: "W"
       scale: 10
       rule: 1
@@ -18,6 +19,7 @@ parameters:
 
     - name: "PV2 Power"
       class: "power"
+      state_class: "measurement"      
       uom: "W"
       scale: 10
       rule: 1
@@ -26,6 +28,7 @@ parameters:
 
     - name: "PV1 Voltage"
       class: "voltage"
+      state_class: "measurement"      
       uom: "V"
       scale: 0.1
       rule: 1 
@@ -34,6 +37,7 @@ parameters:
 
     - name: "PV2 Voltage"
       class: "voltage"    
+      state_class: "measurement"      
       uom: "V"
       scale: 0.1
       rule: 1
@@ -42,6 +46,7 @@ parameters:
 
     - name: "PV1 Current"
       class: "current"
+      state_class: "measurement"      
       uom: "A"
       scale: 0.01
       rule: 1
@@ -50,6 +55,7 @@ parameters:
 
     - name: "PV2 Current"
       class: "current"
+      state_class: "measurement"      
       uom: "A"
       scale: 0.01
       rule: 1
@@ -58,6 +64,7 @@ parameters:
 
     - name: "Daily Production"
       class: "energy"
+      state_class: "total"      
       uom: "kWh"
       scale: 0.01
       rule: 1
@@ -66,6 +73,7 @@ parameters:
 
     - name: "Total Production"
       class: "energy"
+      state_class: "total_increasing"      
       uom: "kWh"
       scale: 1
       rule: 3
@@ -74,6 +82,7 @@ parameters:
 
     - name: "Total generation time"
       class: ""
+      state_class: "measurement"      
       uom: "h"
       scale: 1
       rule: 3
@@ -82,6 +91,7 @@ parameters:
 
     - name: "Today generation time"
       class: ""
+      state_class: "measurement"      
       uom: "min"
       scale: 1
       rule: 1
@@ -92,6 +102,7 @@ parameters:
    items: 
     - name: "Output active power"
       class: "power"
+      state_class: "measurement"      
       uom: "W"
       scale: 10
       rule: 1
@@ -100,6 +111,7 @@ parameters:
 
     - name: "Output reactive power"
       class: ""
+      state_class: "measurement"      
       uom: "kVar"
       scale: 0.01
       rule: 1
@@ -108,6 +120,7 @@ parameters:
 
     - name: "Grid frequency"
       class: "frequency"
+      state_class: "measurement"      
       uom: "Hz"
       scale: 0.01
       rule: 1
@@ -116,6 +129,7 @@ parameters:
 
     - name: "L1 Voltage"
       class: "voltage"
+      state_class: "measurement"      
       uom: "V"
       scale: 0.1
       rule: 1
@@ -124,6 +138,7 @@ parameters:
 
     - name: "L1 Current"
       class: "current"
+      state_class: "measurement"      
       uom: "A"
       scale: 0.01
       rule: 1
@@ -132,6 +147,7 @@ parameters:
 
     - name: "L2 Voltage"
       class: "voltage"
+      state_class: "measurement"      
       uom: "V"
       scale: 0.1
       rule: 1
@@ -140,6 +156,7 @@ parameters:
 
     - name: "L2 Current"
       class: "current"
+      state_class: "measurement"      
       uom: "A"
       scale: 0.01
       rule: 1
@@ -148,6 +165,7 @@ parameters:
 
     - name: "L3 Voltage"
       class: "voltage"
+      state_class: "measurement"      
       uom: "V"
       scale: 0.1
       rule: 1
@@ -156,6 +174,7 @@ parameters:
 
     - name: "L3 Current"
       class: "current"
+      state_class: "measurement"      
       uom: "A"
       scale: 0.01
       rule: 1
@@ -166,6 +185,7 @@ parameters:
    items: 
     - name: "Inverter status"
       class: ""
+      state_class: "measurement"      
       uom: ""
       scale: 1
       rule: 1
@@ -193,6 +213,7 @@ parameters:
 
     - name: "Inverter inner temperature"
       class: "temperature"
+      state_class: "measurement"      
       uom: "°C"
       scale: 1
       rule: 1
@@ -201,6 +222,7 @@ parameters:
 
     - name: "Inverter bus voltage"
       class: "voltage"
+      state_class: "measurement"      
       uom: "V"
       scale: 0.1
       rule: 1
@@ -209,6 +231,7 @@ parameters:
 
     - name: "PV1 voltage sample by slave CPU"
       class: "voltage"
+      state_class: "measurement"      
       uom: "V"
       scale: 0.1
       rule: 1
@@ -217,6 +240,7 @@ parameters:
 
     - name: "PV1 current sample by slave CPU"
       class: "current"
+      state_class: "measurement"      
       uom: "A"
       scale: 0.1
       rule: 1
@@ -225,6 +249,7 @@ parameters:
 
     - name: "Countdown time"
       class: ""
+      state_class: "measurement"      
       uom: "s"
       scale: 1
       rule: 1
@@ -233,6 +258,7 @@ parameters:
 
     - name: "Inverter alert message"
       class: ""
+      state_class: ""      
       uom: ""
       scale: 1
       rule: 1
@@ -241,6 +267,7 @@ parameters:
 
     - name: "Input mode"
       class: ""
+      state_class: ""      
       uom: ""
       scale: 1
       rule: 1
@@ -249,6 +276,7 @@ parameters:
 
     - name: "Communication Board inner message"
       class: ""
+      state_class: ""      
       uom: ""
       scale: 1
       rule: 1
@@ -257,6 +285,7 @@ parameters:
 
     - name: "Insulation of PV1+ to ground"
       class: ""
+      state_class: "measurement"      
       uom: ""
       scale: 1
       rule: 1
@@ -265,6 +294,7 @@ parameters:
 
     - name: "Insulation of PV2+ to ground"
       class: ""
+      state_class: "measurement"      
       uom: ""
       scale: 1
       rule: 1
@@ -273,6 +303,7 @@ parameters:
 
     - name: "Insulation of PV- to ground"
       class: ""
+      state_class: "measurement"      
       uom: ""
       scale: 1
       rule: 1
@@ -281,6 +312,7 @@ parameters:
 
     - name: "Country"
       class: ""
+      state_class: ""      
       uom: ""
       scale: 1
       rule: 1
@@ -352,6 +384,7 @@ parameters:
    items: 
     - name: "Fault 1"
       class: ""
+      state_class: ""      
       uom: ""
       scale: 1
       rule: 1
@@ -395,6 +428,7 @@ parameters:
 
     - name: "Fault 2"
       class: ""
+      state_class: ""      
       uom: ""
       scale: 1
       rule: 1
@@ -438,6 +472,7 @@ parameters:
 
     - name: "Fault 3"
       class: ""
+      state_class: ""      
       uom: ""
       scale: 1
       rule: 1
@@ -481,6 +516,7 @@ parameters:
 
     - name: "Fault 4"
       class: ""
+      state_class: ""      
       uom: ""
       scale: 1
       rule: 1
@@ -524,6 +560,7 @@ parameters:
 
     - name: "Fault 5"
       class: ""
+      state_class: ""      
       uom: ""
       scale: 1
       rule: 1
