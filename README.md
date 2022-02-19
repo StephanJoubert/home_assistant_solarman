@@ -79,6 +79,15 @@ sensor:
 
 ** This parameter is optional, and if not specified will revert to parameters.yaml. If you customize the parameters, create a lookup file "customize.yaml" and refer to it so that it will not be overwritten during updates. 
 
+## Lookup Files
+
+| Lookup File | Inverters supported | Notes |
+| --- | --- | --- |
+| parameters.yaml | DEYE/Sunsynk/SolArk Hybrid inverters | used when no lookup specified 
+| deye_string.yaml | DEYE/Sunsynk/SolArk String inverters | eg. SUN-4/5/6/7/8/10/12K-G03 Plus
+| sofar_lsw3.yaml | SOFAR Inverters
+
+
 ## Entities
 Once the component is running, it will add the following entities to Home Assistant
 ![Entities](./entities.png)
