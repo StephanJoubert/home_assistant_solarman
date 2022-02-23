@@ -59,14 +59,6 @@ parameters:
       registers: [0x003F,0x0040]
       icon: 'mdi:solar-power'
 
-    - name: "Solar DC Power"
-      class: "power"
-      state_class: "measurement"
-      uom: "W"
-      scale: 0.1
-      rule: 1
-      registers: [0x0052]
-      icon: 'mdi:solar-power'
 
 
  - group: Grid
@@ -160,7 +152,7 @@ parameters:
       state_class: "measurement"      
       uom: "W"
       scale: 0.1
-      rule: 1
+      rule: 3
       registers: [0x0050,0x0051]
       icon: 'mdi:home-lightning-bolt'
 
@@ -169,29 +161,33 @@ parameters:
       state_class: "measurement"
       uom: "W"
       scale: 0.1
+      rule: 3
       registers: [0x0052, 0x0053]
       icon: 'mdi:home-lightning-bolt'
 
     - name: "Output Apparent Power"
-      class: "power"
+      class: "apparent_power"
       state_class: "measurement"
       uom: "VA"
       scale: 0.1
+      rule: 3
       registers: [0x0054, 0x0055]
       icon: 'mdi:home-lightning-bolt'
 
     - name: "Output Active Power"
-      class: "power"
+      class: "energy"
       state_class: "measurement"
       uom: "kWh"
       scale: 0.1
+      rule: 3
       registers: [0x0056, 0x0057]
       icon: 'mdi:home-lightning-bolt'
 
     - name: "Output Reactive Power"
-      class: "power"
+      class: "reactive_power"
       state_class: "measurement"
       uom: "VAR"
+      rule: 3
       scale: 0.1
       registers: [0x0058, 0x0059]
       icon: 'mdi:home-lightning-bolt'
