@@ -12,6 +12,8 @@ Click on "Configuration" and select "Energy".
 | Consumption| * XYZ Total Energy Bought |
 | Return to Grid| * XYZ Total Energy Sold |
 | Solar Production | * XYZ Total Production |
+| Battery Systems (energy going in to the battery ) | * XYZ Total Battery Charge|
+| Battery Systems (energy coming out of the the battery ) | * XYZ Total Battery Discharge|
 
 * Replace XYZ with the name you specified in the configuration.yaml file.
 

@@ -1,11 +1,7 @@
 requests:
   - start: 0x0003
-    end:  0x000E
-  - start: 0x003B
     end: 0x0070
-  - start: 0x0096
-    end: 0x00C3
-  - start: 0x00f4
+  - start: 0x0096  
     end: 0x00f8
 
 parameters:
@@ -93,6 +89,24 @@ parameters:
 
  - group: Battery
    items: 
+    - name: "Total Battery Charge"
+      class: "energy"
+      state_class: "total_increasing"      
+      uom: "kWh"
+      scale: 0.1
+      rule: 3
+      registers: [0x0048,0x0049]
+      icon: 'mdi:battery-plus'
+
+    - name: "Total Battery Discharge"
+      class: "energy"
+      state_class: "total_increasing"
+      uom: "kWh"
+      scale: 0.1
+      rule: 3
+      registers: [0x004A,0x004B]
+      icon: 'mdi:battery-minus'
+
     - name: "Battery Status"
       class: ""
       state_class: "measurement"
@@ -158,23 +172,6 @@ parameters:
 
  - group: Grid
    items: 
-    - name: "Grid Status"
-      class: ""
-      state_class: ""
-      uom: ""
-      scale: 1
-      rule: 1
-      registers: [0x00A9]
-      isstr: true
-      lookup: 
-      -  key: 0
-         value: "SELL"
-      -  key: 1
-         value: "BUY"
-      -  key: 2
-         value: "Stand-by"
-      icon: 'mdi:transmission-tower'
-
     - name: "Total Grid Power"
       class: "power"
       state_class: "measurement"
