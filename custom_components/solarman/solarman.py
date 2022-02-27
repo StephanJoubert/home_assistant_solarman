@@ -75,8 +75,23 @@ class Inverter:
         del packet_data      
         del buisiness_field
         return packet
+    
+    def validate_checksum(self, packet):
+        checksum = 0
+        length = len(packet)
+        # Don't include the checksum and END OF MESSAGE (-2)
+        for i in range(1,length-2,1):
+            checksum += packet[i]
+        checksum &= 0xFF
+        if checksum == packet[length-2]:
+            return 1
+        else:
+            return 0
+        
+    
  
     def send_request (self, params, start, end):
+        result = 0
         length = end - start + 1
         request = self.generate_request(start, length)
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -85,18 +100,16 @@ class Inverter:
             sock.connect((self._host, self._port))
             sock.sendall(request) # Request param 0x3B up to 0x71
             raw_msg = sock.recv(1024)
-            self.status_lastUpdate = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-            self.status_connection = "Connected"
-            params.parse(raw_msg, start, length) 
+            if self.validate_checksum(raw_msg) == 1:
+                result = 1
+                params.parse(raw_msg, start, length) 
             del raw_msg
         except:
-            print ('Could not connect to the inverter on %s:%s', self._host, self._port)
-            self.status_connection = "Disconnected"
+            result = 0
         finally:
-            sock.close()
-            
+            sock.close()   
             del request
-        return
+        return result
 
     @Throttle (MIN_TIME_BETWEEN_UPDATES)
     def update (self):
@@ -105,13 +118,23 @@ class Inverter:
 
 
     def get_statistics(self):
+        result = 1
         params = ParameterParser(self.parameter_definition)
         for request in self.parameter_definition['requests']:
             start = request['start']
             end= request['end']
-            self.send_request(params, start, end)
-        
-        self._current_val = params.get_result()
+            if 0 == self.send_request(params, start, end):
+                # retry once
+                if 0 == self.send_request(params, start, end):
+                    result = 0
+                    
+        if result == 1: 
+            self.status_lastUpdate = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+            self.status_connection = "Connected"                               
+            self._current_val = params.get_result()
+        else:
+            self.status_connection = "Disconnected"
+            
 
     def get_current_val(self):
         return self._current_val
