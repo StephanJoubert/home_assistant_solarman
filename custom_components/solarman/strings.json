@@ -1,0 +1,23 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "[%key:common::config_flow::abort::already_configured_device%]"
+    },
+    "error": {
+      "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
+      "invalid_auth": "[%key:common::config_flow::error::invalid_host%]",
+      "unknown": "[%key:common::config_flow::error::unknown%]"
+    },
+    "step": {
+      "user": {
+        "data": {
+          "name": "[%key:common::config_flow::step::user::data::name%]",
+          "inverter_host": "[%key:common::config_flow::step::user::data::inverter_host%]",
+          "inverter_port": "[%key:common::config_flow::step::user::data::inverter_port%]",
+          "inverter_serial": "[%key:common::config_flow::step::user::data::inverter_serial%]",
+          "lookup_file": "[%key:common::config_flow::step::user::data::lookup_file%]"
+        }
+      }
+    }
+  }
+}

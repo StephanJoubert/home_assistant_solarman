@@ -1,7 +1,11 @@
 from datetime import timedelta
 
+DOMAIN = 'solarman'
 
 DEFAULT_PORT_INVERTER = 8899
+DEFAULT_LOOKUP_FILE = 'parameters.yaml'
+LOOKUP_FILES = ['parameters.yaml', 'sofar_lsw3.yaml', 'deye_string.yaml']
+
 MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=30)
 
 CONF_INVERTER_HOST = 'inverter_host'
