@@ -3,6 +3,7 @@
   "name": "Solarman",
   "documentation": "https://github.com/StephanJoubert/home_assistant_solarman/blob/main/README.md",
   "version": "1.0.0",
+  "config_flow": true,
   "dependencies": [],
   "codeowners": ["@StephanJoubert"],
   "issue_tracker": "https://github.com/StephanJoubert/home_assistant_solarman/issues",
