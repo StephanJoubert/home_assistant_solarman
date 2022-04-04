@@ -48,8 +48,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         else:
             hass_sensors.append(SunsynkSensor(inverter_name, inverter, sensor, inverter_sn))
 
-    hass_sensors.append(SynsynkStatus(inverter_name, inverter, "status_lastUpdate", inverter_sn))
-    hass_sensors.append(SynsynkStatus(inverter_name, inverter, "status_connection", inverter_sn))
+    hass_sensors.append(SolarmanStatus(inverter_name, inverter, "status_lastUpdate", inverter_sn))
+    hass_sensors.append(SolarmanStatus(inverter_name, inverter, "status_connection", inverter_sn))
 
     _LOGGER.debug(f'sensor.py:async_setup_entry: async_add_entities')
     _LOGGER.debug(hass_sensors)
@@ -61,7 +61,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
 #  It derives from the Entity class in HA and is suited for status values.
 #############################################################################################################
 
-class SynsynkStatus(Entity):
+class SolarmanStatus(Entity):
     def __init__(self, inverter_name, inverter, field_name, sn):
         self._inverter_name = inverter_name
         self.inverter = inverter
@@ -99,9 +99,9 @@ class SynsynkStatus(Entity):
 #   Overrides the Status entity, supply the configured icon, and updates the inverter parameters
 #############################################################################################################
 
-class SunsynkSensorText(SynsynkStatus):
+class SunsynkSensorText(SolarmanStatus):
     def __init__(self, inverter_name, inverter, sensor, sn):
-        SynsynkStatus.__init__(self,inverter_name, inverter, sensor['name'], sn)
+        SolarmanStatus.__init__(self,inverter_name, inverter, sensor['name'], sn)
         if 'icon' in sensor:
             self.p_icon = sensor['icon']
         else:
