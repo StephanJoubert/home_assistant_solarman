@@ -25,16 +25,20 @@ This section defines the requests that should be issued to the logger each time 
 requests:
   - start: 0x0003
     end:  0x000E
+    mb_functioncode: 0x03
   - start: 0x003B
     end: 0x0070
+    mb_functioncode: 0x03
   - start: 0x0096
     end: 0x00C3
+    mb_functioncode: 0x03
   - start: 0x00f4
     end: 0x00f8
+    mb_functioncode: 0x03
 
 ~~~
 
-This block specifies that the component should issue three requests to the logger, the first one requesting parameters 0x0003 up to 0x000E, then a second request for parmeters 0x003B up to 0x0070, and the last for parameters 0x000f4 up to 0x00f8.
+This block specifies that the component should issue three requests to the logger, the first one requesting parameters 0x0003 up to 0x000E, then a second request for parmeters 0x003B up to 0x0070, and the last for parameters 0x000f4 up to 0x00f8. All of the requests will be sent using Modbus Function Code 0x03.
 
 ## 2. Parameters
 This section defines the induvidual parameter definitions. For example:
