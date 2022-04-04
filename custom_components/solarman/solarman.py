@@ -1,9 +1,12 @@
 import socket
 import yaml
+import logging
 from homeassistant.util import Throttle
 from datetime import datetime
 from .parser import ParameterParser
 from .const import *
+
+log = logging.getLogger(__name__)
 
 START_OF_MESSAGE = 0xA5
 END_OF_MESSAGE = 0x15
@@ -99,8 +102,10 @@ class Inverter:
         sock.settimeout(10)
         try:
             sock.connect((self._host, self._port))
+            log.debug(request.hex())
             sock.sendall(request) # Request param 0x3B up to 0x71
             raw_msg = sock.recv(1024)
+            log.debug(raw_msg.hex())
             if self.validate_checksum(raw_msg) == 1:
                 result = 1
                 params.parse(raw_msg, start, length) 
