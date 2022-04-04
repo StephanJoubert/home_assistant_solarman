@@ -12,11 +12,12 @@ SERIAL_NO = [0x00, 0x00]
 SEND_DATA_FIELD = [0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
 
 class Inverter:
-    def __init__(self, path, serial, host, port, lookup_file):
+    def __init__(self, path, serial, host, port, mb_slaveid, lookup_file):
         self._serial = serial
         self.path = path
         self._host = host
         self._port = port
+        self._mb_slaveid = mb_slaveid
         self._current_val = None
         self.status_connection = "Disconnected"
         self.status_lastUpdate = "N/A"
@@ -44,20 +45,20 @@ class Inverter:
         serial_bytes.reverse()
         return serial_bytes
     
-    def get_read_business_field(self, start, length):
-        request_data = bytearray([0x01, 0x03]) # Function Code
+    def get_read_business_field(self, start, length, mb_fc):
+        request_data = bytearray([self._mb_slaveid, mb_fc]) # Function Code
         request_data.extend(start.to_bytes(2, 'big'))
         request_data.extend(length.to_bytes(2, 'big'))
         crc = self.modbus(request_data)
         request_data.extend(crc.to_bytes(2, 'little'))  
         return request_data
         
-    def generate_request(self, start, length):    
+    def generate_request(self, start, length, mb_fc):
         packet = bytearray([START_OF_MESSAGE])
 
         packet_data = []
         packet_data.extend (SEND_DATA_FIELD)
-        buisiness_field = self.get_read_business_field(start, length)
+        buisiness_field = self.get_read_business_field(start, length, mb_fc)
         packet_data.extend(buisiness_field)
         length = packet_data.__len__()
         packet.extend(length.to_bytes(2, "little")) 
@@ -90,10 +91,10 @@ class Inverter:
         
     
  
-    def send_request (self, params, start, end):
+    def send_request (self, params, start, end, mb_fc):
         result = 0
         length = end - start + 1
-        request = self.generate_request(start, length)
+        request = self.generate_request(start, length, mb_fc)
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.settimeout(10)
         try:
@@ -123,9 +124,10 @@ class Inverter:
         for request in self.parameter_definition['requests']:
             start = request['start']
             end= request['end']
-            if 0 == self.send_request(params, start, end):
+            mb_fc = request['mb_functioncode']
+            if 0 == self.send_request(params, start, end, mb_fc):
                 # retry once
-                if 0 == self.send_request(params, start, end):
+                if 0 == self.send_request(params, start, end, mb_fc):
                     result = 0
                     
         if result == 1: 
