@@ -1,8 +1,10 @@
 requests:
   - start: 0x0000
     end:  0x0027
+    mb_functioncode: 0x03
   - start: 0x0105
     end: 0x0114
+    mb_functioncode: 0x03
 
 
 parameters:

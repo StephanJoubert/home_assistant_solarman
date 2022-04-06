@@ -62,6 +62,7 @@ sensor:
     inverter_host: 192.168.0.100
     inverter_port: 8899
     inverter_serial: 1720747149 
+    inverter_mb_slaveid: 1
     scan_interval: 30
     lookup_file: sofar_lsw3.yaml
 ~~~
@@ -74,6 +75,7 @@ sensor:
 | inverter_host| The IP address of the data logger |
 | inverter_port | Always 8899 |
 | inverter_serial| The serial number of the data collector |
+| inverter_mb_slaveid| The Modbus Slave ID of the inverter. Defaults to 1 |
 | scan_interval | Time in seconds between refresh intervals |
 | lookup_file | ** The yaml file to use for parameter-definition |
 
