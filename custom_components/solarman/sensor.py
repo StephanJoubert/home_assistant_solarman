@@ -31,7 +31,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     inverter_sn = entry.options.get(CONF_INVERTER_SERIAL)
     inverter_mb_slaveid = entry.options.get(CONF_INVERTER_MB_SLAVEID)
     lookup_file = entry.options.get(CONF_LOOKUP_FILE)
-    path = hass.config.path('custom_components/solarman/')
+    path = hass.config.path('custom_components/solarman/inverter_definitions/')
 
     # Check input configuration.
     if inverter_host is None:
