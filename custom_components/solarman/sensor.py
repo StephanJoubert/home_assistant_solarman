@@ -31,7 +31,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     inverter_sn = entry.options.get(CONF_INVERTER_SERIAL)
     inverter_mb_slaveid = entry.options.get(CONF_INVERTER_MB_SLAVEID)
     lookup_file = entry.options.get(CONF_LOOKUP_FILE)
-    path = hass.config.path('custom_components/solarman/')
+    path = hass.config.path('custom_components/solarman/inverter_definitions/')
 
     # Check input configuration.
     if inverter_host is None:
@@ -44,9 +44,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     hass_sensors = []
     for sensor in inverter.get_sensors():
         if "isstr" in sensor:
-            hass_sensors.append(SunsynkSensorText(inverter_name, inverter, sensor, inverter_sn))
+            hass_sensors.append(SolarmanSensorText(inverter_name, inverter, sensor, inverter_sn))
         else:
-            hass_sensors.append(SunsynkSensor(inverter_name, inverter, sensor, inverter_sn))
+            hass_sensors.append(SolarmanSensor(inverter_name, inverter, sensor, inverter_sn))
 
     hass_sensors.append(SolarmanStatus(inverter_name, inverter, "status_lastUpdate", inverter_sn))
     hass_sensors.append(SolarmanStatus(inverter_name, inverter, "status_connection", inverter_sn))
@@ -99,7 +99,7 @@ class SolarmanStatus(Entity):
 #   Overrides the Status entity, supply the configured icon, and updates the inverter parameters
 #############################################################################################################
 
-class SunsynkSensorText(SolarmanStatus):
+class SolarmanSensorText(SolarmanStatus):
     def __init__(self, inverter_name, inverter, sensor, sn):
         SolarmanStatus.__init__(self,inverter_name, inverter, sensor['name'], sn)
         if 'icon' in sensor:
@@ -127,9 +127,9 @@ class SunsynkSensorText(SolarmanStatus):
 #############################################################################################################
 
 
-class SunsynkSensor(SunsynkSensorText):
+class SolarmanSensor(SolarmanSensorText):
     def __init__(self, inverter_name, inverter, sensor, sn):
-        SunsynkSensorText.__init__(self, inverter_name, inverter, sensor, sn)
+        SolarmanSensorText.__init__(self, inverter_name, inverter, sensor, sn)
         self._device_class = sensor['class']
         if 'state_class' in sensor:
             self._state_class = sensor['state_class']

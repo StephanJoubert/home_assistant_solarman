@@ -26,10 +26,12 @@ custom_components
 │   ├── __init__.py
 │   ├── const.py
 │   ├── manifest.json
-│   ├── parameters.yaml
 │   ├── parser.py
 │   ├── solarman.py
-│   └── sensor.py
+│   ├── sensor.py
+│   └── inverter_definitions
+│       ├── parameters.yaml
+│       └── custom_parameters.yaml
 ├── {other components}
 ```
 
