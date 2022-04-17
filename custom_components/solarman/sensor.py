@@ -7,8 +7,6 @@
 #
 ###############################################################################
 
-from datetime import datetime
-
 import logging
 import voluptuous as vol
 from homeassistant.core import HomeAssistant
@@ -19,15 +17,25 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import *
 from .solarman import Inverter
+from .scanner import InverterScanner
 
 _LOGGER = logging.getLogger(__name__)
+_inverter_scanner = InverterScanner()
 
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
     _LOGGER.debug(f'sensor.py:async_setup_platform: {config}') 
+   
     inverter_name = config.get(CONF_NAME)
     inverter_host = config.get(CONF_INVERTER_HOST)
+    if inverter_host == "0.0.0.0":
+        inverter_host = _inverter_scanner.get_ipaddress()
+        
+   
     inverter_port = config.get(CONF_INVERTER_PORT)
     inverter_sn = config.get(CONF_INVERTER_SERIAL)
+    if inverter_sn == 0:
+        inverter_sn = _inverter_scanner.get_serialno()
+    
     inverter_mb_slaveid = config.get(CONF_INVERTER_MB_SLAVEID)
     if not inverter_mb_slaveid:
         inverter_mb_slaveid = DEFAULT_INVERTER_MB_SLAVEID
