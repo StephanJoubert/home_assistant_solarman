@@ -1,9 +1,9 @@
 # Customizing 
 
-The hart of this component is the parameter-definition file *parameters.yaml*. By changing the file, the behaviour is totally changed.
+The hart of this component is the parameter-definition file ex *deye_hybrid.yaml*. By changing the file, the behaviour is totally changed.
 
 NOTE:
-In order to leave your customized file intact during upgrades, copy the most relevan yaml file to a file called "custom_parameters.yaml, and set the "lookup_file" option in configuration.yaml to point to it.
+In order to leave your customized file intact during upgrades, copy the most relevant yaml file to a file called "custom_parameters.yaml, and set the "lookup_file" option in configuration.yaml to point to it.
 
 ~~~ YAML
 sensor:
