@@ -22,15 +22,16 @@ from .solarman import Inverter
 
 _LOGGER = logging.getLogger(__name__)
 
-async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback):
-    _LOGGER.debug(f'sensor.py:async_setup_entry: {entry.options}')
-
-    inverter_name = entry.options.get(CONF_NAME)
-    inverter_host = entry.options.get(CONF_INVERTER_HOST)
-    inverter_port = entry.options.get(CONF_INVERTER_PORT)
-    inverter_sn = entry.options.get(CONF_INVERTER_SERIAL)
-    inverter_mb_slaveid = entry.options.get(CONF_INVERTER_MB_SLAVEID)
-    lookup_file = entry.options.get(CONF_LOOKUP_FILE)
+async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
+    _LOGGER.debug(f'sensor.py:async_setup_platform: {config}') 
+    inverter_name = config.get(CONF_NAME)
+    inverter_host = config.get(CONF_INVERTER_HOST)
+    inverter_port = config.get(CONF_INVERTER_PORT)
+    inverter_sn = config.get(CONF_INVERTER_SERIAL)
+    inverter_mb_slaveid = config.get(CONF_INVERTER_MB_SLAVEID)
+    if not inverter_mb_slaveid:
+        inverter_mb_slaveid = DEFAULT_INVERTER_MB_SLAVEID
+    lookup_file = config.get(CONF_LOOKUP_FILE)
     path = hass.config.path('custom_components/solarman/inverter_definitions/')
 
     # Check input configuration.
@@ -55,6 +56,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     _LOGGER.debug(hass_sensors)
 
     async_add_entities(hass_sensors)
+       
+# Set-up from the entries in config-flow
+async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback):
+    _LOGGER.debug(f'sensor.py:async_setup_entry: {entry.options}') 
+    async_setup_platform(hass, entry.options, async_add_entities)
+    
+   
 
 #############################################################################################################
 # This is the entity seen by Home Assistant.
