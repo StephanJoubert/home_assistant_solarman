@@ -101,7 +101,7 @@ sensor:
 
 | Lookup File | Inverters supported | Notes |
 | --- | --- | --- |
-| parameters.yaml | DEYE/Sunsynk/SolArk Hybrid inverters | used when no lookup specified 
+| deye_hybrid.yaml | DEYE/Sunsynk/SolArk Hybrid inverters | used when no lookup specified 
 | deye_string.yaml | DEYE/Sunsynk/SolArk String inverters | eg. SUN-4/5/6/7/8/10/12K-G03 Plus
 | sofar_lsw3.yaml | SOFAR Inverters
 | solis_hybrid.yaml | SOLIS Hybrid inverter
@@ -124,7 +124,7 @@ sensor:
     inverter_port: 8899
     inverter_serial: 0 
     inverter_mb_slaveid: 1
-    lookup_file: deye.yaml
+    lookup_file: deye_hybrid.yaml
 ~~~
 ## Config-flow
 ![Autodicover](./flow_init.png)
