@@ -80,7 +80,7 @@ sensor:
     inverter_port: 8899
     inverter_serial: 1720747149 
     inverter_mb_slaveid: 1
-    lookup_file: deye.yaml
+    lookup_file: deye_hybrid.yaml
 ~~~
 
 ## Parameters 
