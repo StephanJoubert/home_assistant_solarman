@@ -3,10 +3,11 @@ This is a Home Assistant component for interacting with Solarman data collectors
 
 It has been tested with a 5kW DEYE/SUNSYNK inverter. The collector is reported to be used in Omnik, Hosola, Goodwe, Solax, Ginlong, Samil, Sofar and Power-One Solar inverters, you may get success from any of these as well.
 
-This component uses version 5 of the communication protocol. If your collector is older and this component does not work, try the following integration which is similar, but uses version 4 of the protocol:
+This component uses version 5 of the communication protocol. If your collector is older and this component does not work, try one of the other integrations that uses version 4 of the protocol.
 
-https://github.com/heinoldenhuis/home_assistant_omnik_solar
 
+# Discord
+Feel free to discuss the integration by joining the [Discord server.](https://discord.gg/3HQJXR7qRd)
 
 # Installation
 
@@ -65,7 +66,7 @@ This integration can be configured using config-flow, or by manually configuring
 ![Solarman](./flow_init_manual.png)
 
 
-## Manual Configuration (configurtion.yaml)
+## Manual Configuration (configuration.yaml)
 In your configuration.yaml file, add the solarman platform under "sensor"
 
 ### Example:
@@ -103,6 +104,7 @@ sensor:
 | parameters.yaml | DEYE/Sunsynk/SolArk Hybrid inverters | used when no lookup specified 
 | deye_string.yaml | DEYE/Sunsynk/SolArk String inverters | eg. SUN-4/5/6/7/8/10/12K-G03 Plus
 | sofar_lsw3.yaml | SOFAR Inverters
+| solis_hybrid.yaml | SOLIS Hybrid inverter
 
 # Auto-discovery
 The component has the option to auto-discover the logger IP and serial number. 
