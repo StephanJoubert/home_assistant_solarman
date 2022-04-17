@@ -1,0 +1,25 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "Urządzenie jest już skonfigurowane"
+    },
+    "error": {
+      "cannot_connect": "Nie udało się połączyć",
+      "invalid_host": "Nieprawidłowa nazwa hosta lub adres IP",
+      "unknown": "Niespodziewany błąd"
+    },
+    "step": {
+      "user": {
+        "title": "Konfiguracja połączenia falownika",
+        "data": {
+          "name": "Ta nazwa będzie poprzedzać wszystkie wartości parametrów (zmień wedle uznania)",
+          "inverter_host": "Host (adres IP lub nazwa hosta)",
+          "inverter_serial": "Numer seryjny urządzenia (można go sprawdzić z interfejsu sieciowego)",
+          "inverter_port": "Port (zwykle 8899)",
+          "mb_slaveid": "Modbus Slave ID (zwykle 1)",
+          "lookup_file": "Plik yaml używany do definiowania parametrów"
+        }
+      }
+    }
+  }
+}
