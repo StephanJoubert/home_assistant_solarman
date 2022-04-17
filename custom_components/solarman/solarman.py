@@ -25,7 +25,10 @@ class Inverter:
         self.status_connection = "Disconnected"
         self.status_lastUpdate = "N/A"
         if not lookup_file:
-            lookup_file = 'parameters.yaml'
+            lookup_file = 'deye_hybrid.yaml'
+        elif lookup_file == 'parameters.yaml':
+            lookup_file = 'deye_hybrid.yaml'
+
             
         with open(self.path + lookup_file) as f:
             self.parameter_definition = yaml.full_load(f) 
