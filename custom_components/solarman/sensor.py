@@ -22,7 +22,7 @@ from .scanner import InverterScanner
 _LOGGER = logging.getLogger(__name__)
 _inverter_scanner = InverterScanner()
 
-async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
+def _do_setup_platform(hass: HomeAssistant, config, async_add_entities : AddEntitiesCallback):
     _LOGGER.debug(f'sensor.py:async_setup_platform: {config}') 
    
     inverter_name = config.get(CONF_NAME)
@@ -60,15 +60,20 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     hass_sensors.append(SolarmanStatus(inverter_name, inverter, "status_lastUpdate", inverter_sn))
     hass_sensors.append(SolarmanStatus(inverter_name, inverter, "status_connection", inverter_sn))
 
-    _LOGGER.debug(f'sensor.py:async_setup_entry: async_add_entities')
+    _LOGGER.debug(f'sensor.py:_do_setup_platform: async_add_entities')
     _LOGGER.debug(hass_sensors)
 
     async_add_entities(hass_sensors)
+
+# Set-up from configuration.yaml
+async def async_setup_platform(hass: HomeAssistant, config, async_add_entities : AddEntitiesCallback, discovery_info=None):
+    _LOGGER.debug(f'sensor.py:async_setup_platform: {config}') 
+    _do_setup_platform(hass, config, async_add_entities)
        
 # Set-up from the entries in config-flow
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback):
     _LOGGER.debug(f'sensor.py:async_setup_entry: {entry.options}') 
-    async_setup_platform(hass, entry.options, async_add_entities)
+    _do_setup_platform(hass, entry.options, async_add_entities)
     
    
 
