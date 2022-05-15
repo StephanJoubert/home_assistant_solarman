@@ -46,7 +46,7 @@ Once logged in, expand the "Device information" and note the Device serial numbe
 
 ![WebPortal](./web_portal.png)
 
-2. Check the version of the solarman logger. If the serial number starts with 17xxxxxxx or 21xxxxxxx (protocol V5), the component should work. If not, you may need to try the component for V4 of the protocol mentioned above.
+2. Check the version of the solarman logger. If the serial number starts with 17xxxxxxx, 21xxxxxxx or 40xxxxxxxx (protocol V5), the component should work. If not, you may need to try the component for V4 of the protocol mentioned above.
 
 3. On your DHCP server, reserve the IP for the WiFi data logger so that it will not change. 
 
