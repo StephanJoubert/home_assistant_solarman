@@ -4,14 +4,14 @@
 # https://www.scss.tcd.ie/coghlan/Elios4you/RS485_MODBUS-Hybrid-BACoghlan-201811228-1854.pdf
 
 requests:
-  - start: 33000
-    end:  33099
+  - start: 33029
+    end:  33095
     mb_functioncode: 0x04
-  - start: 33100
-    end:  33199
+  - start: 33116
+    end:  33179
     mb_functioncode: 0x04
-  - start: 33200
-    end:  33299
+  - start: 33206
+    end:  33282
     mb_functioncode: 0x04
 
 parameters:
@@ -89,6 +89,9 @@ parameters:
       registers: [33093]
       icon: 'mdi:thermometer'
 
+# Sensors below are outside of modbus request ranges.
+# If enabling, ensure to amend the request start register.
+# 
 #    - name: "Inverter ID"
 #      class: ""
 #      state_class: ""      
@@ -262,7 +265,7 @@ parameters:
    items: 
     - name: "Daily Generation"
       class: "energy"
-      state_class: "measurement"
+      state_class: "total_increasing"
       uom: "kWh"
       scale: 0.1
       rule: 1
@@ -275,7 +278,7 @@ parameters:
       uom: "kWh"
       scale: 1
       rule: 3
-      registers: [33033,33031]
+      registers: [33032,33031]
       icon: 'mdi:solar-power'
 
     - name: "Yearly Generation"
