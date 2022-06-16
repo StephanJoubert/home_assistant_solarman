@@ -1,0 +1,25 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "O dispositivo já está configurado"
+    },
+    "error": {
+      "cannot_connect": "Falhou ao conectar",
+      "invalid_host": "Nome de host ou endereço IP inválido",
+      "unknown": "Erro inesperado"
+    },
+    "step": {
+      "user": {
+        "title": "Configuração de conexão do inversor",
+        "data": {
+          "name": "Este nome será prefixado para todos os valores de parâmetro (altere como quiser)",
+          "inverter_host": "Host (ip ou nome do host)",
+          "inverter_serial": "Número de série do dispositivo (recuperar da interface da web)",
+          "inverter_port": "Porta (geralmente 8899)",
+          "mb_slaveid": "Modbus Slave ID (geralmente 1)",
+          "lookup_file": "O arquivo yaml a ser usado para definição de parâmetro"
+        }
+      }
+    }
+  }
+}
