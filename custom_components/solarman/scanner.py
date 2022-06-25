@@ -27,7 +27,7 @@ class InverterScanner:
                             self._ipaddress = a[0]
                             self._mac = a[1]
                             self._serial = int(a[2])
-                    except socket.timout:
+                    except TimeoutError:
                         break
         except:                        
             return None    
