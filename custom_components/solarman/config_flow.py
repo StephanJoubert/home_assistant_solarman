@@ -38,38 +38,26 @@ def step_user_data_schema(data: dict[str, Any] = {CONF_NAME: SENSOR_PREFIX, CONF
     return STEP_USER_DATA_SCHEMA
 
 
-async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str, Any]:
-    """
-    Validate the user input allows us to connect.
-
-    Data has the keys from STEP_USER_DATA_SCHEMA with values provided by the user.
-    """
-
-    _LOGGER.debug(f'config_flow.py:validate_input: {data}')
-
+async def validate_input(host, port):
+    """Validate the host and port allows us to connect."""
     try:
         getaddrinfo(
-            data[CONF_INVERTER_HOST], data[CONF_INVERTER_PORT], family=0, type=0, proto=0, flags=0
+            host, port, family=0, type=0, proto=0, flags=0
         )
     except herror:
         raise InvalidHost
-    except gaierror:
+    except gaierror or TimeoutError:
         raise CannotConnect
-    except TimeoutError:
-        raise CannotConnect
-
-    return {"title": data[CONF_INVERTER_HOST]}
 
 
 class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
-    """Handle a config flow for SolarMAN logger."""
+    """Config flow for SolarMAN logger."""
 
     VERSION = 1
 
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
     ) -> FlowResult:
-        _LOGGER.debug(f'config_flow.py:ConfigFlow.async_step_user: {user_input}')
         """Handle the initial step."""
         if user_input is None:
             return self.async_show_form(
@@ -79,7 +67,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         errors = {}
 
         try:
-            info = await validate_input(self.hass, user_input)
+            await validate_input(user_input[CONF_INVERTER_HOST], user_input[CONF_INVERTER_PORT])
         except InvalidHost:
             errors["base"] = "invalid_host"
         except CannotConnect:
@@ -88,12 +76,9 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             _LOGGER.exception("Unexpected exception")
             errors["base"] = "unknown"
         else:
-            _LOGGER.debug(f'config_flow.py:ConfigFlow.async_step_user: validation passed: {user_input}')
             # await self.async_set_unique_id(user_input.device_id) # not sure this is permitted as the user can change the device_id
             # self._abort_if_unique_id_configured()
-            return self.async_create_entry(title=info["title"], data=user_input)
-
-        _LOGGER.debug(f'config_flow.py:ConfigFlow.async_step_user: validation failed: {user_input}')
+            return self.async_create_entry(title=user_input[CONF_INVERTER_HOST], data=user_input)
 
         return self.async_show_form(
             step_id="user",
