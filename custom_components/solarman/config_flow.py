@@ -18,8 +18,6 @@ import homeassistant.helpers.config_validation as cv
 from .const import *
 from .scanner import InverterScanner
 
-_inverter_scanner = InverterScanner()
-
 _LOGGER = logging.getLogger(__name__)
 
 
@@ -31,9 +29,9 @@ def get_data_schema(data: dict[str, Any] = None) -> Schema:
     data_schema = vol.Schema(
         {
             vol.Required(CONF_NAME, default=data.get(CONF_NAME, SENSOR_PREFIX)): str,
-            vol.Required(CONF_INVERTER_HOST, default=data.get(CONF_INVERTER_HOST, DEFAULT_PORT_INVERTER)): str,
-            vol.Required(CONF_INVERTER_SERIAL, default=data.get(CONF_INVERTER_SERIAL)): int,
-            vol.Optional(CONF_INVERTER_PORT, default=data.get(CONF_INVERTER_PORT)): int,
+            vol.Required(CONF_INVERTER_HOST, default=data.get(CONF_INVERTER_HOST, DEFAULT_INVERTER_HOST)): str,
+            vol.Required(CONF_INVERTER_SERIAL_NUMBER, default=data.get(CONF_INVERTER_SERIAL_NUMBER, DEFAULT_INVERTER_SERIAL_NUMBER)): int,
+            vol.Optional(CONF_INVERTER_PORT, default=data.get(CONF_INVERTER_PORT, DEFAULT_INVERTER_PORT)): int,
             vol.Optional(CONF_INVERTER_SERVER_ID, default=data.get(CONF_INVERTER_SERVER_ID, DEFAULT_INVERTER_SERVER_ID)): int,
             vol.Optional(CONF_LOOKUP_FILE, default=data.get(CONF_LOOKUP_FILE, DEFAULT_LOOKUP_FILE)): vol.In(LOOKUP_FILES),
         },
@@ -44,6 +42,7 @@ def get_data_schema(data: dict[str, Any] = None) -> Schema:
 
 async def validate_input(host, port):
     """Validate the host and port allows us to connect."""
+    # TODO: is this actually async ?
     try:
         getaddrinfo(
             host, port, family=0, type=0, proto=0, flags=0
@@ -59,6 +58,18 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     VERSION = 1
 
+    async def __init__(self):
+        """Initialize the config flow."""
+        self._scanner = InverterScanner()    
+
+    def _sync_get_ip_address(self):
+        """Get the IP address."""
+        return self._scanner.get_ipaddress()
+
+    def _sync_get_serial_number(self):
+        """Get the serial number."""
+        return self._scanner.get_serialno()
+
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
     ) -> FlowResult:
@@ -70,14 +81,12 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         errors = {}
 
-        # TODO: handle scanning for inverter
-        #if inverter_host == "0.0.0.0":
-        #    inverter_host = _inverter_scanner.get_ipaddress()
+        if user_input[CONF_INVERTER_HOST] == DEFAULT_INVERTER_HOST:
+            user_input[CONF_INVERTER_HOST] = await self.hass.async_add_executor_job(self._sync_get_ip_address)
 
-        # TODO:  handle scanning for serial number
-        #if inverter_sn == 0:
-        #    inverter_sn = _inverter_scanner.get_serialno()
-
+        if user_input[CONF_INVERTER_SERIAL_NUMBER] == DEFAULT_INVERTER_SERIAL_NUMBER:
+            user_input[CONF_INVERTER_SERIAL_NUMBER] = await self.hass.async_add_executor_job(self._sync_get_serial_number)
+        # TODO:  think about validation a bit more....should serial # go after validate_input?
 
 
         try:
