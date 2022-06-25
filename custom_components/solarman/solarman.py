@@ -1,7 +1,6 @@
 import socket
 import yaml
 import logging
-from homeassistant.util import Throttle
 from datetime import datetime
 from .parser import ParameterParser
 from .const import *
@@ -131,7 +130,7 @@ class Inverter:
             del request
         return result
 
-    @Throttle (MIN_TIME_BETWEEN_UPDATES)
+    
     def update (self):
         self.get_statistics()
         return
