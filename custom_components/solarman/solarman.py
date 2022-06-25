@@ -15,8 +15,8 @@ SERIAL_NO = [0x00, 0x00]
 SEND_DATA_FIELD = [0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
 
 class Inverter:
-    def __init__(self, path, serial, host, port, server_id, lookup_file, name):
-        self._serial = serial
+    def __init__(self, path, serial_number, host, port, server_id, lookup_file, name):
+        self._serial_number = serial_number
         self.path = path
         self._host = host
         self._port = port
@@ -39,6 +39,11 @@ class Inverter:
         """Return name."""
         return self._name
 
+    @property
+    def serial_number(self):
+        """Return serial number."""
+        return self._serial_number
+
     def modbus(self, data):
         POLY = 0xA001
 
@@ -52,7 +57,7 @@ class Inverter:
         return crc    
 
     def get_serial_hex(self):
-        serial_hex = hex(self._serial)[2:]
+        serial_hex = hex(self._serial_number)[2:]
         serial_bytes = bytearray.fromhex(serial_hex)
         serial_bytes.reverse()
         return serial_bytes
