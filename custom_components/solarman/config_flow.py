@@ -16,6 +16,9 @@ from homeassistant.exceptions import HomeAssistantError
 from homeassistant.const import CONF_NAME
 import homeassistant.helpers.config_validation as cv
 from .const import *
+from .scanner import InverterScanner
+
+_inverter_scanner = InverterScanner()
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -66,6 +69,16 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             )
 
         errors = {}
+
+        # TODO: handle scanning for inverter
+        #if inverter_host == "0.0.0.0":
+        #    inverter_host = _inverter_scanner.get_ipaddress()
+
+        # TODO:  handle scanning for serial number
+        #if inverter_sn == 0:
+        #    inverter_sn = _inverter_scanner.get_serialno()
+
+
 
         try:
             await validate_input(user_input[CONF_INVERTER_HOST], user_input[CONF_INVERTER_PORT])
