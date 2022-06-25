@@ -65,5 +65,5 @@ class SolarmanDataUpdateCoordinator(DataUpdateCoordinator):
 
     def _sync_update_data(self):
         """Fetch synchronous data from Solarman."""
-        # TODO
-        pass
+        # TODO: error catching
+        self.inverter.update()
