@@ -36,9 +36,7 @@ def _do_setup_platform(hass: HomeAssistant, config, async_add_entities : AddEnti
     if inverter_sn == 0:
         inverter_sn = _inverter_scanner.get_serialno()
     
-    inverter_mb_slaveid = config.get(CONF_INVERTER_MB_SLAVEID)
-    if not inverter_mb_slaveid:
-        inverter_mb_slaveid = DEFAULT_INVERTER_MB_SLAVEID
+    inverter_mb_slaveid = config.get(CONF_INVERTER_MB_SLAVEID, DEFAULT_INVERTER_MB_SLAVEID)
     lookup_file = config.get(CONF_LOOKUP_FILE)
     path = hass.config.path('custom_components/solarman/inverter_definitions/')
 
