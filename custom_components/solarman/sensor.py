@@ -70,8 +70,7 @@ async def async_setup_platform(hass: HomeAssistant, config, async_add_entities :
        
 # Set-up from the entries in config-flow
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback):
-    _LOGGER.debug(f'sensor.py:async_setup_entry: {entry.options}') 
-    _do_setup_platform(hass, entry.options, async_add_entities)
+    _do_setup_platform(hass, entry, async_add_entities)
     
    
 

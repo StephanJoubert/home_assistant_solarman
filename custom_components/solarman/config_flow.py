@@ -66,13 +66,6 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     VERSION = 1
 
-    @staticmethod
-    @callback
-    def async_get_options_flow(entry: config_entries.ConfigEntry) -> OptionsFlow:
-        """Get the options flow for this handler."""
-        _LOGGER.debug(f'config_flow.py:ConfigFlow.async_get_options_flow: {entry}')
-        return OptionsFlow(entry)
-
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
     ) -> FlowResult:
@@ -98,54 +91,12 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             _LOGGER.debug(f'config_flow.py:ConfigFlow.async_step_user: validation passed: {user_input}')
             # await self.async_set_unique_id(user_input.device_id) # not sure this is permitted as the user can change the device_id
             # self._abort_if_unique_id_configured()
-            return self.async_create_entry(
-                title=info["title"], data=user_input, options=user_input
-            )
+            return self.async_create_entry(title=info["title"], data=user_input)
 
         _LOGGER.debug(f'config_flow.py:ConfigFlow.async_step_user: validation failed: {user_input}')
 
         return self.async_show_form(
             step_id="user",
-            data_schema=step_user_data_schema(user_input),
-            errors=errors,
-        )
-
-
-class OptionsFlow(config_entries.OptionsFlow):
-    """Handle options."""
-
-    def __init__(self, entry: config_entries.ConfigEntry) -> None:
-        """Initialize options flow."""
-        _LOGGER.debug(f'config_flow.py:OptionsFlow.__init__: {entry}')
-        self.entry = entry
-
-    async def async_step_init(
-        self, user_input: dict[str, Any] | None = None
-    ) -> FlowResult:
-        """Manage the options."""
-        _LOGGER.debug(f'config_flow.py:OptionsFlow.async_step_init: {user_input}')
-        if user_input is None:
-            return self.async_show_form(
-                step_id="init",
-                data_schema=step_user_data_schema(self.entry.options),
-            )
-
-        errors = {}
-
-        try:
-            info = await validate_input(self.hass, user_input)
-        except InvalidHost:
-            errors["base"] = "invalid_host"
-        except CannotConnect:
-            errors["base"] = "cannot_connect"
-        except Exception:  # pylint: disable=broad-except
-            _LOGGER.exception("Unexpected exception")
-            errors["base"] = "unknown"
-        else:
-            return self.async_create_entry(title=info["title"], data=user_input)
-
-        return self.async_show_form(
-            step_id="init",
             data_schema=step_user_data_schema(user_input),
             errors=errors,
         )
