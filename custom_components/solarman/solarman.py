@@ -15,13 +15,14 @@ SERIAL_NO = [0x00, 0x00]
 SEND_DATA_FIELD = [0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
 
 class Inverter:
-    def __init__(self, path, serial, host, port, server_id, lookup_file):
+    def __init__(self, path, serial, host, port, server_id, lookup_file, name):
         self._serial = serial
         self.path = path
         self._host = host
         self._port = port
         self._server_id = server_id
         self._current_val = None
+        self._name = name
         self.status_connection = "Disconnected"
         self.status_lastUpdate = "N/A"
         if not lookup_file:
@@ -32,6 +33,11 @@ class Inverter:
             
         with open(self.path + lookup_file) as f:
             self.parameter_definition = yaml.full_load(f) 
+
+    @property
+    def name(self):
+        """Return name."""
+        return self._name
 
     def modbus(self, data):
         POLY = 0xA001
