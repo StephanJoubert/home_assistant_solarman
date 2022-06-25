@@ -20,22 +20,23 @@ from .const import *
 _LOGGER = logging.getLogger(__name__)
 
 
-def step_user_data_schema(data: dict[str, Any] = {CONF_NAME: SENSOR_PREFIX, CONF_INVERTER_PORT: DEFAULT_PORT_INVERTER, CONF_INVERTER_SERVER_ID: DEFAULT_INVERTER_SERVER_ID, CONF_LOOKUP_FILE: DEFAULT_LOOKUP_FILE}) -> Schema:
-    _LOGGER.debug(f'config_flow.py:step_user_data_schema: {data}')
-    STEP_USER_DATA_SCHEMA = vol.Schema(
+def get_data_schema(data: dict[str, Any] = None) -> Schema:
+    """Generate a data schema."""
+    if data is None:
+        data = {}
+
+    data_schema = vol.Schema(
         {
-            vol.Required(CONF_NAME, default=data.get(CONF_NAME)): str,
-            vol.Required(CONF_INVERTER_HOST, default=data.get(CONF_INVERTER_HOST)): str,
+            vol.Required(CONF_NAME, default=data.get(CONF_NAME, SENSOR_PREFIX)): str,
+            vol.Required(CONF_INVERTER_HOST, default=data.get(CONF_INVERTER_HOST, DEFAULT_PORT_INVERTER)): str,
             vol.Required(CONF_INVERTER_SERIAL, default=data.get(CONF_INVERTER_SERIAL)): int,
             vol.Optional(CONF_INVERTER_PORT, default=data.get(CONF_INVERTER_PORT)): int,
-            vol.Optional(CONF_INVERTER_SERVER_ID, default=data.get(CONF_INVERTER_SERVER_ID)): int,
-            vol.Optional(CONF_LOOKUP_FILE, default=data.get(CONF_LOOKUP_FILE)): vol.In(LOOKUP_FILES),
+            vol.Optional(CONF_INVERTER_SERVER_ID, default=data.get(CONF_INVERTER_SERVER_ID, DEFAULT_INVERTER_SERVER_ID)): int,
+            vol.Optional(CONF_LOOKUP_FILE, default=data.get(CONF_LOOKUP_FILE, DEFAULT_LOOKUP_FILE)): vol.In(LOOKUP_FILES),
         },
         extra=vol.PREVENT_EXTRA
     )
-    _LOGGER.debug(
-        f'config_flow.py:step_user_data_schema: STEP_USER_DATA_SCHEMA: {STEP_USER_DATA_SCHEMA}')
-    return STEP_USER_DATA_SCHEMA
+    return data_schema
 
 
 async def validate_input(host, port):
@@ -61,7 +62,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Handle the initial step."""
         if user_input is None:
             return self.async_show_form(
-                step_id="user", data_schema=step_user_data_schema()
+                step_id="user", data_schema=get_data_schema()
             )
 
         errors = {}
@@ -82,7 +83,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         return self.async_show_form(
             step_id="user",
-            data_schema=step_user_data_schema(user_input),
+            data_schema=get_data_schema(user_input),
             errors=errors,
         )
 
