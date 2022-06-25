@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import logging
 from typing import Any
-from socket import getaddrinfo, herror, gaierror, timeout
+from socket import getaddrinfo, herror, gaierror
 
 import voluptuous as vol
 from voluptuous.schema_builder import Schema
@@ -13,9 +13,8 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.exceptions import HomeAssistantError
 
-from homeassistant.const import (EVENT_HOMEASSISTANT_STOP, CONF_NAME, CONF_SCAN_INTERVAL)
+from homeassistant.const import (CONF_NAME)
 import homeassistant.helpers.config_validation as cv
-from homeassistant.components.sensor import PLATFORM_SCHEMA
 from .const import *
 
 _LOGGER = logging.getLogger(__name__)
@@ -56,7 +55,7 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
         raise InvalidHost
     except gaierror:
         raise CannotConnect
-    except timeout:
+    except TimeoutError:
         raise CannotConnect
 
     return {"title": data[CONF_INVERTER_HOST]}
