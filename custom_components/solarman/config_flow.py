@@ -9,12 +9,11 @@ import voluptuous as vol
 from voluptuous.schema_builder import Schema
 
 from homeassistant import config_entries
-from homeassistant.core import HomeAssistant, callback
+from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.exceptions import HomeAssistantError
 
 from homeassistant.const import CONF_NAME
-import homeassistant.helpers.config_validation as cv
 from .const import *
 from .scanner import InverterScanner
 
