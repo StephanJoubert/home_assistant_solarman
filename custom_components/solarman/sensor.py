@@ -36,7 +36,7 @@ def _do_setup_platform(hass: HomeAssistant, config, async_add_entities : AddEnti
     if inverter_sn == 0:
         inverter_sn = _inverter_scanner.get_serialno()
     
-    inverter_mb_slaveid = config.get(CONF_INVERTER_MB_SLAVEID, DEFAULT_INVERTER_MB_SLAVEID)
+    inverter_server_id = config.get(CONF_INVERTER_SERVER_ID, DEFAULT_INVERTER_SERVER_ID)
     lookup_file = config.get(CONF_LOOKUP_FILE)
     path = hass.config.path('custom_components/solarman/inverter_definitions/')
 
@@ -46,7 +46,7 @@ def _do_setup_platform(hass: HomeAssistant, config, async_add_entities : AddEnti
     if inverter_sn is None:
         raise vol.Invalid('configuration parameter [inverter_serial] does not have a value')
 
-    inverter = Inverter(path, inverter_sn, inverter_host, inverter_port, inverter_mb_slaveid, lookup_file)
+    inverter = Inverter(path, inverter_sn, inverter_host, inverter_port, inverter_server_id, lookup_file)
     #  Prepare the sensor entities.
     hass_sensors = []
     for sensor in inverter.get_sensors():

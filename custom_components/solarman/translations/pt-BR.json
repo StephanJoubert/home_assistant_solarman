@@ -16,7 +16,7 @@
           "inverter_host": "Host (ip ou nome do host)",
           "inverter_serial": "Número de série do dispositivo (recuperar da interface da web)",
           "inverter_port": "Porta (geralmente 8899)",
-          "mb_slaveid": "Modbus Slave ID (geralmente 1)",
+          "mb_server_id": "Modbus Server ID (geralmente 1)",
           "lookup_file": "O arquivo yaml a ser usado para definição de parâmetro"
         }
       }

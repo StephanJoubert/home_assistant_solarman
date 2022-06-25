@@ -15,7 +15,7 @@
           "inverter_host": "[%key:common::config_flow::step::user::data::inverter_host%]",
           "inverter_serial": "[%key:common::config_flow::step::user::data::inverter_serial%]",
           "inverter_port": "[%key:common::config_flow::step::user::data::inverter_port%]",
-          "mb_slaveid": "[%key:common::config_flow::step::user::data::mb_slaveid%]",
+          "mb_server_id": "[%key:common::config_flow::step::user::data::mb_server_id%]",
           "lookup_file": "[%key:common::config_flow::step::user::data::lookup_file%]"
         }
       }

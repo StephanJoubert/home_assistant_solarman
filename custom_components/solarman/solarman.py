@@ -15,12 +15,12 @@ SERIAL_NO = [0x00, 0x00]
 SEND_DATA_FIELD = [0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
 
 class Inverter:
-    def __init__(self, path, serial, host, port, mb_slaveid, lookup_file):
+    def __init__(self, path, serial, host, port, server_id, lookup_file):
         self._serial = serial
         self.path = path
         self._host = host
         self._port = port
-        self._mb_slaveid = mb_slaveid
+        self._server_id = server_id
         self._current_val = None
         self.status_connection = "Disconnected"
         self.status_lastUpdate = "N/A"
@@ -52,7 +52,7 @@ class Inverter:
         return serial_bytes
     
     def get_read_business_field(self, start, length, mb_fc):
-        request_data = bytearray([self._mb_slaveid, mb_fc]) # Function Code
+        request_data = bytearray([self._server_id, mb_fc]) # Function Code
         request_data.extend(start.to_bytes(2, 'big'))
         request_data.extend(length.to_bytes(2, 'big'))
         crc = self.modbus(request_data)

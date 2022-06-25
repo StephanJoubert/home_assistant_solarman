@@ -16,7 +16,7 @@
           "inverter_host": "Host (adres IP lub nazwa hosta)",
           "inverter_serial": "Numer seryjny urz\u0105dzenia (mo\u017cna go sprawdzi\u0107 z interfejsu sieciowego)",
           "inverter_port": "Port (zwykle 8899)",
-          "mb_slaveid": "Modbus Slave ID (zwykle 1)",
+          "mb_server_id": "Modbus Server ID (zwykle 1)",
           "lookup_file": "Plik yaml u\u017cywany do definiowania parametr\u00f3w"
         }
       }
