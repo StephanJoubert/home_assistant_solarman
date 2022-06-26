@@ -1,10 +1,9 @@
-
 """Interface with Solarman sensors."""
 
 from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.components.sensor import SensorEntity
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback):
@@ -24,38 +23,19 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     async_add_entities(hass_sensors)
     
 
-class SolarmanStatus(Entity):
+class SolarmanStatus(SensorEntity):
     def __init__(self, inverter, field_name):
-        self._inverter_name = inverter.name
         self.inverter = inverter
         self._field_name = field_name
-        self.p_state = None
-        self.p_icon = 'mdi:magnify'
+        self._inverter_name = inverter.name
         self._serial_number = inverter.serial_number
-        return
+        self._attr_icon = 'mdi:magnify'
+        self._attr_name = "{} {}".format(self._inverter_name, field_name)
+        self._attr_unique_id = "{}_{}_{}".format(self._inverter_name, self._serial_number, field_name)
 
-    @property
-    def icon(self):
-        #  Return the icon of the sensor. """
-        return self.p_icon
-
-    @property
-    def name(self):
-        #  Return the name of the sensor.
-        return "{} {}".format(self._inverter_name, self._field_name)
-
-    @property
-    def unique_id(self):
-        # Return a unique_id based on the serial number
-        return "{}_{}_{}".format(self._inverter_name, self._serial_number, self._field_name)
-
-    @property
-    def state(self):
-        #  Return the state of the sensor.
-        return self.p_state
 
     def update(self):
-        self.p_state = getattr(self.inverter, self._field_name)
+        self._attr_state = getattr(self.inverter, self._field_name)
 
 #############################################################################################################
 #  Entity displaying a text field read from the inverter
@@ -66,10 +46,7 @@ class SolarmanSensorText(SolarmanStatus):
     def __init__(self, inverter, sensor):
         SolarmanStatus.__init__(self, inverter, sensor['name'])
         if 'icon' in sensor:
-            self.p_icon = sensor['icon']
-        else:
-            self.p_icon = ''
-        return
+            self._attr_icon = sensor['icon']
 
 
     def update(self):
@@ -81,7 +58,7 @@ class SolarmanSensorText(SolarmanStatus):
         val = self.inverter.get_current_val()
         if val is not None:
             if self._field_name in val:
-                self.p_state = val[self._field_name]
+                self._attr_state = val[self._field_name]
 
 
 #############################################################################################################
@@ -93,29 +70,10 @@ class SolarmanSensorText(SolarmanStatus):
 class SolarmanSensor(SolarmanSensorText):
     def __init__(self, inverter_name, inverter, sensor):
         SolarmanSensorText.__init__(self, inverter_name, inverter, sensor)
-        self._device_class = sensor['class']
+        self._attr_device_class = sensor['class']
         if 'state_class' in sensor:
-            self._state_class = sensor['state_class']
-        else:
-            self._state_class = None
-        self.uom = sensor['uom']
+            self._attr_state_class = sensor['state_class']
+
+        self._attr_native_unit_of_measurement = sensor['uom']
         return
-
-    @property
-    def device_class(self):
-        return self._device_class
-
-
-    @property
-    def extra_state_attributes(self):
-        if self._state_class:
-            return  {
-                'state_class': self._state_class
-            }
-        else:
-            return None
-
-    @property
-    def unit_of_measurement(self):
-        return self.uom
 
