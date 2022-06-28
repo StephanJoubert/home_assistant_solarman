@@ -13,9 +13,9 @@
         "data": {
           "name": "[%key:common::config_flow::step::user::data::name%]",
           "inverter_host": "[%key:common::config_flow::step::user::data::inverter_host%]",
-          "inverter_serial": "[%key:common::config_flow::step::user::data::inverter_serial%]",
+          "inverter_serial_number": "[%key:common::config_flow::step::user::data::inverter_serial_number%]",
           "inverter_port": "[%key:common::config_flow::step::user::data::inverter_port%]",
-          "mb_server_id": "[%key:common::config_flow::step::user::data::mb_server_id%]",
+          "inverter_mb_server_id": "[%key:common::config_flow::step::user::data::inverter_mb_server_id%]",
           "lookup_file": "[%key:common::config_flow::step::user::data::lookup_file%]"
         }
       }

@@ -14,9 +14,9 @@
         "data": {
           "name": "This name will be prefixed to all parameter values (change as you like)",
           "inverter_host": "Host (ip or hostname)",
-          "inverter_serial": "Device Serial Number (retrieve from the web interface)",
+          "inverter_serial_number": "Device Serial Number (retrieve from the web interface)",
           "inverter_port": "Port (usually 8899)",
-          "mb_server_id": "Modbus Server ID (usually 1)",
+          "inverter_mb_server_id": "Modbus Server ID (usually 1)",
           "lookup_file": "The yaml file to use for parameter-definition"
         }
       }
