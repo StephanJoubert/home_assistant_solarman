@@ -57,7 +57,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     VERSION = 1
 
-    async def __init__(self):
+    def __init__(self):
         """Initialize the config flow."""
         self._scanner = InverterScanner()    
 
