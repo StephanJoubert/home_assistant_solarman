@@ -29,7 +29,8 @@ class InverterScanner:
                             self._serial = int(a[2])
                     except TimeoutError:
                         break
-        except:                        
+        except:
+            # TODO:  this quietly ignores EVERY exception...think about this                        
             return None    
             
     def get_ipaddress(self):

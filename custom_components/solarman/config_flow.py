@@ -81,10 +81,20 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         errors = {}
 
         if user_input[CONF_INVERTER_HOST] == DEFAULT_INVERTER_HOST:
-            user_input[CONF_INVERTER_HOST] = await self.hass.async_add_executor_job(self._sync_get_ip_address)
+            address = await self.hass.async_add_executor_job(self._sync_get_ip_address)
+            if not address:
+                errors["base"] = "invalid_host"
+            else:
+                user_input[CONF_INVERTER_HOST] = address
 
         if user_input[CONF_INVERTER_SERIAL_NUMBER] == DEFAULT_INVERTER_SERIAL_NUMBER:
-            user_input[CONF_INVERTER_SERIAL_NUMBER] = await self.hass.async_add_executor_job(self._sync_get_serial_number)
+            serial = await self.hass.async_add_executor_job(self._sync_get_serial_number)
+            if not serial:
+                # TODO: make a strings.json error ?  Do we really need serial number?
+                errors["base"] = "unknown"
+            else:
+                user_input[CONF_INVERTER_SERIAL_NUMBER] = serial
+
         # TODO:  think about validation a bit more....should serial # go after validate_input?
 
 
