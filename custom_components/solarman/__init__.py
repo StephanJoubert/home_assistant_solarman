@@ -19,13 +19,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Solarman Collector from a config entry."""
     _LOGGER.debug(f'__init__.py:async_setup_entry({entry.as_dict()})')
 
-    inverter_name = entry[CONF_NAME]
-    inverter_host = entry[CONF_INVERTER_HOST]
-    inverter_port = entry[CONF_INVERTER_PORT]
-    inverter_sn = entry[CONF_INVERTER_SERIAL]
+    conf = entry.data
+
+    inverter_name = conf[CONF_NAME]
+    inverter_host = conf[CONF_INVERTER_HOST]
+    inverter_port = conf[CONF_INVERTER_PORT]
+    inverter_sn = conf[CONF_INVERTER_SERIAL_NUMBER]
     
-    inverter_server_id = entry[CONF_INVERTER_SERVER_ID]
-    lookup_file = entry[CONF_LOOKUP_FILE]
+    inverter_server_id = conf[CONF_INVERTER_SERVER_ID]
+    lookup_file = conf[CONF_LOOKUP_FILE]
     path = hass.config.path('custom_components/solarman/inverter_definitions/')
 
     inverter = Inverter(path, inverter_sn, inverter_host, inverter_port, inverter_server_id, lookup_file, name=inverter_name)
