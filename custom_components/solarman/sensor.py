@@ -68,9 +68,9 @@ class SolarmanSensorText(SolarmanStatus):
 class SolarmanSensor(SolarmanSensorText):
     """Entity displaying a numeric field read from the inverter."""
 
-    def __init__(self, inverter_name, inverter, sensor):
+    def __init__(self, inverter, sensor):
         """Initialize."""
-        SolarmanSensorText.__init__(self, inverter_name, inverter, sensor)
+        SolarmanSensorText.__init__(self, inverter, sensor)
         self._attr_device_class = sensor["class"]
         if "state_class" in sensor:
             self._attr_state_class = sensor["state_class"]
