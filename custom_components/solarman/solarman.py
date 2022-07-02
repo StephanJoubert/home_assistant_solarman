@@ -60,6 +60,8 @@ class Inverter:
 
     def _get_serial_hex(self):
         serial_hex = hex(self._serial_number)[2:]
+        if len(serial_hex) % 2 != 0:
+            serial_hex = f"0{serial_hex}"
         serial_bytes = bytearray.fromhex(serial_hex)
         serial_bytes.reverse()
         return serial_bytes
