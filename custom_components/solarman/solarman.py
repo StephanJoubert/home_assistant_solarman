@@ -16,6 +16,7 @@ SEND_DATA_FIELD = [0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0
 class Inverter:
     def __init__(self, path, serial_number, host, port, server_id, lookup_file, name):
         self._serial_number = serial_number
+        self._serial_hex = self._get_serial_hex()
         self.path = path
         self._host = host
         self._port = port
@@ -55,7 +56,7 @@ class Inverter:
                 else crc >> 1)  
         return crc    
 
-    def get_serial_hex(self):
+    def _get_serial_hex(self):
         serial_hex = hex(self._serial_number)[2:]
         serial_bytes = bytearray.fromhex(serial_hex)
         serial_bytes.reverse()
@@ -80,7 +81,7 @@ class Inverter:
         packet.extend(length.to_bytes(2, "little")) 
         packet.extend(CONTROL_CODE)
         packet.extend(SERIAL_NO)
-        packet.extend(self.get_serial_hex())    
+        packet.extend(self._serial_hex)    
         packet.extend(packet_data)
         #Checksum
         checksum = 0
