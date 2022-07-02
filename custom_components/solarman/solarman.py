@@ -34,6 +34,8 @@ class Inverter:
         with open(self.path + lookup_file) as f:
             self.parameter_definition = yaml.full_load(f) 
 
+        self._params = ParameterParser(self.parameter_definition)
+
     @property
     def name(self):
         """Return name."""
@@ -108,7 +110,7 @@ class Inverter:
         
     
  
-    def send_request (self, params, start, end, mb_fc):
+    def send_request (self, start, end, mb_fc):
         result = 0
         length = end - start + 1
         request = self.generate_request(start, length, mb_fc)
@@ -122,7 +124,7 @@ class Inverter:
             _LOGGER.debug(raw_msg.hex())
             if self.validate_checksum(raw_msg) == 1:
                 result = 1
-                params.parse(raw_msg, start, length) 
+                self._params.parse(raw_msg, start, length) 
             del raw_msg
         except:
             result = 0
@@ -139,20 +141,19 @@ class Inverter:
 
     def get_statistics(self):
         result = 1
-        params = ParameterParser(self.parameter_definition)
         for request in self.parameter_definition['requests']:
             start = request['start']
             end= request['end']
             mb_fc = request['mb_functioncode']
-            if 0 == self.send_request(params, start, end, mb_fc):
+            if 0 == self.send_request(start, end, mb_fc):
                 # retry once
-                if 0 == self.send_request(params, start, end, mb_fc):
+                if 0 == self.send_request(start, end, mb_fc):
                     result = 0
                     
         if result == 1: 
             self.status_lastUpdate = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
             self.status_connection = "Connected"                               
-            self._current_val = params.get_result()
+            self._current_val = self._params.get_result()
         else:
             self.status_connection = "Disconnected"
             
@@ -161,5 +162,4 @@ class Inverter:
         return self._current_val
 
     def get_sensors(self):
-        params = ParameterParser(self.parameter_definition)
-        return params.get_sensors ()
+        return self._params.get_sensors ()
