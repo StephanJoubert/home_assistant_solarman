@@ -502,7 +502,7 @@ parameters:
 
     - name: "Today Battery Charge"
       class: "energy"
-      state_class: "total_increaing"      
+      state_class: "total_increasing"      
       uom: "kWh"
       scale: 0.1
       rule: 1
