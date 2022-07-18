@@ -1,179 +1,79 @@
+"""Interface with Solarman sensors."""
 
-################################################################################
-#   Solarman local interface.
-#
-#   This component can retrieve data from the solarman dongle using version 5
-#   of the protocol.
-#
-###############################################################################
-
-import logging
-import voluptuous as vol
 from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import CONF_NAME
-from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.components.sensor import SensorEntity
+from .const import DOMAIN
 
-from .const import *
-from .solarman import Inverter
-from .scanner import InverterScanner
 
-_LOGGER = logging.getLogger(__name__)
-_inverter_scanner = InverterScanner()
+async def async_setup_entry(
+    hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
+):
+    """Setup from the config entry."""
+    inverter = hass.data[DOMAIN][entry.entry_id].inverter
 
-def _do_setup_platform(hass: HomeAssistant, config, async_add_entities : AddEntitiesCallback):
-    _LOGGER.debug(f'sensor.py:async_setup_platform: {config}') 
-   
-    inverter_name = config.get(CONF_NAME)
-    inverter_host = config.get(CONF_INVERTER_HOST)
-    if inverter_host == "0.0.0.0":
-        inverter_host = _inverter_scanner.get_ipaddress()
-        
-   
-    inverter_port = config.get(CONF_INVERTER_PORT)
-    inverter_sn = config.get(CONF_INVERTER_SERIAL)
-    if inverter_sn == 0:
-        inverter_sn = _inverter_scanner.get_serialno()
-    
-    inverter_mb_slaveid = config.get(CONF_INVERTER_MB_SLAVEID)
-    if not inverter_mb_slaveid:
-        inverter_mb_slaveid = DEFAULT_INVERTER_MB_SLAVEID
-    lookup_file = config.get(CONF_LOOKUP_FILE)
-    path = hass.config.path('custom_components/solarman/inverter_definitions/')
-
-    # Check input configuration.
-    if inverter_host is None:
-        raise vol.Invalid('configuration parameter [inverter_host] does not have a value')
-    if inverter_sn is None:
-        raise vol.Invalid('configuration parameter [inverter_serial] does not have a value')
-
-    inverter = Inverter(path, inverter_sn, inverter_host, inverter_port, inverter_mb_slaveid, lookup_file)
-    #  Prepare the sensor entities.
     hass_sensors = []
     for sensor in inverter.get_sensors():
         if "isstr" in sensor:
-            hass_sensors.append(SolarmanSensorText(inverter_name, inverter, sensor, inverter_sn))
+            hass_sensors.append(SolarmanSensorText(inverter, sensor))
         else:
-            hass_sensors.append(SolarmanSensor(inverter_name, inverter, sensor, inverter_sn))
+            hass_sensors.append(SolarmanSensor(inverter, sensor))
 
-    hass_sensors.append(SolarmanStatus(inverter_name, inverter, "status_lastUpdate", inverter_sn))
-    hass_sensors.append(SolarmanStatus(inverter_name, inverter, "status_connection", inverter_sn))
-
-    _LOGGER.debug(f'sensor.py:_do_setup_platform: async_add_entities')
-    _LOGGER.debug(hass_sensors)
+    hass_sensors.append(SolarmanStatus(inverter, "status_lastUpdate"))
+    hass_sensors.append(SolarmanStatus(inverter, "status_connection"))
 
     async_add_entities(hass_sensors)
 
-# Set-up from configuration.yaml
-async def async_setup_platform(hass: HomeAssistant, config, async_add_entities : AddEntitiesCallback, discovery_info=None):
-    _LOGGER.debug(f'sensor.py:async_setup_platform: {config}') 
-    _do_setup_platform(hass, config, async_add_entities)
-       
-# Set-up from the entries in config-flow
-async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback):
-    _LOGGER.debug(f'sensor.py:async_setup_entry: {entry.options}') 
-    _do_setup_platform(hass, entry.options, async_add_entities)
-    
-   
 
-#############################################################################################################
-# This is the entity seen by Home Assistant.
-#  It derives from the Entity class in HA and is suited for status values.
-#############################################################################################################
+class SolarmanStatus(SensorEntity):
+    """Generic Solarman sensor entity."""
 
-class SolarmanStatus(Entity):
-    def __init__(self, inverter_name, inverter, field_name, sn):
-        self._inverter_name = inverter_name
+    def __init__(self, inverter, field_name):
+        """Initialize."""
         self.inverter = inverter
         self._field_name = field_name
-        self.p_state = None
-        self.p_icon = 'mdi:magnify'
-        self._sn = sn
-        return
-
-    @property
-    def icon(self):
-        #  Return the icon of the sensor. """
-        return self.p_icon
-
-    @property
-    def name(self):
-        #  Return the name of the sensor.
-        return "{} {}".format(self._inverter_name, self._field_name)
-
-    @property
-    def unique_id(self):
-        # Return a unique_id based on the serial number
-        return "{}_{}_{}".format(self._inverter_name, self._sn, self._field_name)
-
-    @property
-    def state(self):
-        #  Return the state of the sensor.
-        return self.p_state
+        self._inverter_name = inverter.name
+        self._serial_number = inverter.serial_number
+        self._attr_icon = "mdi:magnify"
+        self._attr_name = "{} {}".format(self._inverter_name, field_name)
+        self._attr_unique_id = "{}_{}_{}".format(
+            self._inverter_name, self._serial_number, field_name
+        )
 
     def update(self):
-        self.p_state = getattr(self.inverter, self._field_name)
+        """Update this sensor using the data."""
+        self._attr_state = getattr(self.inverter, self._field_name)
 
-#############################################################################################################
-#  Entity displaying a text field read from the inverter
-#   Overrides the Status entity, supply the configured icon, and updates the inverter parameters
-#############################################################################################################
 
 class SolarmanSensorText(SolarmanStatus):
-    def __init__(self, inverter_name, inverter, sensor, sn):
-        SolarmanStatus.__init__(self,inverter_name, inverter, sensor['name'], sn)
-        if 'icon' in sensor:
-            self.p_icon = sensor['icon']
-        else:
-            self.p_icon = ''
-        return
+    """Entity displaying a text field read from the inverter."""
 
+    def __init__(self, inverter, sensor):
+        """Initialize."""
+        SolarmanStatus.__init__(self, inverter, sensor["name"])
+        if "icon" in sensor:
+            self._attr_icon = sensor["icon"]
 
     def update(self):
-    #  Update this sensor using the data.
-    #  Get the latest data and use it to update our sensor state.
-    #  Retrieve the sensor data from actual interface
+        """Update this sensor using the data."""
         self.inverter.update()
 
         val = self.inverter.get_current_val()
         if val is not None:
             if self._field_name in val:
-                self.p_state = val[self._field_name]
-
-
-#############################################################################################################
-#  Entity displaying a numeric field read from the inverter
-#   Overrides the Text sensor and supply the device class, last_reset and unit of measurement
-#############################################################################################################
+                self._attr_state = val[self._field_name]
 
 
 class SolarmanSensor(SolarmanSensorText):
-    def __init__(self, inverter_name, inverter, sensor, sn):
-        SolarmanSensorText.__init__(self, inverter_name, inverter, sensor, sn)
-        self._device_class = sensor['class']
-        if 'state_class' in sensor:
-            self._state_class = sensor['state_class']
-        else:
-            self._state_class = None
-        self.uom = sensor['uom']
+    """Entity displaying a numeric field read from the inverter."""
+
+    def __init__(self, inverter, sensor):
+        """Initialize."""
+        SolarmanSensorText.__init__(self, inverter, sensor)
+        self._attr_device_class = sensor["class"]
+        if "state_class" in sensor:
+            self._attr_state_class = sensor["state_class"]
+
+        self._attr_native_unit_of_measurement = sensor["uom"]
         return
-
-    @property
-    def device_class(self):
-        return self._device_class
-
-
-    @property
-    def extra_state_attributes(self):
-        if self._state_class:
-            return  {
-                'state_class': self._state_class
-            }
-        else:
-            return None
-
-    @property
-    def unit_of_measurement(self):
-        return self.uom
-
