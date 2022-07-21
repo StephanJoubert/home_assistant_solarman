@@ -128,55 +128,176 @@ parameters:
       state_class: ""
       uom: ""
       scale: 1
-      rule: 6
+      rule: 1
       registers: [33121]
       icon: 'mdi:home-lightning-bolt'
-    
-    - name: "Fault Status 01 (Grid)"
+      lookup: 
+      -  key: 0x701
+         value: "Normal Operation"
+      -  key: 0x702
+         value: "Initial Standby"
+      -  key: 0x704
+         value: "Control Shutdown"
+      -  key: 0x708
+         value: "Downtime"
+      -  key: 0x710
+         value: "Standby"         
+      -  key: 0x720
+         value: "Derating Operation"        
+      -  key: 0x740
+         value: "Limit Operation"      
+      -  key: 0x780
+         value: "Bypass Overload"              
+                     
+    - name: "Grid Fault Status"
       class: ""
       state_class: ""
       uom: ""
       scale: 1
-      rule: 6
+      rule: 1
       registers: [33116]
       icon: 'mdi:alert'
-
-    - name: "Fault Status 02 (Backup Load)"
+      lookup: 
+      -  key: 0x0000
+         value: "No Fault"
+      -  key: 0x1
+         value: "No Grid"
+      -  key: 0x2
+         value: "Grid OverVoltage"
+      -  key: 0x4
+         value: "Grid UnderVoltage"
+      -  key: 0x8
+         value: "Grid OverFrequency"         
+      -  key: 0x10
+         value: "Grid UnderFrequency"
+      -  key: 0x20
+         value: "Grid Imbalance"
+      -  key: 0x40
+         value: "Grid Frequncy Jitter"
+      -  key: 0x80
+         value: "Grid Impedence too Large"
+      -  key: 0x100
+         value: "Grid Tracking Fault"        
+      -  key: 0x200
+         value: "Meter Comm Failure"        
+      -  key: 0x400
+         value: "Failsafe"              
+                                                                                                     
+    - name: "Backup Load Fault Status"
       class: ""
       state_class: ""
       uom: ""
       scale: 1
-      rule: 6
+      rule: 1
       registers: [33117]
       icon: 'mdi:alert'
-
-    - name: "Fault Status 03 (Battery)"
+      lookup: 
+      -  key: 0x0
+         value: "No Fault"
+      -  key: 0x1
+         value: "Bypass OverVoltage Fault"
+      -  key: 0x2
+         value: "Bypass Overload Fault"             
+    - name: "Battery Fault Status"
       class: ""
       state_class: ""
       uom: ""
       scale: 1
-      rule: 6
+      rule: 1
       registers: [33118]
       icon: 'mdi:alert'
-
+      lookup: 
+      -  key: 0x0
+         value: "No Fault"
+      -  key: 0x1
+         value: "Battery Not Connected"
+      -  key: 0x2
+         value: "Battery OverVoltage Detection"
+      -  key: 0x4
+         value: "Battery UnderVoltage Detection"              
+                                               
     - name: "Fault Status 04 (Device)"
       class: ""
       state_class: ""
       uom: ""
       scale: 1
-      rule: 6
+      rule: 1
       registers: [33119]
       icon: 'mdi:alert'
-
+      lookup: 
+      -  key: 0x0000
+         value: "No Fault"
+      -  key: 0x1
+         value: "DC OverVoltage"
+      -  key: 0x2
+         value: "DC Bus OverVoltage"
+      -  key: 0x4
+         value: "DC Bus Uneven Voltage"
+      -  key: 0x8
+         value: "DC Bus UnderVoltage"         
+      -  key: 0x10
+         value: "DC Bus2 Uneven Voltage"
+      -  key: 0x20
+         value: "DC A path OverCurrent"
+      -  key: 0x40
+         value: "DC B path OverCurrent"
+      -  key: 0x80
+         value: "DC Input Disturbance"
+      -  key: 0x100
+         value: "Grid OverCurrent"        
+      -  key: 0x200
+         value: "IGBT OverCurrent"        
+      -  key: 0x400
+         value: "Grid Disturbance 2"      
+      -  key: 0x800
+         value: "Arc Self-Test Protection"
+      -  key: 0x1000
+         value: "Arc Fault Reservation"
+      -  key: 0x2000
+         value: "Grid Current Sample Abnormality"  
     - name: "Fault Status 05 (Device)"
       class: ""
       state_class: ""
       uom: ""
       scale: 1
-      rule: 6
+      rule: 1
       registers: [33120]
       icon: 'mdi:alert'
-
+      lookup: 
+      -  key: 0x0000
+         value: "No Fault"
+      -  key: 0x1
+         value: "Grid Disturbance"
+      -  key: 0x2
+         value: "DC Component Too Large"
+      -  key: 0x4
+         value: "Over Temp Protection"
+      -  key: 0x8
+         value: "Relay Detection Protection"         
+      -  key: 0x10
+         value: "Under Temp Protection"
+      -  key: 0x20
+         value: "PV Insulation Fault"
+      -  key: 0x40
+         value: "12V UnderVoltage Protection"
+      -  key: 0x80
+         value: "Leakage Current Protection"
+      -  key: 0x100
+         value: "Leakage Current Self-Test"        
+      -  key: 0x200
+         value: "DSP Initialization Protect"        
+      -  key: 0x400
+         value: "DSP B Protection"      
+      -  key: 0x800
+         value: "Battery Overvoltage H/W Failure"
+      -  key: 0x1000
+         value: "LLC Hardware OverCurrent"      
+      -  key: 0x2000
+         value: "Network Side Transient OverCurrent"
+      -  key: 0x4000
+         value: "CAN Communication Failed"         
+      -  key: 0x8000
+         value: "DSP Communication Failed"         
     - name: "Inverter Temperature"
       class: "temperature"
       state_class: "measurement"      
@@ -239,10 +360,18 @@ parameters:
       state_class: ""      
       uom: ""
       scale: 1
-      rule: 6
+      rule: 1
       registers: [33132]
       icon: 'mdi:battery-clock'
-
+      lookup: 
+      -  key: 0x21
+         value: "Spontaneous Mode"
+      -  key: 0x22
+         value: "Optimized Revenue Mode"
+      -  key: 0x24
+         value: "Off-Grid Storage Mode"
+      -  key: 0x28      
+         value: "Battery Wake-Up"                                
  - group: InverterDC
    items: 
     - name: "PV1 Voltage"
