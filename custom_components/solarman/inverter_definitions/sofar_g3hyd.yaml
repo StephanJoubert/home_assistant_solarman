@@ -1,19 +1,21 @@
 # Sofar G3 also HYD 5-20KTL-3PH
+# some value commented after month no change
 requests:
   - start: 0x0404
-    end: 0x042E
+    end: 0x0420
     mb_functioncode: 0x03
   - start: 0x0484
     end: 0x04AF
     mb_functioncode: 0x03
-  - start: 0x0504
-    end: 0x041F
-    mb_functioncode: 0x03
+# off - grid info
+#  - start: 0x0504
+#    end: 0x051F
+#    mb_functioncode: 0x03
   - start: 0x0584
     end: 0x0589
     mb_functioncode: 0x03
   - start: 0x0604
-    end: 0x060A
+    end: 0x060A # end of first battery after this continue battery pack 2,3,4
     mb_functioncode: 0x03
   - start: 0x0684
     end: 0x069B
@@ -28,6 +30,7 @@ parameters:
         scale: 1
         rule: 1
         registers: [ 0x0404 ]
+        isstr: true
         lookup:
           - key: 0
             value: "waiting"
@@ -178,7 +181,7 @@ parameters:
         registers: [ 0x0607 ]
         icon: 'mdi:battery'
       - name: "Battery Number of Cycles"
-        class: "temperature"
+        class: ""
         state_class: "measurement"
         uom: "cycle"
         scale: 1
@@ -211,14 +214,14 @@ parameters:
         rule: 2
         registers: [ 0x0486 ]
         icon: 'mdi:home-lightning-bolt'
-      - name: "ApparentPower_Output_Total"
-        class: "power"
-        state_class: "measurement"
-        uom: "W"
-        scale: 10
-        rule: 2
-        registers: [ 0x0487 ]
-        icon: 'mdi:home-lightning-bolt'
+#      - name: "ApparentPower_Output_Total"
+#        class: "power"
+#        state_class: "measurement"
+#        uom: "W"
+#        scale: 10
+#        rule: 2
+#        registers: [ 0x0487 ]
+#        icon: 'mdi:home-lightning-bolt'
       - name: "ActivePower_PCC_Total"
         class: "power"
         state_class: "measurement"
@@ -227,22 +230,22 @@ parameters:
         rule: 2
         registers: [ 0x0488 ]
         icon: 'mdi:home-lightning-bolt'
-      - name: "ReactivePower_PCC_Total"
-        class: "power"
-        state_class: "measurement"
-        uom: "W"
-        scale: 10
-        rule: 2
-        registers: [ 0x0489 ]
-        icon: 'mdi:home-lightning-bolt'
-      - name: "ApparentPower_PCC_Total"
-        class: "power"
-        state_class: "measurement"
-        uom: "W"
-        scale: 10
-        rule: 2
-        registers: [ 0x048A ]
-        icon: 'mdi:home-lightning-bolt'
+#      - name: "ReactivePower_PCC_Total"
+#        class: "power"
+#        state_class: "measurement"
+#        uom: "W"
+#        scale: 10
+#        rule: 2
+#        registers: [ 0x0489 ]
+#        icon: 'mdi:home-lightning-bolt'
+#      - name: "ApparentPower_PCC_Total"
+#        class: "power"
+#        state_class: "measurement"
+#        uom: "W"
+#        scale: 10
+#        rule: 2
+#        registers: [ 0x048A ]
+#        icon: 'mdi:home-lightning-bolt'
       - name: "Voltage_Phase_R"
         class: "voltage"
         state_class: "measurement"
@@ -267,22 +270,22 @@ parameters:
         rule: 2
         registers: [ 0x048F ]
         icon: 'mdi:lightning-bolt-outline'
-      - name: "ReactivePower_Output_R"
-        class: "power"
-        state_class: "measurement"
-        uom: "W"
-        scale: 10
-        rule: 2
-        registers: [ 0x0490 ]
-        icon: 'mdi:lightning-bolt-outline'
-      - name: "PowerFactor_Output_R"
-        class: "powerfactor"
-        state_class: "measurement"
-        uom: "p.u."
-        scale: 0.001
-        rule: 2
-        registers: [ 0x0491 ]
-        icon: 'mdi:lightning-bolt-outline'
+#      - name: "ReactivePower_Output_R"
+#        class: "power"
+#        state_class: "measurement"
+#        uom: "W"
+#        scale: 10
+#        rule: 2
+#        registers: [ 0x0490 ]
+#        icon: 'mdi:lightning-bolt-outline'
+#      - name: "PowerFactor_Output_R"
+#        class: "powerfactor"
+#        state_class: "measurement"
+#        uom: "p.u."
+#        scale: 0.001
+#        rule: 2
+#        registers: [ 0x0491 ]
+#        icon: 'mdi:lightning-bolt-outline'
       - name: "Current_PCC_R"
         class: "current"
         state_class: "measurement"
@@ -291,30 +294,30 @@ parameters:
         rule: 1
         registers: [ 0x0492 ]
         icon: 'mdi:lightning-bolt-outline'
-      - name: "ActivePower_PCC_R"
-        class: "power"
-        state_class: "measurement"
-        uom: "W"
-        scale: 10
-        rule: 2
-        registers: [ 0x0493 ]
-        icon: 'mdi:lightning-bolt-outline'
-      - name: "ReactivePower_PCC_R"
-        class: "power"
-        state_class: "measurement"
-        uom: "W"
-        scale: 10
-        rule: 2
-        registers: [ 0x0494 ]
-        icon: 'mdi:lightning-bolt-outline'
-      - name: "PowerFactor_PCC_R"
-        class: "powerfactor"
-        state_class: "measurement"
-        uom: "p.u."
-        scale: 0.001
-        rule: 2
-        registers: [ 0x0495 ]
-        icon: 'mdi:lightning-bolt-outline'
+#      - name: "ActivePower_PCC_R"
+#        class: "power"
+#        state_class: "measurement"
+#        uom: "W"
+#        scale: 10
+#        rule: 2
+#        registers: [ 0x0493 ]
+#        icon: 'mdi:lightning-bolt-outline'
+#      - name: "ReactivePower_PCC_R"
+#        class: "power"
+#        state_class: "measurement"
+#        uom: "W"
+#        scale: 10
+#        rule: 2
+#        registers: [ 0x0494 ]
+#        icon: 'mdi:lightning-bolt-outline'
+#      - name: "PowerFactor_PCC_R"
+#        class: "powerfactor"
+#        state_class: "measurement"
+#        uom: "p.u."
+#        scale: 0.001
+#        rule: 2
+#        registers: [ 0x0495 ]
+#        icon: 'mdi:lightning-bolt-outline'
       - name: "Voltage_Phase_S"
         class: "voltage"
         state_class: "measurement"
@@ -339,22 +342,22 @@ parameters:
         rule: 2
         registers: [ 0x049A ]
         icon: 'mdi:lightning-bolt-outline'
-      - name: "ReactivePower_Output_S"
-        class: "power"
-        state_class: "measurement"
-        uom: "W"
-        scale: 10
-        rule: 2
-        registers: [ 0x049B ]
-        icon: 'mdi:lightning-bolt-outline'
-      - name: "PowerFactor_Output_S"
-        class: "powerfactor"
-        state_class: "measurement"
-        uom: "p.u."
-        scale: 0.001
-        rule: 2
-        registers: [ 0x049C ]
-        icon: 'mdi:lightning-bolt-outline'
+##      - name: "ReactivePower_Output_S"
+##        class: "power"
+##        state_class: "measurement"
+##        uom: "W"
+##        scale: 10
+##        rule: 2
+##        registers: [ 0x049B ]
+##        icon: 'mdi:lightning-bolt-outline'
+#      - name: "PowerFactor_Output_S"
+#        class: "powerfactor"
+#        state_class: "measurement"
+#        uom: "p.u."
+#        scale: 0.001
+#        rule: 2
+#        registers: [ 0x049C ]
+#        icon: 'mdi:lightning-bolt-outline'
       - name: "Current_PCC_S"
         class: "current"
         state_class: "measurement"
@@ -363,30 +366,30 @@ parameters:
         rule: 1
         registers: [ 0x049D ]
         icon: 'mdi:lightning-bolt-outline'
-      - name: "ActivePower_PCC_S"
-        class: "power"
-        state_class: "measurement"
-        uom: "W"
-        scale: 10
-        rule: 2
-        registers: [ 0x049E ]
-        icon: 'mdi:lightning-bolt-outline'
-      - name: "ReactivePower_PCC_S"
-        class: "power"
-        state_class: "measurement"
-        uom: "W"
-        scale: 10
-        rule: 2
-        registers: [ 0x049F ]
-        icon: 'mdi:lightning-bolt-outline'
-      - name: "PowerFactor_PCC_S"
-        class: "powerfactor"
-        state_class: "measurement"
-        uom: "p.u."
-        scale: 0.001
-        rule: 2
-        registers: [ 0x04A0 ]
-        icon: 'mdi:lightning-bolt-outline'
+#      - name: "ActivePower_PCC_S"
+#        class: "power"
+#        state_class: "measurement"
+#        uom: "W"
+#        scale: 10
+#        rule: 2
+#        registers: [ 0x049E ]
+#        icon: 'mdi:lightning-bolt-outline'
+#      - name: "ReactivePower_PCC_S"
+#        class: "power"
+#        state_class: "measurement"
+#        uom: "W"
+#        scale: 10
+#        rule: 2
+#        registers: [ 0x049F ]
+#        icon: 'mdi:lightning-bolt-outline'
+#      - name: "PowerFactor_PCC_S"
+#        class: "powerfactor"
+#        state_class: "measurement"
+#        uom: "p.u."
+#        scale: 0.001
+#        rule: 2
+#        registers: [ 0x04A0 ]
+#        icon: 'mdi:lightning-bolt-outline'
       - name: "Voltage_Phase_T"
         class: "voltage"
         state_class: "measurement"
@@ -411,22 +414,22 @@ parameters:
         rule: 2
         registers: [ 0x04A5 ]
         icon: 'mdi:lightning-bolt-outline'
-      - name: "ReactivePower_Output_T"
-        class: "power"
-        state_class: "measurement"
-        uom: "W"
-        scale: 10
-        rule: 2
-        registers: [ 0x04A6 ]
-        icon: 'mdi:lightning-bolt-outline'
-      - name: "PowerFactor_Output_T"
-        class: "powerfactor"
-        state_class: "measurement"
-        uom: "p.u."
-        scale: 0.001
-        rule: 2
-        registers: [ 0x04A7 ]
-        icon: 'mdi:lightning-bolt-outline'
+#      - name: "ReactivePower_Output_T"
+#        class: "power"
+#        state_class: "measurement"
+#        uom: "W"
+#        scale: 10
+#        rule: 2
+#        registers: [ 0x04A6 ]
+#        icon: 'mdi:lightning-bolt-outline'
+#      - name: "PowerFactor_Output_T"
+#        class: "powerfactor"
+#        state_class: "measurement"
+#        uom: "p.u."
+#        scale: 0.001
+#        rule: 2
+#        registers: [ 0x04A7 ]
+#        icon: 'mdi:lightning-bolt-outline'
       - name: "Current_PCC_T"
         class: "current"
         state_class: "measurement"
@@ -435,38 +438,38 @@ parameters:
         rule: 1
         registers: [ 0x04A8 ]
         icon: 'mdi:lightning-bolt-outline'
-      - name: "ActivePower_PCC_T"
-        class: "power"
-        state_class: "measurement"
-        uom: "W"
-        scale: 10
-        rule: 2
-        registers: [ 0x04A9 ]
-        icon: 'mdi:lightning-bolt-outline'
-      - name: "ReactivePower_PCC_T"
-        class: "power"
-        state_class: "measurement"
-        uom: "W"
-        scale: 10
-        rule: 2
-        registers: [ 0x04AA ]
-        icon: 'mdi:lightning-bolt-outline'
-      - name: "PowerFactor_PCC_T"
-        class: "powerfactor"
-        state_class: "measurement"
-        uom: "p.u."
-        scale: 0.001
-        rule: 2
-        registers: [ 0x04AB ]
-        icon: 'mdi:lightning-bolt-outline'
-      - name: "ActivePower_PV_Ext"
-        class: "power"
-        state_class: "measurement"
-        uom: "W"
-        scale: 10
-        rule: 1
-        registers: [ 0x04AE ]
-        icon: 'mdi:lightning-bolt-outline'
+#      - name: "ActivePower_PCC_T"
+#        class: "power"
+#        state_class: "measurement"
+#        uom: "W"
+#        scale: 10
+#        rule: 2
+#        registers: [ 0x04A9 ]
+#        icon: 'mdi:lightning-bolt-outline'
+#      - name: "ReactivePower_PCC_T"
+#        class: "power"
+#        state_class: "measurement"
+#        uom: "W"
+#        scale: 10
+#        rule: 2
+#        registers: [ 0x04AA ]
+#        icon: 'mdi:lightning-bolt-outline'
+#      - name: "PowerFactor_PCC_T"
+#        class: "powerfactor"
+#        state_class: "measurement"
+#        uom: "p.u."
+#        scale: 0.001
+#        rule: 2
+#        registers: [ 0x04AB ]
+#        icon: 'mdi:lightning-bolt-outline'
+#      - name: "ActivePower_PV_Ext"
+#        class: "power"
+#        state_class: "measurement"
+#        uom: "W"
+#        scale: 10
+#        rule: 1
+#        registers: [ 0x04AE ]
+#        icon: 'mdi:lightning-bolt-outline'
       - name: "ActivePower_Load_Sys"
         class: "power"
         state_class: "measurement"
@@ -595,6 +598,7 @@ parameters:
         scale: 1
         rule: 1
         registers: [ 0x0405 ]
+        isstr: true
         icon: 'mdi:wrench'
         lookup:
           - key: 0
@@ -638,6 +642,7 @@ parameters:
         scale: 1
         rule: 1
         icon: 'mdi:wrench'
+        isstr: true
         registers: [ 0x0406 ]
         lookup:
           - key: 0
@@ -681,6 +686,8 @@ parameters:
         scale: 1
         rule: 1
         icon: 'mdi:wrench'
+        isstr: true
+
         registers: [ 0x0407 ]
         lookup:
           - key: 0
@@ -725,6 +732,7 @@ parameters:
         rule: 1
         icon: 'mdi:wrench'
         registers: [ 0x0408 ]
+        isstr: true
         lookup:
           - key: 0
             value: "No error"
@@ -768,6 +776,7 @@ parameters:
         rule: 1
         icon: 'mdi:wrench'
         registers: [ 0x0409 ]
+        isstr: true
         lookup:
           - key: 0
             value: "No error"
@@ -810,6 +819,7 @@ parameters:
         scale: 1
         rule: 1
         icon: 'mdi:wrench'
+        isstr: true
         registers: [ 0x040A ]
         lookup:
           - key: 0
@@ -853,6 +863,7 @@ parameters:
         scale: 1
         rule: 1
         icon: 'mdi:wrench'
+        isstr: true
         registers: [ 0x040B ]
         lookup:
           - key: 0
@@ -898,6 +909,7 @@ parameters:
         rule: 1
         icon: 'mdi:wrench'
         registers: [ 0x040C ]
+        isstr: true
         lookup:
           - key: 0
             value: "No error"
@@ -940,6 +952,8 @@ parameters:
         scale: 1
         rule: 1
         icon: 'mdi:wrench'
+        isstr: true
+
         registers: [ 0x040D ]
         lookup:
           - key: 0
@@ -983,6 +997,7 @@ parameters:
         scale: 1
         rule: 1
         icon: 'mdi:wrench'
+        isstr: true
         registers: [ 0x040E ]
         lookup:
           - key: 0
@@ -1027,6 +1042,7 @@ parameters:
         rule: 1
         icon: 'mdi:wrench'
         registers: [ 0x040F ]
+        isstr: true
         lookup:
           - key: 0
             value: "No error"
@@ -1070,6 +1086,7 @@ parameters:
         rule: 1
         icon: 'mdi:wrench'
         registers: [ 0x0410 ]
+        isstr: true
         lookup:
           - key: 0
             value: "No error"
