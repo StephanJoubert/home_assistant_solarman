@@ -52,11 +52,14 @@ def _do_setup_platform(hass: HomeAssistant, config, async_add_entities : AddEnti
     #  Prepare the sensor entities.
     hass_sensors = []
     for sensor in inverter.get_sensors():
-        if "isstr" in sensor:
-            hass_sensors.append(SolarmanSensorText(inverter_name, inverter, sensor, inverter_sn))
-        else:
-            hass_sensors.append(SolarmanSensor(inverter_name, inverter, sensor, inverter_sn))
-
+        try:
+            if "isstr" in sensor:
+                hass_sensors.append(SolarmanSensorText(inverter_name, inverter, sensor, inverter_sn))
+            else:
+                hass_sensors.append(SolarmanSensor(inverter_name, inverter, sensor, inverter_sn))
+        except BaseException as ex:
+            _LOGGER.error(f'Config error {ex} {sensor}')
+            raise
     hass_sensors.append(SolarmanStatus(inverter_name, inverter, "status_lastUpdate", inverter_sn))
     hass_sensors.append(SolarmanStatus(inverter_name, inverter, "status_connection", inverter_sn))
 

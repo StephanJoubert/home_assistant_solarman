@@ -442,7 +442,7 @@ parameters:
       class: "current"
       state_class: "measurement"
       uom: "A"
-      scale: 1
+      scale: 0.1
       rule: 1
       registers: [33076]
       icon: 'mdi:current-ac'
