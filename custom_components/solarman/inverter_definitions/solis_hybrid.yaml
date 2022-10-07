@@ -368,6 +368,8 @@ parameters:
          value: "Spontaneous Mode"
       -  key: 0x22
          value: "Optimized Revenue Mode"
+      -  key: 0x23
+         value: "Charging from Grid"        
       -  key: 0x24
          value: "Off-Grid Storage Mode"
       -  key: 0x28      
