@@ -1,6 +1,7 @@
 import socket
 import yaml
 import logging
+import struct
 from homeassistant.util import Throttle
 from datetime import datetime
 from .parser import ParameterParser
@@ -82,21 +83,73 @@ class Inverter:
         del packet_data      
         del buisiness_field
         return packet
-    
-    def validate_checksum(self, packet):
-        checksum = 0
-        length = len(packet)
-        # Don't include the checksum and END OF MESSAGE (-2)
-        for i in range(1,length-2,1):
-            checksum += packet[i]
-        checksum &= 0xFF
-        if checksum == packet[length-2]:
+
+    def validate_packet(self, packet):
+        # Perform some checks to ensure the received packet is correct
+        # Start with the outer V5 logger packet and work inwards towards the embedded modbus frame
+
+        # Does the v5 packet start and end with what we expect?
+        if packet[0] != 0xa5 or packet[len(packet) - 1] != 0x15:
+            log.debug("unexpected v5 packet start/stop")
+            return 0
+        # Does the v5 packet have the correct checksum?
+        elif self.validate_v5_checksum(packet) == 0:
+            log.debug("invalid v5 checksum")
+            return 0
+        # Is the control code what we expect?  Note: We sometimes see keepalives appear (0x4710)
+        elif packet[3:5] != struct.pack("<H", 0x1510):
+            log.debug("unexpected v5 control code")
+            return 0
+        # Is the v5 packet of the expected type?
+        elif packet[11] != 0x02:
+            log.debug("unexpected v5 frame type")
+            return 0
+
+        # Move onto the encapsulated modbus frame
+        modbus_frame = packet[25:len(packet) - 2]
+
+        # Is the modbus CRC correct?
+        if self.validate_modbus_crc(modbus_frame) == 0:
+            log.debug("invalid modbus crc")
+            return 0
+
+        # Validation compelted successfully
+        return 1
+
+
+    def validate_modbus_crc(self, frame):
+        # Calculate crc with all but the last 2 bytes of the frame (they contain the crc)
+        calc_crc = 0xFFFF
+        for pos in frame[:-2]:
+            calc_crc ^= pos
+            for i in range(8):
+                if (calc_crc & 1) != 0:
+                    calc_crc >>= 1
+                    calc_crc ^= 0xA001  # bitwise 'or' with modbus magic number (0xa001 == bitwise reverse of 0x8005)
+                else:
+                    calc_crc >>= 1
+
+        # Compare calculated crc with the one supplied in the frame....
+        frame_crc, = struct.unpack('<H', frame[-2:])
+        if calc_crc == frame_crc:
             return 1
         else:
             return 0
-        
-    
- 
+
+
+    def validate_v5_checksum(self, packet):
+        checksum = 0
+        length = len(packet)
+        # Don't include the checksum and END OF MESSAGE (-2)
+        for i in range(1, length - 2, 1):
+            checksum += packet[i]
+        checksum &= 0xFF
+        if checksum == packet[length - 2]:
+            return 1
+        else:
+            return 0
+
+
     def send_request (self, params, start, end, mb_fc):
         result = 0
         length = end - start + 1
@@ -109,7 +162,7 @@ class Inverter:
             sock.sendall(request) # Request param 0x3B up to 0x71
             raw_msg = sock.recv(1024)
             log.debug(raw_msg.hex())
-            if self.validate_checksum(raw_msg) == 1:
+            if self.validate_packet(raw_msg) == 1:
                 result = 1
                 params.parse(raw_msg, start, length) 
             del raw_msg
