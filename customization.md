@@ -75,6 +75,7 @@ The group just groups parameters that belong together. The induvidual parameter-
 |rule|Method to interpret the data from the logger ###|
 |registers|Array of register fields that comprises the value. If the value is placed in a number of registers, this  array will contain more than one item.|
 |lookup|Defines a key-value pair for values where an integer maps to a string field|
+|invalid|Optional validation against a reference value, which invalidate complete dataset. Could be used, if the inverter delivers sometimes non usable data (e.g. Total Production == 0.0)|
 
 
 \# (see) https://developers.home-assistant.io/docs/core/entity/

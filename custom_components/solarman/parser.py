@@ -1,5 +1,6 @@
 import yaml
 import struct
+import math
 
 
 
@@ -71,7 +72,11 @@ class ParameterParser:
             if self.is_integer_num (value):
                 self.result[title] = int(value)  
             else:   
-                self.result[title] = value  
+                self.result[title] = value
+
+            if 'invalid' in definition:
+                if math.fabs(definition['invalid'] - value) < 0.001:
+                    raise ValueError(f'Invalidate complete dataset ({title} ~ {value})')
         return
     
     def try_parse_unsigned (self, rawData, definition, start, length):
@@ -100,7 +105,11 @@ class ParameterParser:
                 if self.is_integer_num (value):
                     self.result[title] = int(value)  
                 else:   
-                    self.result[title] = value                  
+                    self.result[title] = value   
+
+                if 'invalid' in definition:
+                    if math.fabs(definition['invalid'] - value) < 0.001:
+                        raise ValueError(f'Invalidate complete dataset ({title} ~ {value})')
         return
 
 
