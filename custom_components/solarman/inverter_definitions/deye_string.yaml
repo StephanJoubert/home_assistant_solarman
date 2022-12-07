@@ -59,6 +59,7 @@ parameters:
       rule: 3
       registers: [0x003F,0x0040]
       icon: 'mdi:solar-power'
+      invalid: 0.0
 
 
 
