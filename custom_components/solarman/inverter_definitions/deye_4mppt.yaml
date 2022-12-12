@@ -9,8 +9,8 @@ requests:
     mb_functioncode: 0x03
 
 parameters:
- - group: solar
-   items: 
+  - group: solar
+    items: 
     - name: "PV1 Voltage"
       class: "voltage"
       state_class: "measurement"
@@ -100,8 +100,8 @@ parameters:
 
 
 
- - group: Grid
-   items: 
+  - group: Grid
+    items: 
     - name: "AC Voltage 1"
       class: "voltage"
       state_class: "measurement"
@@ -183,8 +183,8 @@ parameters:
 #      registers: [0x004F]
 #      icon: 'mdi:home-lightning-bolt'
 
- - group: Inverter
-   items: 
+  - group: Inverter
+    items: 
     - name: "Running Status"
       class: ""
       state_class: ""      
@@ -194,14 +194,14 @@ parameters:
       registers: [0x003B]
       isstr: true
       lookup: 
-      -  key: 0
-         value: "Stand-by"
-      -  key: 1
-         value: "Self-checking"
-      -  key: 2
-         value: "Normal"
-      -  key: 3
-         value: "FAULT"
+      - key: 0
+        value: "Stand-by"
+      - key: 1
+        value: "Self-checking"
+      - key: 2
+        value: "Normal"
+      - key: 3
+        value: "FAULT"
       icon: 'mdi:home-lightning-bolt'
 
 #    - name: "Total Ouput AC Power"
