@@ -1,7 +1,7 @@
 # Solarman integration
 This is a Home Assistant component for interacting with Solarman data collectors used with a variety of inverters. The integration allows Home Assistant to connect in direct-mode over the local network to the collector to extract the information, and no cables are required. 
 
-It has been tested with a 5kW DEYE/SUNSYNK inverter. The collector is reported to be used in Omnik, Hosola, Goodwe, Solax, Ginlong, Samil, Sofar and Power-One Solar inverters, you may get success from any of these as well.
+It has been created with a 5kW DEYE/SUNSYNK inverter and since integrated with a veriety of other inverters that uses the Solarman data collector.
 
 This component uses version 5 of the communication protocol. If your collector is older and this component does not work, try one of the other integrations that uses version 4 of the protocol.
 
@@ -31,8 +31,7 @@ custom_components
 │   ├── solarman.py
 │   ├── sensor.py
 │   └── inverter_definitions
-│       ├── parameters.yaml
-│       └── custom_parameters.yaml
+│       ├── {inverter-definition yaml files}
 ├── {other components}
 ```
 
@@ -103,8 +102,11 @@ sensor:
 | --- | --- | --- |
 | deye_hybrid.yaml | DEYE/Sunsynk/SolArk Hybrid inverters | used when no lookup specified 
 | deye_string.yaml | DEYE/Sunsynk/SolArk String inverters | eg. SUN-4/5/6/7/8/10/12K-G03 Plus
+| deye_4mppt.yaml | DEYE Microinverter
 | sofar_lsw3.yaml | SOFAR Inverters
+| sofar_hyd3k-6k.yaml | SOFAR Hybrid inverter | HYD 6000 or rebranded ex. ZCS AZZURRO
 | solis_hybrid.yaml | SOLIS Hybrid inverter
+| solid_1p8k-5g | SOLIS 1P8K-5G 
 
 # Auto-discovery
 The component has the option to auto-discover the logger IP and serial number. 
@@ -115,6 +117,8 @@ NOTE:
 This should be used as a temporary or debug measure since the discovery only happens when the component starts and, if the logger is inaccessible at that point, the entities will unavailable until restart. This will not be the case when the IP and serial was specified.
 
 ## Manual
+The section below shows an example configuration done using manual configuration. This is an option for those that want to customize the component for inverters not supported out of the box.
+
 ~~~ YAML
 
 sensor:
@@ -127,7 +131,7 @@ sensor:
     lookup_file: deye_hybrid.yaml
 ~~~
 ## Config-flow
-![Autodicover](./flow_init.png)
+![Autodiscover](./flow_init.png)
 
 # Entities
 Once the component is running, it will add the following entities to Home Assistant
@@ -143,4 +147,4 @@ The entities includes the device classes to enable it to be added to the [Energy
 To configure the energy dashboard with the infirmation provided by this component,  see [configuring energy dashboard](energy.md)
 
 # Customization
-This integration was tested agains the DEYE 5kW inverter, and it is possible that the parameter-definitions for other inverters may differ. If you want to try your hand at it, refer to [customizing parameters.yaml](customization.md)
+This integration was tested against the DEYE 5kW inverter, and it is possible that the parameter-definitions for other inverters may differ. If you want to try your hand at it, refer to [customizing parameters.yaml](customization.md)

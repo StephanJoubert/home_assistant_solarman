@@ -63,20 +63,40 @@ The group just groups parameters that belong together. The induvidual parameter-
 ### Parameter-item
 
 
-|field|description|
-|:----------:|----------|
-|name|The *name* field of the home-assistant entity #|
-|class|The *class* field of the home-assistant entity #|
-|state_class|The *state_class* field of the home assistant entity ##|
-|uom|The *unit_of_measurement* field of the home-assistant entity #|
-|icon|The *icon* field of the home-assistant entity #|
+|field||description|
+|-|-|-|
+|name||The *name* field of the home-assistant entity #|
+|class||The *class* field of the home-assistant entity #|
+|state_class||The *state_class* field of the home assistant entity ##|
+|uom||The *unit_of_measurement* field of the home-assistant entity #|
+|icon||The *icon* field of the home-assistant entity #|
 || **The fields below define how the value from the logger is parsed** |
-|scale|Scaling factor for the value read from the logger|
-|rule|Method to interpret the data from the logger ###|
-|registers|Array of register fields that comprises the value. If the value is placed in a number of registers, this  array will contain more than one item.|
-|lookup|Defines a key-value pair for values where an integer maps to a string field|
-|invalid|Optional validation against a reference value, which invalidate complete dataset. Could be used, if the inverter delivers sometimes non usable data (e.g. Total Production == 0.0)|
+|scale||Scaling factor for the value read from the logger|
+|rule||Method to interpret the data from the logger ###|
+|registers||Array of register fields that comprises the value. If the value is placed in a number of registers, this  array will contain more than one item.|
+|lookup||Defines a key-value pair for values where an integer maps to a string field|
+||**The following is optional and could be used, if the inverter delivers sometimes non usable data (e.g. Total Production == 0.0)**|
+|validation| ||
+||min|Spefifies the minimum value to accept|
+||max|Specifies the maximum value to accept|
+||invalidate_all| Optional: invalidate complete dataset if specified. If not specified, it will only invalidate the specific parameter|
 
+
+Example yaml file for the example mentioned above:   
+
+~~~ YAML
+    - name: "Total Production"
+      class: "energy"
+      state_class: "total_increasing"
+      uom: "kWh"
+      scale: 0.1
+      rule: 3
+      registers: [0x003F,0x0040]
+      icon: 'mdi:solar-power'
+      validation:
+        min: 0.1 
+        invalidate_all:
+~~~ 
 
 \# (see) https://developers.home-assistant.io/docs/core/entity/
 

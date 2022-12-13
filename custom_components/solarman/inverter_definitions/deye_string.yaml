@@ -59,7 +59,9 @@ parameters:
       rule: 3
       registers: [0x003F,0x0040]
       icon: 'mdi:solar-power'
-      invalid: 0.0
+      validation:
+        min: 0.1 
+        invalidate_all:
 
 
 
@@ -177,9 +179,9 @@ parameters:
       icon: 'mdi:home-lightning-bolt'
 
     - name: "Output Active Power"
-      class: "power"
+      class: "energy"
       state_class: "measurement"
-      uom: "W"
+      uom: "kWh"
       scale: 0.1
       rule: 3
       registers: [0x0056, 0x0057]

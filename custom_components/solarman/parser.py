@@ -1,9 +1,5 @@
 import yaml
 import struct
-import math
-
-
-
 
 # The parameters start in the "business field" 
 # just after the first two bytes.
@@ -41,6 +37,21 @@ class ParameterParser:
         elif rule == 6:
             self.try_parse_bits(rawData,definition, start, length)
         return
+    
+    def do_validate(self, title, value, rule):
+        if 'min' in rule:           
+            if rule['min'] > value:
+                if 'invalide_all' in rule:
+                    raise ValueError(f'Invalidate complete dataset ({title} ~ {value})')
+                return False
+
+        if 'max' in rule:                       
+            if rule['max'] < value:
+                if 'invalide_all' in rule:
+                    raise ValueError(f'Invalidate complete dataset ({title} ~ {value})')
+                return False
+        
+        return True
 
     def try_parse_signed (self, rawData, definition, start, length):
         title = definition['name']
@@ -69,14 +80,15 @@ class ParameterParser:
             else:
                 value = value * scale
                 
+            if 'validation' in definition:
+                if not self.do_validate(title, value, definition['validation']):
+                    return
+                
             if self.is_integer_num (value):
                 self.result[title] = int(value)  
             else:   
                 self.result[title] = value
 
-            if 'invalid' in definition:
-                if math.fabs(definition['invalid'] - value) < 0.001:
-                    raise ValueError(f'Invalidate complete dataset ({title} ~ {value})')
         return
     
     def try_parse_unsigned (self, rawData, definition, start, length):
@@ -102,14 +114,15 @@ class ParameterParser:
                     value = value - definition['offset']  
                                    
                 value = value * scale
+                
+                if 'validation' in definition:
+                    if not self.do_validate(title, value, definition['validation']):
+                        return
+
                 if self.is_integer_num (value):
                     self.result[title] = int(value)  
                 else:   
                     self.result[title] = value   
-
-                if 'invalid' in definition:
-                    if math.fabs(definition['invalid'] - value) < 0.001:
-                        raise ValueError(f'Invalidate complete dataset ({title} ~ {value})')
         return
 
 
