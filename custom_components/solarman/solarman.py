@@ -167,7 +167,7 @@ class Inverter:
                 params.parse(raw_msg, start, length) 
             del raw_msg
         except:
-            logging.exception("An exception was thrown!")
+            log.error("An exception was thrown!")
             result = 0
         finally:
             sock.close()   
