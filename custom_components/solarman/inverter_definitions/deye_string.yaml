@@ -181,7 +181,7 @@ parameters:
     - name: "Output Active Power"
       class: "energy"
       state_class: "measurement"
-      uom: "kWh"
+      uom: "W"
       scale: 0.1
       rule: 3
       registers: [0x0056, 0x0057]
