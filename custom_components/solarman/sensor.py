@@ -143,6 +143,8 @@ class SolarmanSensorText(SolarmanStatus):
         if val is not None:
             if self._field_name in val:
                 self.p_state = val[self._field_name]
+            else:
+                _LOGGER.debug(f'No value recorded for {self._field_name}')
 
 
 #############################################################################################################
