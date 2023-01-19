@@ -1,4 +1,3 @@
-import yaml
 import struct
 
 # The parameters start in the "business field" 
@@ -41,13 +40,13 @@ class ParameterParser:
     def do_validate(self, title, value, rule):
         if 'min' in rule:           
             if rule['min'] > value:
-                if 'invalide_all' in rule:
+                if 'invalidate_all' in rule:
                     raise ValueError(f'Invalidate complete dataset ({title} ~ {value})')
                 return False
 
         if 'max' in rule:                       
             if rule['max'] < value:
-                if 'invalide_all' in rule:
+                if 'invalidate_all' in rule:
                     raise ValueError(f'Invalidate complete dataset ({title} ~ {value})')
                 return False
         
