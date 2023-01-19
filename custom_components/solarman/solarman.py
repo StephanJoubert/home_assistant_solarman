@@ -166,6 +166,9 @@ class Inverter:
             else:
                 log.debug(f"Querying [{start} - {end}] failed, invalid response packet.")
             del raw_msg
+        except:
+            log.error("An exception was thrown!")
+            result = 0
         finally:
             del request
         return result
