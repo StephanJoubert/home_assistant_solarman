@@ -14,6 +14,7 @@ END_OF_MESSAGE = 0x15
 CONTROL_CODE = [0x10, 0x45]
 SERIAL_NO = [0x00, 0x00]
 SEND_DATA_FIELD = [0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
+QUERY_RETRY_ATTEMPTS = 6
 
 class Inverter:
     def __init__(self, path, serial, host, port, mb_slaveid, lookup_file):
@@ -150,27 +151,25 @@ class Inverter:
             return 0
 
 
-    def send_request (self, params, start, end, mb_fc):
+    def send_request(self, params, start, end, mb_fc, sock):
         result = 0
         length = end - start + 1
         request = self.generate_request(start, length, mb_fc)
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.settimeout(10)
         try:
-            sock.connect((self._host, self._port))
             log.debug(request.hex())
-            sock.sendall(request) # Request param 0x3B up to 0x71
+            sock.sendall(request)
             raw_msg = sock.recv(1024)
             log.debug(raw_msg.hex())
             if self.validate_packet(raw_msg) == 1:
                 result = 1
-                params.parse(raw_msg, start, length) 
+                params.parse(raw_msg, start, length)
+            else:
+                log.debug(f"Querying [{start} - {end}] failed, invalid response packet.")
             del raw_msg
         except:
             log.error("An exception was thrown!")
             result = 0
         finally:
-            sock.close()   
             del request
         return result
 
@@ -183,22 +182,59 @@ class Inverter:
     def get_statistics(self):
         result = 1
         params = ParameterParser(self.parameter_definition)
-        for request in self.parameter_definition['requests']:
-            start = request['start']
-            end= request['end']
-            mb_fc = request['mb_functioncode']
-            if 0 == self.send_request(params, start, end, mb_fc):
-                # retry once
-                if 0 == self.send_request(params, start, end, mb_fc):
+        requests = self.parameter_definition['requests']
+        log.debug(f"Starting to query for [{len(requests)}] ranges...")
+
+        def connect_to_server():
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.settimeout(6)
+            sock.connect((self._host, self._port))
+            return sock
+
+        try:
+            sock = connect_to_server()
+
+            for request in requests:
+                start = request['start']
+                end = request['end']
+                mb_fc = request['mb_functioncode']
+                log.debug(f"Querying [{start} - {end}]...")
+
+                attempts_left = QUERY_RETRY_ATTEMPTS
+                while attempts_left > 0:
+                    attempts_left -= 1
                     result = 0
-                    
-        if result == 1: 
-            self.status_lastUpdate = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-            self.status_connection = "Connected"                               
-            self._current_val = params.get_result()
-        else:
+                    try:
+                        result = self.send_request(params, start, end, mb_fc, sock)
+                    except ConnectionResetError:
+                        log.debug(f"Querying [{start} - {end}] failed as client closed stream, trying to re-open.")
+                        sock.close()
+                        sock = connect_to_server()
+                    except TimeoutError:
+                        log.debug(f"Querying [{start} - {end}] failed with timeout")
+                    except Exception as e:
+                        log.debug(f"Querying [{start} - {end}] failed with exception [{type(e).__name__}]")
+                    if result == 0:
+                        log.debug(f"Querying [{start} - {end}] failed, [{attempts_left}] retry attempts left")
+                    else:
+                        log.debug(f"Querying [{start} - {end}] succeeded")
+                        break
+                if result == 0:
+                    log.warning(f"Querying registers [{start} - {end}] failed, aborting.")
+                    break
+
+            if result == 1:
+                log.debug(f"All queries succeeded, exposing updated values.")
+                self.status_lastUpdate = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+                self.status_connection = "Connected"
+                self._current_val = params.get_result()
+            else:
+                self.status_connection = "Disconnected"
+        except Exception as e:
+            log.warning(f"Querying failed on connection start with exception [{type(e).__name__}]")
             self.status_connection = "Disconnected"
-            
+        finally:
+            sock.close()
 
     def get_current_val(self):
         return self._current_val
