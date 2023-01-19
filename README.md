@@ -101,6 +101,7 @@ sensor:
 | Lookup File | Inverters supported | Notes |
 | --- | --- | --- |
 | deye_hybrid.yaml | DEYE/Sunsynk/SolArk Hybrid inverters | used when no lookup specified 
+| deye_sg04lp3.yaml | DEYE/Sunsynk/SolArk Hybrid 8/12K-SG04LP3 | e.g. 12K-SG04LP3-EU
 | deye_string.yaml | DEYE/Sunsynk/SolArk String inverters | eg. SUN-4/5/6/7/8/10/12K-G03 Plus
 | deye_4mppt.yaml | DEYE Microinverter
 | sofar_lsw3.yaml | SOFAR Inverters
