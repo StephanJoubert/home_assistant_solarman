@@ -183,11 +183,12 @@ class Inverter:
         log.debug(f"Starting to query for [{len(requests)}] ranges...")
 
         def connect_to_server():
-            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            sock.settimeout(6)
-            sock.connect((self._host, self._port))
-            return sock
+            server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            server.settimeout(10)
+            server.connect((self._host, self._port))
+            return server
 
+        sock = None
         try:
             sock = connect_to_server()
 
@@ -231,7 +232,8 @@ class Inverter:
             log.warning(f"Querying failed on connection start with exception [{type(e).__name__}]")
             self.status_connection = "Disconnected"
         finally:
-            sock.close()
+            if sock:
+                sock.close()
 
     def get_current_val(self):
         return self._current_val
