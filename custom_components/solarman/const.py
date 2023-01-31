@@ -16,7 +16,8 @@ LOOKUP_FILES = [
     'solis_1p8k-5g.yaml',
     'sofar_g3hyd.yaml',
     'sofar_hyd3k-6k-es.yaml',
-    'custom_parameters.yaml'
+    'custom_parameters.yaml',
+    'zcs_azzurro-ktl-v3.yaml'
 ]
 
 MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=30)
