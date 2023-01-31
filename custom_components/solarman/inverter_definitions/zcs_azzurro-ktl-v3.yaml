@@ -33,6 +33,24 @@ requests:
 parameters:
   - group: Solar
     items:
+      - name: 'PV Generation today'
+        class: 'energy'
+        state_class: 'total'
+        uom: 'kWh'
+        scale: 0.01
+        rule: 1
+        registers: [0x0685, 0x0684]
+        icon: 'mdi:solar-power'
+
+      - name: 'PV Generation total'
+        class: 'energy'
+        state_class: 'total_increasing'
+        uom: 'kWh'
+        scale: 0.1
+        rule: 3
+        registers: [0x0687, 0x0686]
+        icon: 'mdi:solar-power'
+
       - name: 'PV1 Power'
         class: 'power'
         state_class: 'measurement'
@@ -97,6 +115,7 @@ parameters:
         rule: 1
         registers: [0x0484]
         icon: 'mdi:home-lightning-bolt'
+
       - name: 'ActivePower Output Total'
         class: 'power'
         state_class: 'measurement'
@@ -127,6 +146,7 @@ parameters:
           - key: 4
             value: 'Permanent'
         icon: 'mdi:wrench'
+
       - name: 'Module temperature'
         class: 'temperature'
         uom: '°C'
@@ -134,6 +154,7 @@ parameters:
         rule: 2
         registers: [0x0683]
         icon: 'mdi:thermometer'
+
       - name: 'Ambient temperature'
         class: 'temperature'
         uom: '°C'
@@ -141,6 +162,7 @@ parameters:
         rule: 2
         registers: [0x0418]
         icon: 'mdi:thermometer'
+
       - name: 'Radiator temperature'
         class: 'temperature'
         uom: '°C'
@@ -148,25 +170,6 @@ parameters:
         rule: 2
         registers: [0x041A]
         icon: 'mdi:thermometer'
-
-  - group: Generation
-    items:
-      - name: 'PV Generation today'
-        class: 'energy'
-        state_class: 'total'
-        uom: 'kWh'
-        scale: 0.01
-        rule: 1
-        registers: [0x0685, 0x0684]
-        icon: 'mdi:solar-power'
-      - name: 'PV generation total'
-        class: 'energy'
-        state_class: 'total_increasing'
-        uom: 'kWh'
-        scale: 0.1
-        rule: 3
-        registers: [0x0687, 0x0686]
-        icon: 'mdi:solar-power'
 
   - group: Alert
     items:
@@ -191,6 +194,7 @@ parameters:
             0x040F,
             0x0410,
           ]
+
       - name: 'Fault 1'
         class: ''
         state_class: ''
@@ -235,6 +239,7 @@ parameters:
             value: 'ID15'
           - key: 32768
             value: 'ID16'
+
       - name: 'Fault 2'
         class: ''
         state_class: ''
@@ -279,6 +284,7 @@ parameters:
             value: 'ID31 DCI consistency error'
           - key: 32768
             value: 'ID32'
+
       - name: 'Fault 3'
         class: ''
         state_class: ''
@@ -323,6 +329,7 @@ parameters:
             value: 'ID047 Parallel error'
           - key: 32768
             value: 'ID048 Serial number error'
+
       - name: 'Fault 4'
         class: ''
         state_class: ''
@@ -367,6 +374,7 @@ parameters:
             value: 'ID063 '
           - key: 32768
             value: 'ID064 '
+
       - name: 'Fault 5'
         class: ''
         state_class: ''
@@ -411,6 +419,7 @@ parameters:
             value: 'ID079 '
           - key: 32768
             value: 'ID080 '
+
       - name: 'Fault 6'
         class: ''
         state_class: ''
@@ -455,6 +464,7 @@ parameters:
             value: 'ID095 '
           - key: 32768
             value: 'ID096 '
+
       - name: 'Fault 7'
         class: ''
         state_class: ''
@@ -499,6 +509,7 @@ parameters:
             value: 'ID111 Overload protection 2'
           - key: 32768
             value: 'ID112 Overload protection 3'
+
       - name: 'Fault 8'
         class: ''
         state_class: ''
@@ -543,6 +554,7 @@ parameters:
             value: 'ID127 '
           - key: 32768
             value: 'ID128 '
+
       - name: 'Fault 9'
         class: ''
         state_class: ''
@@ -587,6 +599,7 @@ parameters:
             value: 'ID143 Lightning protection permanent fault - AC side'
           - key: 32768
             value: 'ID144 '
+
       - name: 'Fault 10'
         class: ''
         state_class: ''
@@ -631,6 +644,7 @@ parameters:
             value: 'ID159 Lithium battery 3 communication error'
           - key: 32768
             value: 'ID160 Lithium battery 4 communication failure'
+
       - name: 'Fault 11'
         class: ''
         state_class: ''
@@ -675,6 +689,7 @@ parameters:
             value: 'ID175 Fan 7 fault'
           - key: 32768
             value: 'ID176 Meter communication failure'
+
       - name: 'Fault 12'
         class: ''
         state_class: ''
