@@ -188,11 +188,10 @@ class Inverter:
             server.connect((self._host, self._port))
             return server
 
-        sock = None
-        try:
-            sock = connect_to_server()
-
-            for request in requests:
+        for request in requests:
+            sock = None
+            try:
+                sock = connect_to_server()
                 start = request['start']
                 end = request['end']
                 mb_fc = request['mb_functioncode']
@@ -220,20 +219,19 @@ class Inverter:
                 if result == 0:
                     log.warning(f"Querying registers [{start} - {end}] failed, aborting.")
                     break
+            except Exception as e:
+                log.warning(f"Querying failed on connection start with exception [{type(e).__name__}]")
+            finally:
+                if sock:
+                    sock.close()
 
-            if result == 1:
-                log.debug(f"All queries succeeded, exposing updated values.")
-                self.status_lastUpdate = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-                self.status_connection = "Connected"
-                self._current_val = params.get_result()
-            else:
-                self.status_connection = "Disconnected"
-        except Exception as e:
-            log.warning(f"Querying failed on connection start with exception [{type(e).__name__}]")
+        if result == 1:
+            log.debug(f"All queries succeeded, exposing updated values.")
+            self.status_lastUpdate = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+            self.status_connection = "Connected"
+            self._current_val = params.get_result()
+        else:
             self.status_connection = "Disconnected"
-        finally:
-            if sock:
-                sock.close()
 
     def get_current_val(self):
         return self._current_val
