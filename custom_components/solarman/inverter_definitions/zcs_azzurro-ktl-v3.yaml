@@ -116,7 +116,7 @@ parameters:
         registers: [0x0484]
         icon: 'mdi:home-lightning-bolt'
 
-      - name: 'ActivePower Output Total'
+      - name: 'Active Power Output Total'
         class: 'power'
         state_class: 'measurement'
         uom: 'W'
@@ -170,6 +170,15 @@ parameters:
         rule: 2
         registers: [0x041A]
         icon: 'mdi:thermometer'
+
+      - name: 'Insulation Resistance'
+        class: ''
+        state_class: 'measurement'
+        uom: 'Ω'
+        scale: 1
+        rule: 1
+        registers: [0x042B]
+        icon: 'mdi:omega'
 
   - group: Alert
     items:
