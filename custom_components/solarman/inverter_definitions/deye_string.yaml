@@ -122,7 +122,7 @@ parameters:
       icon: 'mdi:home-lightning-bolt'
 
     - name: "Grid Frequency"
-      class: "current"
+      class: "frequency"
       state_class: "measurement"      
       uom: "Hz"
       scale: 0.01
