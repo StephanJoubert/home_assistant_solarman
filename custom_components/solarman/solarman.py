@@ -188,6 +188,8 @@ class Inverter:
             sock.connect((self._host, self._port))
             return sock
 
+        sock = None
+
         try:
             sock = connect_to_server()
 
@@ -231,7 +233,8 @@ class Inverter:
             log.warning(f"Querying failed on connection start with exception [{type(e).__name__}]")
             self.status_connection = "Disconnected"
         finally:
-            sock.close()
+            if sock:
+                sock.close()
 
     def get_current_val(self):
         return self._current_val
