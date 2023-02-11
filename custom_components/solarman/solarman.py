@@ -26,13 +26,11 @@ class Inverter:
         self._current_val = None
         self.status_connection = "Disconnected"
         self.status_lastUpdate = "N/A"
-        if not lookup_file:
-            lookup_file = 'deye_hybrid.yaml'
-        elif lookup_file == 'parameters.yaml':
-            lookup_file = 'deye_hybrid.yaml'
+        self.lookup_file = lookup_file
+        if not self.lookup_file or lookup_file == 'parameters.yaml':
+            self.lookup_file = 'deye_hybrid.yaml'
 
-
-        with open(self.path + lookup_file) as f:
+        with open(self.path + self.lookup_file) as f:
             self.parameter_definition = yaml.full_load(f)
 
     def modbus(self, data):
