@@ -183,13 +183,12 @@ class Inverter:
         log.debug(f"Starting to query for [{len(requests)}] ranges...")
 
         def connect_to_server():
-            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            sock.settimeout(6)
-            sock.connect((self._host, self._port))
-            return sock
+            server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            server.settimeout(6)
+            server.connect((self._host, self._port))
+            return server
 
         sock = None
-
         try:
             sock = connect_to_server()
 
