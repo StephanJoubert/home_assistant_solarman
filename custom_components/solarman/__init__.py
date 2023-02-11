@@ -15,7 +15,7 @@ PLATFORMS: list[str] = ["sensor"]
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Solarman Collector from a config entry."""
     _LOGGER.debug(f'__init__.py:async_setup_entry({entry.as_dict()})')
-    hass.config_entries.async_setup_platforms(entry, PLATFORMS)
+    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     entry.async_on_unload(entry.add_update_listener(update_listener))
     return True
 
