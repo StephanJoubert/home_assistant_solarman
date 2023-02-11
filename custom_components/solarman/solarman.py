@@ -42,23 +42,23 @@ class Inverter:
             for _ in range(8):
                 crc = ((crc >> 1) ^ POLY
                 if (crc & 0x0001)
-                else crc >> 1)  
-        return crc    
+                else crc >> 1)
+        return crc
 
     def get_serial_hex(self):
         serial_hex = hex(self._serial)[2:]
         serial_bytes = bytearray.fromhex(serial_hex)
         serial_bytes.reverse()
         return serial_bytes
-    
+
     def get_read_business_field(self, start, length, mb_fc):
         request_data = bytearray([self._mb_slaveid, mb_fc]) # Function Code
         request_data.extend(start.to_bytes(2, 'big'))
         request_data.extend(length.to_bytes(2, 'big'))
         crc = self.modbus(request_data)
-        request_data.extend(crc.to_bytes(2, 'little'))  
+        request_data.extend(crc.to_bytes(2, 'little'))
         return request_data
-        
+
     def generate_request(self, start, length, mb_fc):
         packet = bytearray([START_OF_MESSAGE])
 
@@ -67,19 +67,19 @@ class Inverter:
         buisiness_field = self.get_read_business_field(start, length, mb_fc)
         packet_data.extend(buisiness_field)
         length = packet_data.__len__()
-        packet.extend(length.to_bytes(2, "little")) 
+        packet.extend(length.to_bytes(2, "little"))
         packet.extend(CONTROL_CODE)
         packet.extend(SERIAL_NO)
-        packet.extend(self.get_serial_hex())    
+        packet.extend(self.get_serial_hex())
         packet.extend(packet_data)
         #Checksum
         checksum = 0
         for i in range(1,len(packet),1):
             checksum += packet[i]
         packet.append(checksum & 0xFF)
-        packet.append(END_OF_MESSAGE)  
-        
-        del packet_data      
+        packet.append(END_OF_MESSAGE)
+
+        del packet_data
         del buisiness_field
         return packet
 
@@ -181,11 +181,12 @@ class Inverter:
         log.debug(f"Starting to query for [{len(requests)}] ranges...")
 
         def connect_to_server():
-            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            sock.settimeout(6)
-            sock.connect((self._host, self._port))
-            return sock
+            server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            server.settimeout(6)
+            server.connect((self._host, self._port))
+            return server
 
+        sock = None
         try:
             sock = connect_to_server()
 
@@ -226,10 +227,11 @@ class Inverter:
             else:
                 self.status_connection = "Disconnected"
         except Exception as e:
-            log.warning(f"Querying failed on connection start with exception [{type(e).__name__}]")
+            log.warning(f"Querying inverter {self._serial} at {self._host}:{self._port} failed on connection start with exception [{type(e).__name__}]")
             self.status_connection = "Disconnected"
         finally:
-            sock.close()
+            if sock:
+                sock.close()
 
     def get_current_val(self):
         return self._current_val
