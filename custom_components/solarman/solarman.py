@@ -51,20 +51,20 @@ class Inverter:
         serial_bytes.reverse()
         return serial_bytes
 
-    def get_read_business_field(self, start, length, mb_fc):
+    def get_business_field(self, start, length, mb_fc):
         request_data = bytearray([self._mb_slaveid, mb_fc]) # Function Code
         request_data.extend(start.to_bytes(2, 'big'))
         request_data.extend(length.to_bytes(2, 'big'))
         crc = self.modbus(request_data)
         request_data.extend(crc.to_bytes(2, 'little'))
-        return request_data
+        return request_data 
 
-    def generate_request(self, start, length, mb_fc):
+    def generate_packet(self, param1, param2, mb_fc):
         packet = bytearray([START_OF_MESSAGE])
 
         packet_data = []
         packet_data.extend (SEND_DATA_FIELD)
-        buisiness_field = self.get_read_business_field(start, length, mb_fc)
+        buisiness_field = self.get_business_field(param1, param2, mb_fc)
         packet_data.extend(buisiness_field)
         length = packet_data.__len__()
         packet.extend(length.to_bytes(2, "little"))
@@ -148,11 +148,16 @@ class Inverter:
         else:
             return 0
 
-
+    def connect_to_server(self):
+        server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server.settimeout(6)
+        server.connect((self._host, self._port))
+        return server
+        
     def send_request(self, params, start, end, mb_fc, sock):
         result = 0
         length = end - start + 1
-        request = self.generate_request(start, length, mb_fc)
+        request = self.generate_packet(start, length, mb_fc)
         try:
             log.debug(request.hex())
             sock.sendall(request)
@@ -168,6 +173,28 @@ class Inverter:
             del request
         return result
 
+    def write_register (self, register, value, mb_fc):
+        sock = None
+        command = None
+        try:
+            sock = self.connect_to_server()
+            if mb_fc:
+                command = self.generate_packet(register, value, mb_fc)
+            else:
+                command = self.generate_packet(register, value, 6)
+            log.debug(command.hex())
+            sock.sendall(command)
+            raw_msg = sock.recv(1024)
+            log.debug(raw_msg.hex())
+            del raw_msg
+        except Exception as e:
+            log.warning(f"Writing to inverter failed with exception [{type(e).__name__}]")
+        finally:
+            if command:
+                del command
+            if sock:
+                del sock
+
     @Throttle (MIN_TIME_BETWEEN_UPDATES)
     def update (self):
         self.get_statistics()
@@ -180,15 +207,11 @@ class Inverter:
         requests = self.parameter_definition['requests']
         log.debug(f"Starting to query for [{len(requests)}] ranges...")
 
-        def connect_to_server():
-            server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            server.settimeout(6)
-            server.connect((self._host, self._port))
-            return server
+
 
         sock = None
         try:
-            sock = connect_to_server()
+            sock = self.connect_to_server()
 
             for request in requests:
                 start = request['start']
@@ -205,7 +228,7 @@ class Inverter:
                     except ConnectionResetError:
                         log.debug(f"Querying [{start} - {end}] failed as client closed stream, trying to re-open.")
                         sock.close()
-                        sock = connect_to_server()
+                        sock = self.connect_to_server()
                     except TimeoutError:
                         log.debug(f"Querying [{start} - {end}] failed with timeout")
                     except Exception as e:
@@ -239,3 +262,8 @@ class Inverter:
     def get_sensors(self):
         params = ParameterParser(self.parameter_definition)
         return params.get_sensors ()
+
+# Service calls
+    def service_write_register(self, register, value, mb_fc):
+        log.warning(f'Write Register : [{register}], value : [{value}], modbus_fc: [{mb_fc}]')
+        self.write_register(register, value, mb_fc)

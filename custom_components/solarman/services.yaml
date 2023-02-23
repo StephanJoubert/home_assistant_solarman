@@ -1,0 +1,36 @@
+write_register:
+  name: Write Single Register to the inverter. USE WITH CARE!
+  description: Write to a MODBUS register
+
+  fields:
+    register:
+      description: Register to write (in decimal)
+      example: "16384"
+      required: true
+      selector:
+        number:
+          min: 0
+          max: 65535 
+          mode: box
+
+    value:
+      description: Value to write
+      example: "1"
+      required: true
+      selector:
+        number:
+          min: 0
+          max: 65535 
+          mode: box
+
+    modbus_function:
+      description: Modbus function
+      example: "6"
+      required: false
+      selector:
+        number:
+          min: 0
+          max: 255  
+          mode: box
+
+  

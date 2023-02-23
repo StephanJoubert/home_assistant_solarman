@@ -18,13 +18,15 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from .const import *
 from .solarman import Inverter
 from .scanner import InverterScanner
+from .services import *
 
 _LOGGER = logging.getLogger(__name__)
 _inverter_scanner = InverterScanner()
 
+
 def _do_setup_platform(hass: HomeAssistant, config, async_add_entities : AddEntitiesCallback):
     _LOGGER.debug(f'sensor.py:async_setup_platform: {config}') 
-   
+    
     inverter_name = config.get(CONF_NAME)
     inverter_host = config.get(CONF_INVERTER_HOST)
     if inverter_host == "0.0.0.0":
@@ -67,6 +69,13 @@ def _do_setup_platform(hass: HomeAssistant, config, async_add_entities : AddEnti
     _LOGGER.debug(hass_sensors)
 
     async_add_entities(hass_sensors)
+    # Register the services with home assistant.    
+    register_services (hass, inverter)
+    
+    
+    
+    
+    
 
 # Set-up from configuration.yaml
 async def async_setup_platform(hass: HomeAssistant, config, async_add_entities : AddEntitiesCallback, discovery_info=None):
