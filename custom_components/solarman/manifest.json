@@ -1,12 +1,12 @@
 {
+  "domain": "solarman",
+  "name": "Solarman",
   "codeowners": ["@StephanJoubert"],
   "config_flow": true,
   "dependencies": [],
   "documentation": "https://github.com/StephanJoubert/home_assistant_solarman/blob/main/README.md",
-  "domain": "solarman",
   "iot_class": "local_polling",
   "issue_tracker": "https://github.com/StephanJoubert/home_assistant_solarman/issues",
-  "name": "Solarman",
   "requirements": ["pyyaml"],
   "version": "1.0.0"
 }
