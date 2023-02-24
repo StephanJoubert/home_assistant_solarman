@@ -112,6 +112,14 @@ parameters:
       registers: [0x0049]
       icon: 'mdi:transmission-tower'
 
+    - name: "Grid Current"
+      class: "current"
+      state_class: "measurement"      
+      uom: "A"
+      scale: 0.1
+      rule: 2
+      registers: [0x004C]
+      icon: 'mdi:home-lightning-bolt'
     - name: "AC Output Frequency"
       class: "frequency"
       state_class: "measurement"      
