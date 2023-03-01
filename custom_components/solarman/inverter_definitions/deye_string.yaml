@@ -151,7 +151,7 @@ parameters:
          value: "FAULT"
       icon: 'mdi:home-lightning-bolt'
 
-    - name: "Total Ouput AC Power"
+    - name: "Total Output AC Power"
       class: "power"
       state_class: "measurement"      
       uom: "W"
