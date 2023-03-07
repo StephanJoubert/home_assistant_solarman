@@ -157,7 +157,7 @@ class SolarmanStatus(SolarmanSensor, Entity):
         return self.p_state
 
     def update(self):
-        self.p_state = getattr(self.inverter, self._field_name)
+        self.p_state = getattr(self.inverter, self._field_name, None)
 
 
 #############################################################################################################
@@ -186,6 +186,7 @@ class SolarmanSensorText(SolarmanStatus):
             if self._field_name in val:
                 self.p_state = val[self._field_name]
             else:
+                self.p_state = None
                 _LOGGER.debug(f'No value recorded for {self._field_name}')
 
 
