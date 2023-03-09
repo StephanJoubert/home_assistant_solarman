@@ -143,11 +143,13 @@ parameters:
       - key: 0
         value: "Stand-by"
       - key: 1
-        value: "Self-checking"
+        value: "Self-check"
       - key: 2
         value: "Normal"
       - key: 3
-        value: "FAULT"
+        value: "Warning"
+      - key: 4
+        value: "Fault"
       icon: 'mdi:home-lightning-bolt'
 
     - name: "Total AC Output Power (Active)"
@@ -158,6 +160,15 @@ parameters:
       rule: 3
       registers: [0x0056, 0x0057]
       icon: 'mdi:home-lightning-bolt'
+      
+    - name: "Radiator Temperature"
+      class: "temperature"
+      uom: "°C"
+      state_class: "measurement"
+      scale: 0.01
+      rule: 1
+      offset: 1000
+      registers: [0x005a]
 
     - name: "Inverter ID"
       class: ""
