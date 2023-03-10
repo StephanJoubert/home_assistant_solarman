@@ -107,7 +107,8 @@ sensor:
 | deye_string.yaml        | DEYE/Sunsynk/SolArk String inverters     | e.g. SUN-4/5/6/7/8/10/12K-G03 Plus                           |
 | deye_4mppt.yaml         | DEYE Microinverter                       |
 | sofar_lsw3.yaml         | SOFAR Inverters                          |
-| sofar_hyd3k-6k.yaml     | SOFAR Hybrid inverter                    | HYD 6000 or rebranded, ex. ZCS Azzurro HYD-ZSS               |
+| sofar_g3hyd.yaml        | SOFAR Hybrid Three-Phase inverter        | HYD 6000 or rebranded (three-phase), ex. ZCS Azzurro 3PH HYD-ZSS |
+| sofar_hyd3k-6k.yaml     | SOFAR Hybrid Single-Phase inverter       | HYD 6000 or rebranded (single-phase), ex. ZCS Azzurro HYD-ZSS|
 | solis_hybrid.yaml       | SOLIS Hybrid inverter                    |
 | solid_1p8k-5g.yaml      | SOLIS 1P8K-5G                            |
 | zcs_azzurro-ktl-v3.yaml | ZCS Azzurro KTL-V3 inverters             | ZCS Azzurro 3.3/4.4/5.5/6.6 KTL-V3 (rebranded Sofar KTLX-G3) |
