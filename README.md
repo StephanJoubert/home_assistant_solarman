@@ -101,11 +101,12 @@ sensor:
 ### Lookup Files
 
 | Lookup File             | Inverters supported                      | Notes                                                        |
-| ----------------------- | ---------------------------------------- | ------------------------------------------------------------ |
+|-------------------------|------------------------------------------|--------------------------------------------------------------|
 | deye_hybrid.yaml        | DEYE/Sunsynk/SolArk Hybrid inverters     | used when no lookup specified                                |
 | deye_sg04lp3.yaml       | DEYE/Sunsynk/SolArk Hybrid 8/12K-SG04LP3 | e.g. 12K-SG04LP3-EU                                          |
 | deye_string.yaml        | DEYE/Sunsynk/SolArk String inverters     | e.g. SUN-4/5/6/7/8/10/12K-G03 Plus                           |
-| deye_4mppt.yaml         | DEYE Microinverter                       |
+| deye_2mppt.yaml         | DEYE Microinverter with 2 MPPT Trackers  | e.g. SUN{600/800/1000}G3
+| deye_4mppt.yaml         | DEYE Microinverter with 4 MPPT Trackers  |
 | sofar_lsw3.yaml         | SOFAR Inverters                          |
 | sofar_hyd3k-6k.yaml     | SOFAR Hybrid inverter                    | HYD 6000 or rebranded, ex. ZCS Azzurro HYD-ZSS               |
 | solis_hybrid.yaml       | SOLIS Hybrid inverter                    |
