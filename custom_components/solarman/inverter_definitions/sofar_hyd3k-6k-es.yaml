@@ -707,7 +707,7 @@ parameters:
       -  key: 30
          value: "ID30 Bunk current is too high"
       -  key: 31
-         value: "ID31 The ouput current is too high"
+         value: "ID31 The output current is too high"
       -  key: 32
          value: "ID32 The input current is too high"
       -  key: 33
