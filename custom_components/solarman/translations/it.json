@@ -1,0 +1,25 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "Questo dispositivo è già configurato"
+    },
+    "error": {
+      "cannot_connect": "Impossibile connettersi",
+      "invalid_host": "Nome o Indirizzo IP forniti non sono validi",
+      "unknown": "Errore"
+    },
+    "step": {
+      "user": {
+        "title": "Configurazione della connessione inverter",
+        "data": {
+          "name": "Questo valore sarà il prefisso di tutte le entità (scegli il nome che più ritieni adatto)",
+          "inverter_host": "Inverter (nome di dominio o indirizzo IP)",
+          "inverter_serial": "Numero seriale del logger (da interfaccia web)",
+          "inverter_port": "Porta (solitamente 8899)",
+          "mb_slaveid": "Slave ID di Modbus (solitamente 1)",
+          "lookup_file": "File YAML contenente la definizione Inverter"
+        }
+      }
+    }
+  }
+}
