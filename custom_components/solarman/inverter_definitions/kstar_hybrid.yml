@@ -589,6 +589,9 @@ parameters:
         registers: [3208, 3209, 3210, 3211, 3212, 3213, 3214, 3215]
         icon: 'mdi:wrench'
 
+      # ARM AND DSP version numbers ("VX.Y.Z") are set in the two bytes on each register. The first byte contains the
+      # X.Y part (scale 0.1), and the second by contains the Z part. How should we transform these values from a number
+      # to a parsed string?
       - name: "ARM Version Number"
         class: ""
         state_class: "measurement"
@@ -660,7 +663,7 @@ parameters:
   # - T: Tertiary
   - group: R Phase
     items:
-      - name: "R Inverter Voltage"
+      - name: "R-phase Inverter Voltage"
         class: "voltage"
         state_class: "measurement"
         uom: "V"
@@ -669,7 +672,7 @@ parameters:
         registers: [ 3123 ]
         icon: 'mdi:home-lightning-bolt'
 
-      - name: "R Inverter Current"
+      - name: "R-phase Inverter Current"
         class: "current"
         state_class: "measurement"
         uom: "A"
@@ -678,7 +681,7 @@ parameters:
         registers: [ 3124 ]
         icon: 'mdi:home-lightning-bolt'
 
-      - name: "R Inverter Frequency"
+      - name: "R-phase Inverter Frequency"
         class: "frequency"
         state_class: "measurement"
         uom: "Hz"
@@ -687,7 +690,7 @@ parameters:
         registers: [ 3125 ]
         icon: 'mdi:home-lightning-bolt'
 
-      - name: "R Inverter Power"
+      - name: "R-phase Inverter Power"
         class: "power"
         state_class: "measurement"
         uom: "W"
@@ -696,7 +699,7 @@ parameters:
         registers: [ 3126 ]
         icon: 'mdi:home-lightning-bolt'
 
-      - name: "R Backup Voltage"
+      - name: "R-phase Backup Voltage"
         class: "voltage"
         state_class: "measurement"
         uom: "V"
@@ -705,7 +708,7 @@ parameters:
         registers: [ 3135 ]
         icon: 'mdi:home-lightning-bolt'
 
-      - name: "R Backup Current"
+      - name: "R-phase Backup Current"
         class: "current"
         state_class: "measurement"
         uom: "A"
@@ -714,7 +717,7 @@ parameters:
         registers: [ 3136 ]
         icon: 'mdi:home-lightning-bolt'
 
-      - name: "R Backup Power"
+      - name: "R-phase Backup Power"
         class: "power"
         state_class: "measurement"
         uom: "W"
@@ -723,7 +726,7 @@ parameters:
         registers: [ 3137 ]
         icon: 'mdi:home-lightning-bolt'
 
-      - name: "R Load Power"
+      - name: "R-phase Load Power"
         class: "power"
         state_class: "measurement"
         uom: "W"
