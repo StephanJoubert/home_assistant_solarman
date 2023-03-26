@@ -113,16 +113,16 @@ parameters:
         uom: "kWh"
         scale: 1
         rule: 3
-        registers: [ 3040,3039 ]
+        registers: [ 3040, 3039 ]
         icon: 'mdi:solar-power'
 
       - name: "Cumulative Production"
         class: "energy"
-        state_class: "total_increasing"
+        state_class: "total"
         uom: "kWh"
         scale: 0.1
         rule: 3
-        registers: [ 3042,3041 ]
+        registers: [ 3042, 3041 ]
         icon: 'mdi:solar-power'
 
   - group: Power Grid
@@ -156,7 +156,7 @@ parameters:
 
       - name: "Cumulative Energy Purchased"
         class: "energy"
-        state_class: "total_increasing"
+        state_class: "total"
         uom: "kWh"
         scale: 0.1
         rule: 3
@@ -170,7 +170,7 @@ parameters:
         scale: 0.1
         rule: 1
         registers: [ 3116 ]
-        icon: 'mdi:transmission-tower-import'
+        icon: 'mdi:transmission-tower-export'
 
       - name: "Monthly Energy Feed-In"
         class: "energy"
@@ -179,7 +179,7 @@ parameters:
         scale: 1
         rule: 3
         registers: [ 3118, 3117 ]
-        icon: 'mdi:transmission-tower-import'
+        icon: 'mdi:transmission-tower-export'
 
       - name: "Yearly Energy Feed-In"
         class: "energy"
@@ -188,11 +188,11 @@ parameters:
         scale: 1
         rule: 3
         registers: [ 3120, 3119 ]
-        icon: 'mdi:transmission-tower-import'
+        icon: 'mdi:transmission-tower-export'
 
       - name: "Cumulative Grid Feed-In"
         class: "energy"
-        state_class: "total_increasing"
+        state_class: "total"
         uom: "kWh"
         scale: 0.1
         rule: 3
@@ -214,7 +214,7 @@ parameters:
         class: "energy"
         state_class: "total_increasing"
         uom: "kWh"
-        scale: 0.1
+        scale: 1
         rule: 3
         registers: [ 3149, 3148 ]
         icon: 'mdi:home-lightning-bolt'
@@ -223,14 +223,14 @@ parameters:
         class: "energy"
         state_class: "total_increasing"
         uom: "kWh"
-        scale: 0.1
+        scale: 1
         rule: 3
         registers: [ 3151, 3150 ]
         icon: 'mdi:home-lightning-bolt'
 
       - name: "Cumulative Consumption"
         class: "energy"
-        state_class: "total_increasing"
+        state_class: "total"
         uom: "kWh"
         scale: 0.1
         rule: 3
@@ -418,7 +418,7 @@ parameters:
         - key: 32
           value: "E10KT"
         - key: 33
-          value: "BE8KT"
+          value: "E8KT"
         - key: 34
           value: "E12KT"
         icon: 'mdi:wrench'
@@ -691,7 +691,7 @@ parameters:
         class: "power"
         state_class: "measurement"
         uom: "W"
-        scale: 0.1
+        scale: 1
         rule: 2
         registers: [ 3126 ]
         icon: 'mdi:home-lightning-bolt'
@@ -709,7 +709,7 @@ parameters:
         class: "current"
         state_class: "measurement"
         uom: "A"
-        scale: 0.1
+        scale: 0.01
         rule: 1
         registers: [ 3136 ]
         icon: 'mdi:home-lightning-bolt'
@@ -718,7 +718,7 @@ parameters:
         class: "power"
         state_class: "measurement"
         uom: "W"
-        scale: 0.1
+        scale: 1
         rule: 1
         registers: [ 3137 ]
         icon: 'mdi:home-lightning-bolt'
