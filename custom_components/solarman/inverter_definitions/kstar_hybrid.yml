@@ -199,9 +199,19 @@ parameters:
         registers: [ 3122, 3121 ]
         icon: 'mdi:transmission-tower-export'
 
+      # Should this be the sum of the 3 phases "Meter Power"?
+      - name: "Total Grid Power"
+        class: "power"
+        state_class: "measurement"
+        uom: "W"
+        scale: 1
+        rule: 2
+        registers: [ 3100 ]
+        icon: 'mdi:home-lightning-bolt'
+
   - group: Electricity Consumption
     items:
-      # Should this be the sum of the 3 phases "Load Power"|"?
+      # Should this be the sum of the 3 phases "Load Power"?
       - name: "Total Consumption Power"
         class: "power"
         state_class: "measurement"
