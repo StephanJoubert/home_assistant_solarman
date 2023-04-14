@@ -11,6 +11,7 @@ LOOKUP_FILES = [
     'deye_hybrid.yaml',
     'deye_sg04lp3.yaml',
     'deye_string.yaml',
+    'kstar_hybrid.yaml',
     'sofar_lsw3.yaml',
     'sofar_wifikit.yaml',
     'solis_hybrid.yaml',
