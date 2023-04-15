@@ -26,8 +26,8 @@ parameters:
         state_class: 'total'
         uom: 'kWh'
         scale: 0.01
-        rule: 1
-        registers: [0x0685, 0x0684]
+        rule: 3
+        registers: [0x0684,0x0685]
         icon: 'mdi:solar-power'
 
       - name: 'PV Generation total'
@@ -36,7 +36,7 @@ parameters:
         uom: 'kWh'
         scale: 0.1
         rule: 3
-        registers: [0x0687, 0x0686]
+        registers: [0x0686,0x0687]
         icon: 'mdi:solar-power'
 
       - name: 'PV1 Power'
