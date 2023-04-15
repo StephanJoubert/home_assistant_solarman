@@ -27,7 +27,7 @@ parameters:
         uom: 'kWh'
         scale: 0.01
         rule: 3
-        registers: [0x0684,0x0685]
+        registers: [0x0685,0x0684]
         icon: 'mdi:solar-power'
 
       - name: 'PV Generation total'
@@ -36,7 +36,7 @@ parameters:
         uom: 'kWh'
         scale: 0.1
         rule: 3
-        registers: [0x0686,0x0687]
+        registers: [0x0687,0x0686]
         icon: 'mdi:solar-power'
 
       - name: 'PV1 Power'
@@ -147,7 +147,7 @@ parameters:
         uom: "kWh"
         scale: 0.01
         rule: 1
-        registers: [0x0694,0x0695]
+        registers: [0x0695,0x0694]
         icon: 'mdi:battery-clock'
 
       - name: "Battery Total Energy Charged"
@@ -156,7 +156,7 @@ parameters:
         uom: "kWh"
         scale: 1
         rule: 1
-        registers: [0x0696,0x0697]
+        registers: [0x0697,0x0696]
         icon: 'mdi:battery-clock'
 
       - name: "Battery Total Energy Dischaged"
@@ -165,7 +165,7 @@ parameters:
         uom: "kWh"
         scale: 1
         rule: 1
-        registers: [0x069A,0x069B]
+        registers: [0x069B,0x069A]
         icon: 'mdi:battery-clock-outline'
 
       - name: "Battery Cicles"
@@ -192,7 +192,7 @@ parameters:
         uom: 'kWh'
         scale: 0.01        
         rule: 3
-        registers: [0x0694,0x0695]
+        registers: [0x0695,0x0694]
         icon: 'mdi:home-lightning-bolt'
 
       - name: 'Battery Discharge Today'
@@ -201,7 +201,7 @@ parameters:
         uom: 'kWh'
         scale: 0.01        
         rule: 3
-        registers: [0x0698,0x0699]
+        registers: [0x0699,0x0698]
         icon: 'mdi:home-lightning-bolt'
 
   - group: Grid
@@ -230,7 +230,7 @@ parameters:
         uom: 'kWh'
         scale: 0.01        
         rule: 3
-        registers: [0x068C,0x068D]
+        registers: [0x068D,0x068C]
         icon: 'mdi:home-lightning-bolt'
 
       - name: 'Energy Selling Today'
@@ -239,7 +239,7 @@ parameters:
         uom: 'kWh'
         scale: 0.01        
         rule: 3
-        registers: [0x0690,0x0691]
+        registers: [0x0691,0x0690]
         icon: 'mdi:home-lightning-bolt'
 
   - group: Inverter
