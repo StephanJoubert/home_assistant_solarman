@@ -188,7 +188,7 @@ parameters:
 
       - name: 'Battery Charge Today'
         class: 'energy'
-        state_class: 'measurement'
+        state_class: 'total'
         uom: 'kWh'
         scale: 0.01        
         rule: 3
@@ -197,7 +197,7 @@ parameters:
 
       - name: 'Battery Discharge Today'
         class: 'energy'
-        state_class: 'measurement'
+        state_class: 'total'
         uom: 'kWh'
         scale: 0.01        
         rule: 3
