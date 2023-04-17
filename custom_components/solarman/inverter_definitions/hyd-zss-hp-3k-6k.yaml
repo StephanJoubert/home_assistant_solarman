@@ -141,15 +141,6 @@ parameters:
         registers: [0x0607]
         icon: 'mdi:battery-heart-outline'
 
-      - name: "Battery Daily Charge"
-        class: "energy"
-        state_class: "total"
-        uom: "kWh"
-        scale: 0.01
-        rule: 1
-        registers: [0x0695,0x0694]
-        icon: 'mdi:battery-clock'
-
       - name: "Battery Total Energy Charged"
         class: "energy"
         state_class: "total"
