@@ -223,6 +223,15 @@ parameters:
         rule: 3
         registers: [0x068D,0x068C]
         icon: 'mdi:home-lightning-bolt'
+        
+      - name: 'Energy Purchase Total'
+        class: 'energy'
+        state_class: 'total_increasing'
+        uom: 'kWh'
+        scale: 0.1        
+        rule: 3
+        registers: [0x068F,0x068E]
+        icon: 'mdi:home-lightning-bolt'
 
       - name: 'Energy Selling Today'
         class: 'energy'
@@ -231,6 +240,15 @@ parameters:
         scale: 0.01        
         rule: 3
         registers: [0x0691,0x0690]
+        icon: 'mdi:home-lightning-bolt'
+
+      - name: 'Energy Selling Total'      
+        class: 'energy'
+        state_class: 'total_increasing'
+        uom: 'kWh'
+        scale: 0.1        
+        rule: 3
+        registers: [0x0693,0x0691]
         icon: 'mdi:home-lightning-bolt'
 
   - group: Inverter
