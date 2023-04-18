@@ -248,7 +248,7 @@ parameters:
         uom: 'kWh'
         scale: 0.1        
         rule: 3
-        registers: [0x0693,0x0691]
+        registers: [0x0693,0x0692]
         icon: 'mdi:home-lightning-bolt'
 
   - group: Inverter
