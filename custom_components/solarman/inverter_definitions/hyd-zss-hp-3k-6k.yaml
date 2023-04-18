@@ -141,7 +141,7 @@ parameters:
         registers: [0x0607]
         icon: 'mdi:battery-heart-outline'
 
-      - name: "Battery Total Energy Charged"
+      - name: "Battery Charge Total"
         class: "energy"
         state_class: "total"
         uom: "kWh"
@@ -150,7 +150,7 @@ parameters:
         registers: [0x0697,0x0696]
         icon: 'mdi:battery-clock'
 
-      - name: "Battery Total Energy Dischaged"
+      - name: "Battery Discharge Total"
         class: "energy"
         state_class: "total"
         uom: "kWh"
