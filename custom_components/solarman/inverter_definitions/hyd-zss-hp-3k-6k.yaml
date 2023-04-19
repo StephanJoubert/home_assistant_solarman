@@ -143,7 +143,7 @@ parameters:
 
       - name: "Battery Charge Total"
         class: "energy"
-        state_class: "total"
+        state_class: "total_increasing"
         uom: "kWh"
         scale: 0.1
         rule: 1
@@ -152,7 +152,7 @@ parameters:
 
       - name: "Battery Discharge Total"
         class: "energy"
-        state_class: "total"
+        state_class: "total_increasing"
         uom: "kWh"
         scale: 0.1
         rule: 1
