@@ -145,7 +145,7 @@ parameters:
         class: "energy"
         state_class: "total"
         uom: "kWh"
-        scale: 1
+        scale: 0.1
         rule: 1
         registers: [0x0697,0x0696]
         icon: 'mdi:battery-clock'
@@ -154,12 +154,12 @@ parameters:
         class: "energy"
         state_class: "total"
         uom: "kWh"
-        scale: 1
+        scale: 0.1
         rule: 1
         registers: [0x069B,0x069A]
         icon: 'mdi:battery-clock-outline'
 
-      - name: "Battery Cicles"
+      - name: "Battery Cycles"
         class: ""
         state_class: ""
         uom: "Charges"
