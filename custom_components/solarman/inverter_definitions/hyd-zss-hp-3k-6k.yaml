@@ -17,6 +17,9 @@ requests:
   - start: 0x0682
     end: 0x069B
     mb_functioncode: 0x03
+  - start: 0x0504
+    end: 0x0504
+    mb_functioncode: 0x03
 
 parameters:
   - group: Solar
