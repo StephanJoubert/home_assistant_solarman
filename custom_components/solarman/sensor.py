@@ -186,7 +186,8 @@ class SolarmanSensorText(SolarmanStatus):
             if self._field_name in val:
                 self.p_state = val[self._field_name]
             else:
-                self.p_state = None
+                if self.uom in ("W", "kW", "°C", "Hz", "V", "A", "VA", "%"):
+                    self.p_state = None
                 _LOGGER.debug(f'No value recorded for {self._field_name}')
 
 
