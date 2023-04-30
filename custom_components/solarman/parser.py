@@ -35,6 +35,10 @@ class ParameterParser:
             self.try_parse_ascii(rawData,definition, start, length)
         elif rule == 6:
             self.try_parse_bits(rawData,definition, start, length)
+        elif rule == 7:
+            self.try_parse_version(rawData,definition, start, length)
+        elif rule == 8:
+            self.try_parse_datetime(rawData,definition, start, length)
         return
     
     def do_validate(self, title, value, rule):
@@ -166,6 +170,49 @@ class ParameterParser:
             self.result[title] = value
         return 
     
+    def try_parse_version (self, rawData, definition, start, length):
+        title = definition['name']         
+        found = True
+        value = ''
+        for r in definition['registers']:
+            index = r - start   # get the decimal value of the register'
+            if (index >= 0) and (index < length):
+                offset = OFFSET_PARAMS + (index * 2)
+                temp = struct.unpack('>H', rawData[offset:offset + 2])[0]
+                value = value + str(temp >> 12) + "." +  str(temp >> 8 & 0x0F) + "." + str(temp >> 4 & 0x0F) + "." + str(temp & 0x0F)
+            else:
+                found = False
+ 
+        if found:
+            self.result[title] = value
+        return
+
+    def try_parse_datetime (self, rawData, definition, start, length):
+        title = definition['name']         
+        found = True
+        value = ''
+        print("start: ", start)
+        for i,r in enumerate(definition['registers']):
+            index = r - start   # get the decimal value of the register'
+            print ("index: ",index)
+            if (index >= 0) and (index < length):
+                offset = OFFSET_PARAMS + (index * 2)
+                temp = struct.unpack('>H', rawData[offset:offset + 2])[0]
+                if(i==0):
+                    value = value + str(temp >> 8)  + "/" + str(temp & 0xFF) + "/"
+                elif (i==1):
+                    value = value + str(temp >> 8)  + " " + str(temp & 0xFF) + ":"
+                elif(i==2):
+                    value = value + str(temp >> 8)  + ":" + str(temp & 0xFF)
+                else:
+                    value = value + str(temp >> 8)  + str(temp & 0xFF)
+            else:
+                found = False
+ 
+        if found:
+            self.result[title] = value
+        return
+ 
     def get_sensors (self):
         result = []
         for i in self._lookups['parameters']:
