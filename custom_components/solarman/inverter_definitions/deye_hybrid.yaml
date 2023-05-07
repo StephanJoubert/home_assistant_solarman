@@ -109,6 +109,24 @@ parameters:
       registers: [0x004A,0x004B]
       icon: 'mdi:battery-minus'
 
+    - name: "Daily Battery Charge"
+      class: "energy"
+      state_class: "total_increasing"      
+      uom: "kWh"
+      scale: 0.1
+      rule: 1
+      registers: [0x0046]
+      icon: 'mdi:battery-plus'
+      
+    - name: "Daily Battery Discharge"
+      class: "energy"
+      state_class: "total_increasing"      
+      uom: "kWh"
+      scale: 0.1
+      rule: 1
+      registers: [0x0047]
+      icon: 'mdi:battery-minus'
+
     - name: "Battery Status"
       class: ""
       state_class: "measurement"
