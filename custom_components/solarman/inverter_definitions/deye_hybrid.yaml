@@ -245,7 +245,7 @@ parameters:
       rule: 2
       registers: [0x00AA]
       icon: 'mdi:transmission-tower'
-
+      
     - name: "External CT L2 Power"
       class: "power"
       state_class: "measurement"
@@ -436,6 +436,15 @@ parameters:
       rule: 2
       registers: [0x00AE]
       icon: 'mdi:home-lightning-bolt'
+      
+    - name: "Load Frequency"
+      class: ""
+      state_class: "measurement"      
+      uom: "Hz"
+      scale: 0.01
+      rule: 1
+      registers: [0x00C0]
+      icon: 'mdi:lightning-bolt-outline'
 
     - name: "DC Temperature"
       class: "temperature"
