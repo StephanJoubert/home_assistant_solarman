@@ -1,0 +1,25 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "Gerät ist bereits konfiguriert"
+    },
+    "error": {
+      "cannot_connect": "Verbindung fehlgeschlagen",
+      "invalid_host": "Ungültiger Hostname oder ungültige IP-Adresse",
+      "unknown": "Unerwarteter Fehler"
+    },
+    "step": {
+      "user": {
+        "title": "Konfiguration der Verbindung zum Wechselrichter",
+        "data": {
+          "name": "Prefix für alle Parameterwerte (nach Belieben zu ändern)",
+          "inverter_host": "Host (IP-Adresse oder Hostname)",
+          "inverter_serial": "Seriennummer des Geräts (über die Weboberfläche abrufbar)",
+          "inverter_port": "Port (normalerweise 8899)",
+          "mb_slaveid": "Modbus-Slave-ID (normalerweise 1)",
+          "lookup_file": "YAML-Datei mit der Parameter-Definition"
+        }
+      }
+    }
+  }
+}
