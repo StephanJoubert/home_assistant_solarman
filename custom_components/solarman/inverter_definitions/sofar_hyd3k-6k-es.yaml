@@ -14,7 +14,7 @@ parameters:
  - group: solar
    items:
     - name: "PV Instant Generated PW"
-      class: "energy"
+      class: "power"
       state_class: "measurement"
       uom: "kW"
       scale: 0.01
