@@ -55,6 +55,8 @@ parameters:
       rule: 1
       registers: [0x003C]
       icon: 'mdi:solar-power'
+      validation:
+        min: 0.1
 
     - name: "Daily Production 1"
       class: "energy"
@@ -64,6 +66,8 @@ parameters:
       rule: 1
       registers: [0x0041]
       icon: 'mdi:solar-power'
+      validation:
+        min: 0.1
 
     - name: "Daily Production 2"
       class: "energy"
@@ -73,6 +77,8 @@ parameters:
       rule: 1
       registers: [0x0042]
       icon: 'mdi:solar-power'
+      validation:
+        min: 0.1
 
     - name: "Total Production"
       class: "energy"
@@ -93,6 +99,8 @@ parameters:
       rule: 3
       registers: [0x0045]
       icon: 'mdi:solar-power'
+      validation:
+        min: 0.1
 
     - name: "Total Production 2"
       class: "energy"
@@ -102,6 +110,8 @@ parameters:
       rule: 3
       registers: [0x0047]
       icon: 'mdi:solar-power'
+      validation:
+        min: 0.1
 
     - name: "Active Power Regulations"
       class: ""
