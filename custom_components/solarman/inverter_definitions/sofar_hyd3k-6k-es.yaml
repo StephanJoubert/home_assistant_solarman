@@ -143,7 +143,7 @@ parameters:
     - name: "Total Grid Return"
       class: "energy"
       state_class: "total"
-      uom: "KWh"
+      uom: "kWh"
       scale: 1
       rule: 3
       registers: [0x021F,0x021E]
@@ -152,7 +152,7 @@ parameters:
     - name: "Total Grid Consumption"
       class: "Energy"
       state_class: "total"
-      uom: "KWh"
+      uom: "kWh"
       scale: 1
       rule: 3
       registers: [0x0221,0x0220]
@@ -161,7 +161,7 @@ parameters:
     - name: "Total Power Consumption"
       class: "energy"
       state_class: "total"
-      uom: "KWh"
+      uom: "kWh"
       scale: 1
       rule: 3
       registers: [0x0223,0x0222]
@@ -173,7 +173,7 @@ parameters:
     - name: "Power Consumption"
       class: ""
       state_class: ""
-      uom: "KW"
+      uom: "kW"
       scale: 0.01
       rule: 1
       registers: [0x0213]
@@ -303,7 +303,7 @@ parameters:
     - name: "Battery Power"
       class: "power"
       state_class: "measurement"
-      uom: "KW"
+      uom: "kW"
       scale: 0.01
       rule: 2
       registers: [0x0237]
@@ -339,7 +339,7 @@ parameters:
     - name: "Battery Total Charge"
       class: "energy"
       state_class: "total"
-      uom: "KWh"
+      uom: "kWh"
       scale: 1
       rule: 3
       registers: [0x0227,0x0226]
@@ -348,7 +348,7 @@ parameters:
     - name: "Battery Total Discharge"
       class: "energy"
       state_class: "total"
-      uom: "KWh"
+      uom: "kWh"
       scale: 1
       rule: 3
       registers: [0x0229,0x0228]
@@ -1059,7 +1059,7 @@ parameters:
     - name: "Charge / Discharge Power"
       class: ""
       state_class: ""
-      uom: "KW"
+      uom: "kW"
       scale: 0.01
       rule: 2
       registers: [0x020D]
@@ -1068,7 +1068,7 @@ parameters:
     - name: "Feed in / out power"
       class: ""
       state_class: ""
-      uom: "KW"
+      uom: "kW"
       scale: 0.01
       rule: 2
       registers: [0x0212]
@@ -1077,7 +1077,7 @@ parameters:
     - name: "Input/Output Power"
       class: "power"
       state_class: "measurement"
-      uom: "KW"
+      uom: "kW"
       scale: 0.01
       rule: 2
       registers: [0x0214]
