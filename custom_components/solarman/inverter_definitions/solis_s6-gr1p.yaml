@@ -1,7 +1,5 @@
-# Solis Single Phase Inverter
-# 1P8K-5G
-# Modbus information derived by test and comparing to Solis Cloud
-# Gedger V.0.1 May 2022
+# Solis S6-GR1P4.6K Configuration
+# NH-Networks 2023
 #
 requests:
   - start: 2999
