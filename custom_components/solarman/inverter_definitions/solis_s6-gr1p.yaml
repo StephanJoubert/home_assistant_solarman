@@ -246,8 +246,8 @@ parameters:
       class: "power"
       state_class: "measurement"
       uom: "W"
-      scale: 0.001
-      rule: 3
+      scale: 1
+      rule: 1
       registers: [3005, 3004]
       icon: 'mdi:solar-power'
 
