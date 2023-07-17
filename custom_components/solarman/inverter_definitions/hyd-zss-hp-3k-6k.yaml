@@ -26,7 +26,7 @@ parameters:
     items:
       - name: 'PV Generation today'
         class: 'energy'
-        state_class: 'total'
+        state_class: 'total_increasing'
         uom: 'kWh'
         scale: 0.01
         rule: 3
@@ -182,7 +182,7 @@ parameters:
 
       - name: 'Battery Charge Today'
         class: 'energy'
-        state_class: 'total'
+        state_class: 'total_increasing'
         uom: 'kWh'
         scale: 0.01        
         rule: 3
@@ -191,7 +191,7 @@ parameters:
 
       - name: 'Battery Discharge Today'
         class: 'energy'
-        state_class: 'total'
+        state_class: 'total_increasing'
         uom: 'kWh'
         scale: 0.01        
         rule: 3
@@ -229,7 +229,7 @@ parameters:
         
       - name: 'Energy Purchase Today'
         class: 'energy'
-        state_class: 'total'
+        state_class: 'total_increasing'
         uom: 'kWh'
         scale: 0.01        
         rule: 3
@@ -247,7 +247,7 @@ parameters:
 
       - name: 'Energy Selling Today'
         class: 'energy'
-        state_class: 'total'
+        state_class: 'total_increasing'
         uom: 'kWh'
         scale: 0.01        
         rule: 3
