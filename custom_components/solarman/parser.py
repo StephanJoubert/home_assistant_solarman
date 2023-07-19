@@ -110,6 +110,10 @@ class ParameterParser:
             else:
                 found = False
         if found:
+            if 'mask' in definition:
+                mask = definition['mask']
+                value &= mask
+
             if 'lookup' in definition:
                 self.result[title] = self.lookup_value (value, definition['lookup'])
             else:
