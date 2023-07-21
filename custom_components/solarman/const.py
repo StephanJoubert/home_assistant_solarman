@@ -4,7 +4,7 @@ DOMAIN = 'solarman'
 
 DEFAULT_PORT_INVERTER = 8899
 DEFAULT_INVERTER_MB_SLAVEID = 1
-DEFAULT_LOOKUP_FILE = 'deye_hybrid.yaml'
+DEFAULT_LOOKUP_FILE = 'solis_s6-gr1p.yaml'
 LOOKUP_FILES = [
     'deye_2mppt.yaml',
     'deye_4mppt.yaml',
@@ -20,11 +20,11 @@ LOOKUP_FILES = [
     'sofar_g3hyd.yaml',
     'sofar_hyd3k-6k-es.yaml',
     'zcs_azzurro-ktl-v3.yaml',
-    'hyd-zss-hp-3k-6k.yaml',
+    'solis_s6-gr1p.yaml',
     'custom_parameters.yaml'
 ]
 
-MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=30)
+MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=15)
 
 CONF_INVERTER_HOST = 'inverter_host'
 CONF_INVERTER_PORT = 'inverter_port'
