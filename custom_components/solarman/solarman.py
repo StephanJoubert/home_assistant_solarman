@@ -6,6 +6,7 @@ from homeassistant.util import Throttle
 from datetime import datetime
 from .parser import ParameterParser
 from .const import *
+from random import randrange
 
 log = logging.getLogger(__name__)
 
@@ -32,6 +33,16 @@ class Inverter:
 
         with open(self.path + self.lookup_file) as f:
             self.parameter_definition = yaml.full_load(f)
+
+        # this value is used to validate the request packet number last sent, to actual response packets received
+        self.current_sequence_number = None
+
+    def advance_sequence_number(self):
+        # generate the initial value randomly and increment from then forward
+        if self.current_sequence_number is None:
+            self.current_sequence_number = randrange(0x01, 0xFF)
+        else:
+            self.current_sequence_number = (self.current_sequence_number + 1) & 0xFF # prevent overflow
 
     def modbus(self, data):
         POLY = 0xA001
@@ -60,6 +71,8 @@ class Inverter:
         return request_data 
 
     def generate_packet(self, param1, param2, mb_fc):
+        # set the next sequence number to use for building the request
+        self.advance_sequence_number()
         packet = bytearray([START_OF_MESSAGE])
 
         packet_data = []
@@ -69,7 +82,8 @@ class Inverter:
         length = packet_data.__len__()
         packet.extend(length.to_bytes(2, "little"))
         packet.extend(CONTROL_CODE)
-        packet.extend(SERIAL_NO)
+        # this next field will be echoed back in the response message
+        packet.extend(struct.pack("<H", self.current_sequence_number)) 
         packet.extend(self.get_serial_hex())
         packet.extend(packet_data)
         #Checksum
@@ -83,25 +97,25 @@ class Inverter:
         del buisiness_field
         return packet
 
-    def validate_packet(self, packet):
+    def validate_packet(self, packet, length):
         # Perform some checks to ensure the received packet is correct
         # Start with the outer V5 logger packet and work inwards towards the embedded modbus frame
 
         # Does the v5 packet start and end with what we expect?
         if packet[0] != 0xa5 or packet[len(packet) - 1] != 0x15:
-            log.debug("unexpected v5 packet start/stop")
+            log.warning("unexpected v5 packet start/stop")
             return 0
         # Does the v5 packet have the correct checksum?
         elif self.validate_v5_checksum(packet) == 0:
-            log.debug("invalid v5 checksum")
+            log.warning("invalid v5 checksum")
             return 0
         # Is the control code what we expect?  Note: We sometimes see keepalives appear (0x4710)
         elif packet[3:5] != struct.pack("<H", 0x1510):
-            log.debug("unexpected v5 control code")
+            log.warning("unexpected v5 control code")
             return 0
         # Is the v5 packet of the expected type?
         elif packet[11] != 0x02:
-            log.debug("unexpected v5 frame type")
+            log.warning("unexpected v5 frame type")
             return 0
 
         # Move onto the encapsulated modbus frame
@@ -109,12 +123,30 @@ class Inverter:
 
         # Is the modbus CRC correct?
         if self.validate_modbus_crc(modbus_frame) == 0:
-            log.debug("invalid modbus crc")
+            log.warning("invalid modbus crc")
+            return 0
+
+        # Does the response match the request?
+        if packet[5] != self.current_sequence_number:
+            log.warning("response frame contains unexpected sequence number")
+            return 0
+
+        # Were the expected number of registers returned?
+        if self.validate_expected_registers_length(modbus_frame, length) == 0:		
+            log.warning("unexpected number of registers found in response")
             return 0
 
         # Validation compelted successfully
         return 1
 
+    def validate_expected_registers_length(self, modbus_frame_bytes, length):
+        # Check that two bytes of data are returned for every register requested
+        # If not, then this is likely the wrong response for the request or parsing will be unsafe
+        actual_data_len = len(modbus_frame_bytes)-5 # do not count slave id, function code, length or CRC bytes (2)
+        if actual_data_len == length*2:
+            return 1
+        else:
+            return 0
 
     def validate_modbus_crc(self, frame):
         # Calculate crc with all but the last 2 bytes of the frame (they contain the crc)
@@ -163,11 +195,11 @@ class Inverter:
             sock.sendall(request)
             raw_msg = sock.recv(1024)
             log.debug(raw_msg.hex())
-            if self.validate_packet(raw_msg) == 1:
+            if self.validate_packet(raw_msg, length) == 1:
                 result = 1
                 params.parse(raw_msg, start, length)
             else:
-                log.debug(f"Querying [{start} - {end}] failed, invalid response packet.")
+                log.warn(f"Querying [{start} - {end}] failed, invalid response packet.")
             del raw_msg
         finally:
             del request
@@ -226,15 +258,15 @@ class Inverter:
                     try:
                         result = self.send_request(params, start, end, mb_fc, sock)
                     except ConnectionResetError:
-                        log.debug(f"Querying [{start} - {end}] failed as client closed stream, trying to re-open.")
+                        log.warning(f"Querying [{start} - {end}] failed as client closed stream, trying to re-open.")
                         sock.close()
                         sock = self.connect_to_server()
                     except TimeoutError:
-                        log.debug(f"Querying [{start} - {end}] failed with timeout")
+                        log.warning(f"Querying [{start} - {end}] failed with timeout")
                     except Exception as e:
-                        log.debug(f"Querying [{start} - {end}] failed with exception [{type(e).__name__}]")
+                        log.warning(f"Querying [{start} - {end}] failed with exception [{type(e).__name__}]")
                     if result == 0:
-                        log.debug(f"Querying [{start} - {end}] failed, [{attempts_left}] retry attempts left")
+                        log.warning(f"Querying [{start} - {end}] failed, [{attempts_left}] retry attempts left")
                     else:
                         log.debug(f"Querying [{start} - {end}] succeeded")
                         break

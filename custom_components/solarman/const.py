@@ -16,9 +16,11 @@ LOOKUP_FILES = [
     'sofar_wifikit.yaml',
     'solis_hybrid.yaml',
     'solis_1p8k-5g.yaml',
+    'solis_3p-4g.yaml',
     'sofar_g3hyd.yaml',
     'sofar_hyd3k-6k-es.yaml',
     'zcs_azzurro-ktl-v3.yaml',
+    'hyd-zss-hp-3k-6k.yaml',
     'custom_parameters.yaml'
 ]
 

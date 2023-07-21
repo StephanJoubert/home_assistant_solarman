@@ -759,6 +759,7 @@ parameters:
       uom: ""
       scale: 1
       rule: 1
+      mask: 1
       registers: [0x0112]
       icon: 'mdi:checkbox-marked-outline'
 
@@ -768,6 +769,7 @@ parameters:
       uom: ""
       scale: 1
       rule: 1
+      mask: 1
       registers: [0x0113]
       icon: 'mdi:checkbox-marked-outline'
 
@@ -777,6 +779,7 @@ parameters:
       uom: ""
       scale: 1
       rule: 1
+      mask: 1
       registers: [0x0114]
       icon: 'mdi:checkbox-marked-outline'
 
@@ -786,6 +789,7 @@ parameters:
       uom: ""
       scale: 1
       rule: 1
+      mask: 1
       registers: [0x0115]
       icon: 'mdi:checkbox-marked-outline'
 
@@ -795,6 +799,7 @@ parameters:
       uom: ""
       scale: 1
       rule: 1
+      mask: 1
       registers: [0x0116]
       icon: 'mdi:checkbox-marked-outline'
 
@@ -804,6 +809,7 @@ parameters:
       uom: ""
       scale: 1
       rule: 1
+      mask: 1
       registers: [0x0117]
       icon: 'mdi:checkbox-marked-outline'
 
@@ -813,6 +819,7 @@ parameters:
       uom: ""
       scale: 1
       rule: 1
+      mask: 1
       registers: [0x00F8]
       icon: 'mdi:checkbox-marked-outline'
       isstr: true
