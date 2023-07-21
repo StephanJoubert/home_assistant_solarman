@@ -39,6 +39,8 @@ class ParameterParser:
             self.try_parse_version(rawData,definition, start, length)
         elif rule == 8:
             self.try_parse_datetime(rawData,definition, start, length)
+        elif rule == 9:
+            self.try_parse_time(rawData,definition, start, length)
         return
     
     def do_validate(self, title, value, rule):
@@ -213,6 +215,23 @@ class ParameterParser:
             else:
                 found = False
  
+        if found:
+            self.result[title] = value
+        return
+
+    def try_parse_time (self, rawData, definition, start, length):
+        title = definition['name']         
+        found = True
+        value = ''
+        for r in definition['registers']:
+            index = r - start   # get the decimal value of the register'
+            if (index >= 0) and (index < length):
+                offset = OFFSET_PARAMS + (index * 2)
+                temp = struct.unpack('>H', rawData[offset:offset + 2])[0]
+                value = str("{:02d}".format(int(temp / 100))) + ":" + str("{:02d}".format(int(temp % 100)))
+            else:
+                found = False
+
         if found:
             self.result[title] = value
         return

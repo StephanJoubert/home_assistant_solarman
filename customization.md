@@ -102,14 +102,17 @@ Example yaml file for the example mentioned above:
 
 \## see https://developers.home-assistant.io/docs/core/entity/sensor/#entities-representing-a-total-amount
 
-\### The rule field specifies how to interpret the binary data. 
+### The rule field specifies how to interpret the binary data. 
 
-1. unsigned 16-bit value
-2. signed 16 bit value
-3. unsigned 32 bit value
-4. signed 32 bit value
-5. ascii value
-6. bit field
-
-
+| Rule # | Description           | Example                                                                                                                |
+|--------|-----------------------|------------------------------------------------------------------------------------------------------------------------|
+|    1   | unsigned 16-bit value |                                                                                                                        |
+|    2   | signed 16 bit value   |                                                                                                                        |
+|    3   | unsigned 32 bit value |                                                                                                                        |
+|    4   | signed 32 bit value   |                                                                                                                        |
+|    5   | ascii value           |                                                                                                                        |
+|    6   | bit field             |                                                                                                                        |
+|    7   | Version               |                                                                                                                        |
+|    8   | Date Time             |                                                                                                                        |
+|    9   | Time                  | Time value as string<ul><li>Example 1: Register Value 2200 => Time Value: 22:00</li><li>Example 2: Register value: 400 => 04:00</li></ul> |
 
