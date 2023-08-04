@@ -4,7 +4,7 @@ Home Assistant component for interacting with Solarman data collectors used with
 
 It has been created with a 5kW DEYE/SUNSYNK inverter and since integrated with a variety of other inverters that uses the Solarman data collector.
 
-This component uses Pysolarman Jonathan McCrohan for the underlying protocol, and also provides service-access to the library for advanced users. See [advanced](advanced.md) 
+This component uses Pysolarman by Jonathan McCrohan for the underlying protocol, and also provides service-access to the library for advanced users. See [advanced](advanced.md) 
 
 # Discord
 
