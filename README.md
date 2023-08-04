@@ -1,10 +1,10 @@
 # Solarman integration
 
-This is a Home Assistant component for interacting with Solarman data collectors used with a variety of inverters. The integration allows Home Assistant to connect in direct-mode over the local network to the collector to extract the information, and no cables are required.
+Home Assistant component for interacting with Solarman data collectors used with a variety of inverters. The integration allows Home Assistant to connect in direct-mode over the local network to the collector to extract the information, and no cables are required.
 
-It has been created with a 5kW DEYE/SUNSYNK inverter and since integrated with a veriety of other inverters that uses the Solarman data collector.
+It has been created with a 5kW DEYE/SUNSYNK inverter and since integrated with a variety of other inverters that uses the Solarman data collector.
 
-This component uses version 5 of the communication protocol. If your collector is older and this component does not work, try one of the other integrations that uses version 4 of the protocol.
+This component uses Pysolarman Jonathan McCrohan for the underlying protocol, and also provides service-access to the library for advanced users. See [advanced](advanced.md) 
 
 # Discord
 

@@ -1,10 +1,10 @@
-write_register:
-  name: Write Single Register to the inverter. USE WITH CARE!
-  description: Write to a MODBUS register
+write_holding_register:
+  name: Write Holding Register. USE WITH CARE!
+  description: See https://pysolarmanv5.readthedocs.io/en/stable/api_reference.html#pysolarmanv5.PySolarmanV5.write_holding_register
 
   fields:
     register:
-      description: Register to write (in decimal)
+      description: Modbus register address (in decimal)
       example: "16384"
       required: true
       selector:
@@ -23,14 +23,6 @@ write_register:
           max: 65535 
           mode: box
 
-    modbus_function:
-      description: Modbus function
-      example: "6"
-      required: false
-      selector:
-        number:
-          min: 0
-          max: 255  
-          mode: box
+
 
   

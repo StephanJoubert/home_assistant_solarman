@@ -73,6 +73,7 @@ The group just groups parameters that belong together. The induvidual parameter-
 || **The fields below define how the value from the logger is parsed** |
 |scale||Scaling factor for the value read from the logger|
 |rule||Method to interpret the data from the logger ###|
+|mask||A mask to filter only used bit fields. This is especialy useful for flag fields|
 |registers||Array of register fields that comprises the value. If the value is placed in a number of registers, this  array will contain more than one item.|
 |lookup||Defines a key-value pair for values where an integer maps to a string field|
 ||**The following is optional and could be used, if the inverter delivers sometimes non usable data (e.g. Total Production == 0.0)**|

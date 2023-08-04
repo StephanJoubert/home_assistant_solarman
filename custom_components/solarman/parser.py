@@ -1,10 +1,5 @@
 import struct
 
-# The parameters start in the "business field" 
-# just after the first two bytes.
-OFFSET_PARAMS = 28
-
-
 class ParameterParser:
     def __init__(self, lookups):
         self.result = {}
@@ -70,8 +65,7 @@ class ParameterParser:
             if (index >= 0) and (index < length):
                 maxint <<= 16
                 maxint |= 0xFFFF
-                offset = OFFSET_PARAMS + (index * 2)
-                temp = struct.unpack('>H', rawData[offset:offset + 2])[0]
+                temp = rawData[index]
                 value += (temp & 0xFFFF) << shift
                 shift += 16
             else:
@@ -105,8 +99,7 @@ class ParameterParser:
         for r in definition['registers']:
             index = r - start   # get the decimal value of the register'
             if (index >= 0) and (index < length):
-                offset = OFFSET_PARAMS + (index * 2)
-                temp = struct.unpack('>H', rawData[offset:offset + 2])[0]
+                temp = rawData[index]
                 value += (temp & 0xFFFF) << shift
                 shift += 16
             else:
@@ -149,8 +142,7 @@ class ParameterParser:
         for r in definition['registers']:
             index = r - start   # get the decimal value of the register'
             if (index >= 0) and (index < length):
-                offset = OFFSET_PARAMS + (index * 2)
-                temp = struct.unpack('>H', rawData[offset:offset + 2])[0]
+                temp = rawData[index]
                 value = value + chr(temp >> 8) + chr(temp & 0xFF)
             else:
                 found = False
@@ -166,8 +158,7 @@ class ParameterParser:
         for r in definition['registers']:
             index = r - start   # get the decimal value of the register'
             if (index >= 0) and (index < length):
-                offset = OFFSET_PARAMS + (index * 2)
-                temp = struct.unpack('>H', rawData[offset:offset + 2])[0]
+                temp = rawData[index]
                 value.append(hex(temp))
             else:
                 found = False
@@ -183,8 +174,7 @@ class ParameterParser:
         for r in definition['registers']:
             index = r - start   # get the decimal value of the register'
             if (index >= 0) and (index < length):
-                offset = OFFSET_PARAMS + (index * 2)
-                temp = struct.unpack('>H', rawData[offset:offset + 2])[0]
+                temp = rawData[index]
                 value = value + str(temp >> 12) + "." +  str(temp >> 8 & 0x0F) + "." + str(temp >> 4 & 0x0F) + "." + str(temp & 0x0F)
             else:
                 found = False
@@ -202,8 +192,7 @@ class ParameterParser:
             index = r - start   # get the decimal value of the register'
             print ("index: ",index)
             if (index >= 0) and (index < length):
-                offset = OFFSET_PARAMS + (index * 2)
-                temp = struct.unpack('>H', rawData[offset:offset + 2])[0]
+                temp = rawData[index]
                 if(i==0):
                     value = value + str(temp >> 8)  + "/" + str(temp & 0xFF) + "/"
                 elif (i==1):
@@ -226,8 +215,7 @@ class ParameterParser:
         for r in definition['registers']:
             index = r - start   # get the decimal value of the register'
             if (index >= 0) and (index < length):
-                offset = OFFSET_PARAMS + (index * 2)
-                temp = struct.unpack('>H', rawData[offset:offset + 2])[0]
+                temp = rawData[index]
                 value = str("{:02d}".format(int(temp / 100))) + ":" + str("{:02d}".format(int(temp % 100)))
             else:
                 found = False
