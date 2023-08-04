@@ -13,7 +13,7 @@ This service will use the IP Address as well as serial number configured
 ## Debugging
 Click on "Developer Tools" on the left-hand, and then select "Services" at the top of the window.
 
-![Services](./services1.png)
+![Services](./Services1.png)
 
 Enter the register address as well as the value to write.  
 
