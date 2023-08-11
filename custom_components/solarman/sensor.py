@@ -188,9 +188,8 @@ class SolarmanSensorText(SolarmanStatus):
                 self.p_state = val[self._field_name]
             else:
                 uom = getattr(self, 'uom', None)
-                if uom:
-                    if (re.match("\S+", uom)):
-                        self.p_state = None
+                if uom and (re.match("\S+", uom)):
+                    self.p_state = None
                 _LOGGER.debug(f'No value recorded for {self._field_name}')
 
 
