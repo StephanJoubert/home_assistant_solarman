@@ -100,9 +100,13 @@ class Inverter:
                 self._current_val = params.get_result()
             else:
                 self.status_connection = "Disconnected"
+                # Clear cached previous results to not report stale and incorrect data
+                self._current_val = {}
         except Exception as e:
             log.warning(f"Querying inverter {self._serial} at {self._host}:{self._port} failed on connection start with exception [{type(e).__name__}]")
             self.status_connection = "Disconnected"
+            # Clear cached previous results to not report stale and incorrect data
+            self._current_val = {}
         finally:
             if modbus:
                 modbus.disconnect()
