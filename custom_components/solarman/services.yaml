@@ -1,10 +1,10 @@
 write_holding_register:
-  name: Write Holding Register. USE WITH CARE!
-  description: See https://pysolarmanv5.readthedocs.io/en/stable/api_reference.html#pysolarmanv5.PySolarmanV5.write_holding_register
+  name: Write Holding Register (Modbus Function Code 6)
+  description: NOTE USE WITH CARE!
 
   fields:
     register:
-      description: Modbus register address (in decimal)
+      description: Modbus register address
       example: "16384"
       required: true
       selector:
@@ -19,10 +19,31 @@ write_holding_register:
       required: true
       selector:
         number:
+          mode: box
+
+write_multiple_holding_registers:
+  name: Write Multiple Holding Registers (Modbus Function Code 16)
+  description: NOTE USE WITH CARE!
+
+  fields:
+    register:
+      description: Modbus register address
+      example: "16384"
+      required: true
+      selector:
+        number:
           min: 0
           max: 65535 
           mode: box
 
-
+    values:
+      description: Values to write
+      example: |
+        - 1
+        - 2
+        - 3
+      required: true
+      selector:
+       object:
 
   

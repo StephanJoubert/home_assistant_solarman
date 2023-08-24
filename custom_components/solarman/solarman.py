@@ -138,3 +138,14 @@ class Inverter:
             log.warning(f"Service Call: write_holding_register : [{register}], value : [{value}] failed with exception [{type(e).__name__}]")
             self.disconnect_from_server()
         return
+
+    def service_write_multiple_holding_registers(self, register, values):
+        log.debug(f'Service Call: write_multiple_holding_registers: [{register}], values : [{values}]')
+        modbus=self.connect_to_server()
+        try:
+            modbus.write_multiple_holding_registers(register, values)
+        except Exception as e:
+            log.warning(f"Service Call: write_multiple_holding_registers: [{register}], values : [{values}] failed with exception [{type(e).__name__}]")
+            self.disconnect_from_server()
+        return
+
