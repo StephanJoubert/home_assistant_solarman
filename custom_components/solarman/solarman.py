@@ -40,17 +40,18 @@ class Inverter:
     def connect_to_server(self):
         if self._modbus:
             return self._modbus
-        
+        log.info(f"Connecting to solarman data logger {self._host}:{self._port}")
         self._modbus = PySolarmanV5(self._host, self._serial, port=self._port, mb_slave_id=1, verbose=True, auto_reconnect=True)
         return self._modbus
 
     def disconnect_from_server(self):
         if self._modbus:
             try:
+                log.info(f"Disconnecting from solarman data logger {self._host}:{self._port}")
                 self._modbus.disconnect()
             finally:
                 self._modbus = None
-    
+
     def send_request(self, params, start, end, mb_fc, sock):
         length = end - start + 1
         match mb_fc:
@@ -119,9 +120,6 @@ class Inverter:
             # Clear cached previous results to not report stale and incorrect data
             self._current_val = {}
             self.disconnect_from_server()
-#        finally:
-#            if modbus:
-#                modbus.disconnect()
 
     def get_current_val(self):
         return self._current_val
@@ -136,9 +134,7 @@ class Inverter:
         modbus=self.connect_to_server()
         try:
             modbus.write_holding_register(register, value)
-#        modbus.disconnect()
         except Exception as e:
             log.warning(f"Service Call: write_holding_register : [{register}], value : [{value}] failed with exception [{type(e).__name__}]")
-            self.disconnect_from_server()        
+            self.disconnect_from_server()
         return
-        
