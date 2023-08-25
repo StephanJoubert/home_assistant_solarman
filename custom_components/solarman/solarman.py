@@ -16,7 +16,7 @@ END_OF_MESSAGE = 0x15
 CONTROL_CODE = [0x10, 0x45]
 SERIAL_NO = [0x00, 0x00]
 SEND_DATA_FIELD = [0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
-QUERY_RETRY_ATTEMPTS = 6
+QUERY_RETRY_ATTEMPTS = 2
 
 class Inverter:
     def __init__(self, path, serial, host, port, mb_slaveid, lookup_file):
@@ -41,7 +41,7 @@ class Inverter:
         if self._modbus:
             return self._modbus
         log.info(f"Connecting to solarman data logger {self._host}:{self._port}")
-        self._modbus = PySolarmanV5(self._host, self._serial, port=self._port, mb_slave_id=self._mb_slaveid, logger=log, auto_reconnect=True)
+        self._modbus = PySolarmanV5(self._host, self._serial, port=self._port, mb_slave_id=self._mb_slaveid, logger=log, auto_reconnect=True, socket_timeout=15)
         return self._modbus
 
     def disconnect_from_server(self):
