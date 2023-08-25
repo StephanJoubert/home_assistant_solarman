@@ -52,13 +52,13 @@ class Inverter:
             finally:
                 self._modbus = None
 
-    def send_request(self, params, start, end, mb_fc, sock):
+    def send_request(self, params, start, end, mb_fc, modbus):
         length = end - start + 1
         match mb_fc:
             case 3:
-                response  = sock.read_holding_registers(register_addr=start, quantity=length)
+                response  = modbus.read_holding_registers(register_addr=start, quantity=length)
             case 4:
-                response  = sock.read_input_registers(register_addr=start, quantity=length)
+                response  = modbus.read_input_registers(register_addr=start, quantity=length)
         params.parse(response, start, length)        
 
 
