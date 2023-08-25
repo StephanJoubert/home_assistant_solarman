@@ -74,9 +74,6 @@ class Inverter:
         requests = self.parameter_definition['requests']
         log.debug(f"Starting to query for [{len(requests)}] ranges...")
 
-
-
-        modbus = None
         try:
             modbus = self.connect_to_server()
 
