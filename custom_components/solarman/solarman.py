@@ -37,7 +37,6 @@ class Inverter:
             return self._modbus
         log.info(f"Connecting to solarman data logger {self._host}:{self._port}")
         self._modbus = PySolarmanV5(self._host, self._serial, port=self._port, mb_slave_id=self._mb_slaveid, logger=log, auto_reconnect=True, socket_timeout=15)
-        return self._modbus
 
     def disconnect_from_server(self):
         if self._modbus:
@@ -47,13 +46,13 @@ class Inverter:
             finally:
                 self._modbus = None
 
-    def send_request(self, params, start, end, mb_fc, modbus):
+    def send_request(self, params, start, end, mb_fc):
         length = end - start + 1
         match mb_fc:
             case 3:
-                response  = modbus.read_holding_registers(register_addr=start, quantity=length)
+                response  = self._modbus.read_holding_registers(register_addr=start, quantity=length)
             case 4:
-                response  = modbus.read_input_registers(register_addr=start, quantity=length)
+                response  = self._modbus.read_input_registers(register_addr=start, quantity=length)
         params.parse(response, start, length)        
 
 
@@ -70,7 +69,6 @@ class Inverter:
         log.debug(f"Starting to query for [{len(requests)}] ranges...")
 
         try:
-            modbus = self.connect_to_server()
 
             for request in requests:
                 start = request['start']
@@ -82,11 +80,13 @@ class Inverter:
                 while attempts_left > 0:
                     attempts_left -= 1
                     try:
-                        self.send_request(params, start, end, mb_fc, modbus)
+                        self.connect_to_server()
+                        self.send_request(params, start, end, mb_fc)
                         result = 1
                     except Exception as e:
                         result = 0
                         log.warning(f"Querying [{start} - {end}] failed with exception [{type(e).__name__}: {e}]")
+                        self.disconnect_from_server()
                     if result == 0:
                         log.warning(f"Querying [{start} - {end}] failed, [{attempts_left}] retry attempts left")
                     else:
@@ -123,9 +123,9 @@ class Inverter:
 # Service calls
     def service_write_holding_register(self, register, value):
         log.debug(f'Service Call: write_holding_register : [{register}], value : [{value}]')
-        modbus=self.connect_to_server()
         try:
-            modbus.write_holding_register(register, value)
+            self.connect_to_server()
+            self._modbus.write_holding_register(register, value)
         except Exception as e:
             log.warning(f"Service Call: write_holding_register : [{register}], value : [{value}] failed with exception [{type(e).__name__}: {e}]")
             self.disconnect_from_server()
@@ -133,9 +133,9 @@ class Inverter:
 
     def service_write_multiple_holding_registers(self, register, values):
         log.debug(f'Service Call: write_multiple_holding_registers: [{register}], values : [{values}]')
-        modbus=self.connect_to_server()
         try:
-            modbus.write_multiple_holding_registers(register, values)
+            self.connect_to_server()
+            self._modbus.write_multiple_holding_registers(register, values)
         except Exception as e:
             log.warning(f"Service Call: write_multiple_holding_registers: [{register}], values : [{values}] failed with exception [{type(e).__name__}: {e}]")
             self.disconnect_from_server()
