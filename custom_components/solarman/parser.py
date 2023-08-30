@@ -132,7 +132,7 @@ class ParameterParser:
         for o in options:
             if (o['key'] == value):
                 return o['value']
-        return "LOOKUP"
+        return value
 
 
     def try_parse_ascii (self, rawData, definition, start, length):
