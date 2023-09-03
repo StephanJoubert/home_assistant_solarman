@@ -1,10 +1,10 @@
 {
   "domain": "solarman",
-  "name": "Solarman",
+  "name": "Solarman (ioxy fork)",
   "codeowners": ["@StephanJoubert"],
   "config_flow": true,
   "dependencies": [],
-  "documentation": "https://github.com/StephanJoubert/home_assistant_solarman/blob/main/README.md",
+  "documentation": "https://github.com/oxynatOr/home_assistant_solarman/blob/main/README.md",
   "iot_class": "local_polling",
   "issue_tracker": "https://github.com/StephanJoubert/home_assistant_solarman/issues",
   "requirements": ["pyyaml","pysolarmanv5"],
