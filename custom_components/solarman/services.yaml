@@ -4,7 +4,7 @@ write_holding_register:
 
   fields:
     register:
-      name: Write Holding Register (Modbus Function Code 6)
+      name: Register
       description: Modbus register address
       example: "16384"
       required: true
@@ -15,7 +15,7 @@ write_holding_register:
           mode: box
 
     value:
-      name: Write Holding Register (Modbus Function Code 6)
+      name: Values
       description: Value to write
       example: "1"
       required: true
@@ -29,7 +29,7 @@ write_multiple_holding_registers:
 
   fields:
     register:
-      name: Write Multiple Holding Registers (Modbus Function Code 16)
+      name: Register
       description: Modbus register address
       example: "16384"
       required: true
@@ -40,7 +40,7 @@ write_multiple_holding_registers:
           mode: box
 
     values:
-      name: Write Multiple Holding Registers (Modbus Function Code 16)
+      name: Values
       description: Values to write
       example: |
         - 1
