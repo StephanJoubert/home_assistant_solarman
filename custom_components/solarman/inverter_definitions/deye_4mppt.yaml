@@ -1,11 +1,12 @@
-# First version : 8.5.2022
+# First version: 08.05.2022
+# Latest update: 08.09.2023
 # Microinverter SUN2000G3 (DEYE/VESDAS)
 # 4x MPPT, 4x inverter
 # 1x Logger, 4x Module, 
 
 requests:
-  - start: 0x0003
-    end:  0x0080
+  - start: 0x0001
+    end:  0x007D
     mb_functioncode: 0x03
 
 parameters:
