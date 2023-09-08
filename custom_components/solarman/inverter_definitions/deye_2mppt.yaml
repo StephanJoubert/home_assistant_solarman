@@ -4,8 +4,8 @@
 # 1x Logger, 2x Module, 
 
 requests:
-  - start: 0x0003
-    end:  0x0080
+  - start: 0x0001
+    end:  0x007D
     mb_functioncode: 0x03
 
 parameters:
