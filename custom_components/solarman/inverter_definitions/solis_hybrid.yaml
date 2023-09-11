@@ -846,7 +846,7 @@ parameters:
 
  - group: Timer
    items: 
-    - name: "Time Charge Current"
+    - name: "Timed Charge Current"
       class: ""
       state_class: "measurement"
       uom: "A"
@@ -855,7 +855,7 @@ parameters:
       registers: [43141]
       icon: 'mdi:wrench-clock'
 
-    - name: "Time Discharge Current"
+    - name: "Timed Discharge Current"
       class: ""
       state_class: "measurement"
       uom: "A"
@@ -864,7 +864,7 @@ parameters:
       registers: [43142]
       icon: 'mdi:wrench-clock'
 
-    - name: "Time Charge Start Hour"
+    - name: "Timed Charge Start Hour"
       class: ""
       state_class: "measurement"
       uom: "H"
@@ -873,7 +873,7 @@ parameters:
       registers: [43143]
       icon: 'mdi:wrench-clock'
 
-    - name: "Time Charge Start Minute"
+    - name: "Timed Charge Start Minute"
       class: ""
       state_class: "measurement"
       uom: "M"
@@ -882,7 +882,7 @@ parameters:
       registers: [43144]
       icon: 'mdi:wrench-clock'
 
-    - name: "Time Charge Stop Hour"
+    - name: "Timed Charge Stop Hour"
       class: ""
       state_class: "measurement"
       uom: "H"
@@ -891,11 +891,47 @@ parameters:
       registers: [43145]
       icon: 'mdi:wrench-clock'
 
-    - name: "Time Charge Stop Minute"
+    - name: "Timed Charge Stop Minute"
       class: ""
       state_class: "measurement"
       uom: "M"
       scale: 1
       rule: 1
       registers: [43146]
+      icon: 'mdi:wrench-clock'
+
+    - name: "Timed Discharge Start Hour"
+      class: ""
+      state_class: "measurement"
+      uom: "H"
+      scale: 1
+      rule: 1
+      registers: [43147]
+      icon: 'mdi:wrench-clock'
+
+    - name: "Timed Discharge Start Minute"
+      class: ""
+      state_class: "measurement"
+      uom: "M"
+      scale: 1
+      rule: 1
+      registers: [43148]
+      icon: 'mdi:wrench-clock'
+
+    - name: "Timed Discharge Stop Hour"
+      class: ""
+      state_class: "measurement"
+      uom: "H"
+      scale: 1
+      rule: 1
+      registers: [43149]
+      icon: 'mdi:wrench-clock'
+
+    - name: "Timed Discharge Stop Minute"
+      class: ""
+      state_class: "measurement"
+      uom: "M"
+      scale: 1
+      rule: 1
+      registers: [43150]
       icon: 'mdi:wrench-clock'
