@@ -844,7 +844,7 @@ parameters:
       registers: [33144]
       icon: 'mdi:battery-arrow-down'
 
- - group: Timer
+ - group: TimedCharge
    items: 
     - name: "Timed Charge Current"
       class: ""
@@ -882,7 +882,7 @@ parameters:
       registers: [43144]
       icon: 'mdi:wrench-clock'
 
-    - name: "Timed Charge Stop Hour"
+    - name: "Timed Charge End Hour"
       class: ""
       state_class: "measurement"
       uom: "H"
@@ -891,7 +891,7 @@ parameters:
       registers: [43145]
       icon: 'mdi:wrench-clock'
 
-    - name: "Timed Charge Stop Minute"
+    - name: "Timed Charge End Minute"
       class: ""
       state_class: "measurement"
       uom: "M"
@@ -918,7 +918,7 @@ parameters:
       registers: [43148]
       icon: 'mdi:wrench-clock'
 
-    - name: "Timed Discharge Stop Hour"
+    - name: "Timed Discharge End Hour"
       class: ""
       state_class: "measurement"
       uom: "H"
@@ -927,7 +927,7 @@ parameters:
       registers: [43149]
       icon: 'mdi:wrench-clock'
 
-    - name: "Timed Discharge Stop Minute"
+    - name: "Timed Discharge End Minute"
       class: ""
       state_class: "measurement"
       uom: "M"
