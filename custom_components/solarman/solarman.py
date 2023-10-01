@@ -6,7 +6,7 @@ from homeassistant.util import Throttle
 from datetime import datetime
 from .parser import ParameterParser
 from .const import *
-from pysolarmanv5 import PySolarmanV5
+from .pysolarmanv5_local import PySolarmanV5
 
 
 log = logging.getLogger(__name__)
