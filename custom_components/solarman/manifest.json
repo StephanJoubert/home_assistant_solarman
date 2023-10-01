@@ -7,6 +7,6 @@
   "documentation": "https://github.com/StephanJoubert/home_assistant_solarman/blob/main/README.md",
   "iot_class": "local_polling",
   "issue_tracker": "https://github.com/StephanJoubert/home_assistant_solarman/issues",
-  "requirements": ["pyyaml","pysolarmanv5"],
+  "requirements": ["pyyaml","git+https://github.com/Dummy0815/pysolarmanv5.git"],
   "version": "1.0.0"
 }
