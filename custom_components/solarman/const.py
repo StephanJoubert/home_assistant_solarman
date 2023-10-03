@@ -21,6 +21,7 @@ LOOKUP_FILES = [
     'solis_hybrid.yaml',
     'solis_s6-gr1p.yaml',
     'zcs_azzurro-ktl-v3.yaml',
+    'Afore_BNTxxxKTL-2mppt.yaml',
     'custom_parameters.yaml'
 ]
 
