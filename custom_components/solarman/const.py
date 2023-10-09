@@ -5,25 +5,8 @@ DOMAIN = 'solarman'
 DEFAULT_PORT_INVERTER = 8899
 DEFAULT_INVERTER_MB_SLAVEID = 1
 DEFAULT_LOOKUP_FILE = 'deye_hybrid.yaml'
-LOOKUP_FILES = [
-    'deye_2mppt.yaml',
-    'deye_4mppt.yaml',
-    'deye_hybrid.yaml',
-    'deye_sg04lp3.yaml',
-    'deye_string.yaml',
-    'kstar_hybrid.yaml',
-    'sofar_g3hyd.yaml',
-    'sofar_hyd3k-6k-es.yaml',
-    'sofar_lsw3.yaml',
-    'sofar_wifikit.yaml',
-    'solis_1p8k-5g.yaml',
-    'solis_3p-4g.yaml',
-    'solis_hybrid.yaml',
-    'solis_s6-gr1p.yaml',
-    'zcs_azzurro-ktl-v3.yaml',
-    'Afore_BNTxxxKTL-2mppt.yaml',
-    'custom_parameters.yaml'
-]
+
+LOOKUP_FILES = (os.listdir(os.path.dirname(__file__) + '/inverter_definitions'))
 
 MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=15)
 
