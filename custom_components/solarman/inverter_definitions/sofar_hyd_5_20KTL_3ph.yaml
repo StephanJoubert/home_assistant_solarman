@@ -173,13 +173,20 @@ parameters:
         icon: 'mdi:solar-power'
       - name: "PV2 Power"
         class: "power"
-        state_class: "measurement"
+        state_class: "mesurement"
         uom: "W"
         scale: 10
         rule: 1
         registers: [ 0x0589 ]
         icon: 'mdi:solar-power'
-
+      - name: "PV Power total"
+        class: "power"
+        state_class: "mesurement"
+        uom: "kW"
+        scale: 0.1
+        rule: 1
+        registers: [ 0x05C4 ]
+        icon: 'mdi:solar-power'
   - group: Battery
     items:
       - name: "Battery 1 Voltage"
