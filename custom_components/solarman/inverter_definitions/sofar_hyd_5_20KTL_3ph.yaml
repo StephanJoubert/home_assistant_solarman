@@ -173,7 +173,7 @@ parameters:
         icon: 'mdi:solar-power'
       - name: "PV2 Power"
         class: "power"
-        state_class: "mesurement"
+        state_class: "measurement"
         uom: "W"
         scale: 10
         rule: 1
@@ -181,7 +181,7 @@ parameters:
         icon: 'mdi:solar-power'
       - name: "PV Power total"
         class: "power"
-        state_class: "mesurement"
+        state_class: "measurement"
         uom: "kW"
         scale: 0.1
         rule: 1
