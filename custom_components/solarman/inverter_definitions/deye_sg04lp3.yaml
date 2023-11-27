@@ -5,6 +5,9 @@ requests:
   - start: 0x0003
     end: 0x0059
     mb_functioncode: 0x03
+  - start: 0x0085
+    end: 0x0085
+    mb_functioncode: 0x03
   - start: 0x0202
     end: 0x022E
     mb_functioncode: 0x03
