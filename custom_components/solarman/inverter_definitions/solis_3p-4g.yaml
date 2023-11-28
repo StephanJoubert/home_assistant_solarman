@@ -164,7 +164,7 @@ parameters:
       registers: [3005, 3004]
       icon: 'mdi:solar-power'
 
-   
+
     - name: "Inverter AC Power"
       class: "power"
       state_class: "measurement"

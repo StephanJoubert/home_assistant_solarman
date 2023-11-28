@@ -845,7 +845,7 @@ parameters:
       icon: 'mdi:battery-arrow-down'
 
  - group: TimedCharge
-   items: 
+   items:
     - name: "Timed Charge Current"
       class: ""
       state_class: "measurement"

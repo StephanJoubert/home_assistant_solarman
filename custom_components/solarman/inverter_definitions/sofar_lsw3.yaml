@@ -6,10 +6,10 @@ requests:
 
 parameters:
  - group: solar
-   items: 
+   items:
     - name: "PV1 Power"
       class: "power"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "W"
       scale: 10
       rule: 1
@@ -18,7 +18,7 @@ parameters:
 
     - name: "PV2 Power"
       class: "power"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "W"
       scale: 10
       rule: 1
@@ -27,81 +27,81 @@ parameters:
 
     - name: "PV1 Voltage"
       class: "voltage"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "V"
       scale: 0.1
-      rule: 1 
+      rule: 1
       registers: [0x0006]
       icon: 'mdi:solar-power'
 
     - name: "PV2 Voltage"
-      class: "voltage"    
-      state_class: "measurement"      
+      class: "voltage"
+      state_class: "measurement"
       uom: "V"
       scale: 0.1
       rule: 1
       registers: [0x0008]
-      icon: 'mdi:solar-power'      
+      icon: 'mdi:solar-power'
 
     - name: "PV1 Current"
       class: "current"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "A"
       scale: 0.01
       rule: 1
       registers: [0x0007]
-      icon: 'mdi:solar-power'      
+      icon: 'mdi:solar-power'
 
     - name: "PV2 Current"
       class: "current"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "A"
       scale: 0.01
       rule: 1
       registers: [0x0009]
-      icon: 'mdi:solar-power'      
+      icon: 'mdi:solar-power'
 
     - name: "Daily Production"
       class: "energy"
-      state_class: "total_increasing"      
+      state_class: "total_increasing"
       uom: "kWh"
       scale: 0.01
       rule: 1
       registers: [0x0019]
-      icon: 'mdi:solar-power'      
+      icon: 'mdi:solar-power'
 
     - name: "Total Production"
       class: "energy"
-      state_class: "total_increasing"      
+      state_class: "total_increasing"
       uom: "kWh"
       scale: 1
       rule: 3
       registers: [0x0016,0x0015]
-      icon: 'mdi:solar-power'      
+      icon: 'mdi:solar-power'
 
     - name: "Total generation time"
       class: ""
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "h"
       scale: 1
       rule: 3
       registers: [0x0018,0x0017]
-      icon: 'mdi:clock-outline'   
+      icon: 'mdi:clock-outline'
 
     - name: "Today generation time"
       class: ""
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "min"
       scale: 1
       rule: 1
       registers: [0x001A]
-      icon: 'mdi:clock-outline'      
+      icon: 'mdi:clock-outline'
 
  - group: Output
-   items: 
+   items:
     - name: "Output active power"
       class: "power"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "W"
       scale: 10
       rule: 1
@@ -110,7 +110,7 @@ parameters:
 
     - name: "Output reactive power"
       class: ""
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "kVar"
       scale: 0.01
       rule: 1
@@ -119,7 +119,7 @@ parameters:
 
     - name: "Grid frequency"
       class: "frequency"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "Hz"
       scale: 0.01
       rule: 1
@@ -128,7 +128,7 @@ parameters:
 
     - name: "L1 Voltage"
       class: "voltage"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "V"
       scale: 0.1
       rule: 1
@@ -137,7 +137,7 @@ parameters:
 
     - name: "L1 Current"
       class: "current"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "A"
       scale: 0.01
       rule: 1
@@ -146,7 +146,7 @@ parameters:
 
     - name: "L2 Voltage"
       class: "voltage"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "V"
       scale: 0.1
       rule: 1
@@ -155,7 +155,7 @@ parameters:
 
     - name: "L2 Current"
       class: "current"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "A"
       scale: 0.01
       rule: 1
@@ -164,7 +164,7 @@ parameters:
 
     - name: "L3 Voltage"
       class: "voltage"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "V"
       scale: 0.1
       rule: 1
@@ -173,7 +173,7 @@ parameters:
 
     - name: "L3 Current"
       class: "current"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "A"
       scale: 0.01
       rule: 1
@@ -181,15 +181,15 @@ parameters:
       icon: 'mdi:home-lightning-bolt'
 
  - group: Inverter
-   items: 
+   items:
     - name: "Inverter status"
       class: ""
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: ""
       scale: 1
       rule: 1
       registers: [0x0000]
-      lookup: 
+      lookup:
       -  key: 0
          value: "Stand-by"
       -  key: 1
@@ -200,7 +200,7 @@ parameters:
          value: "FAULT"
       -  key: 4
          value: "Permanent"
-      icon: 'mdi:wrench'         
+      icon: 'mdi:wrench'
 
     - name: "Inverter module temperature"
       class: "temperature"
@@ -212,16 +212,16 @@ parameters:
 
     - name: "Inverter inner temperature"
       class: "temperature"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "°C"
       scale: 1
       rule: 1
       registers: [0x001C]
-      icon: 'mdi:thermometer'      
+      icon: 'mdi:thermometer'
 
     - name: "Inverter bus voltage"
       class: "voltage"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "V"
       scale: 0.1
       rule: 1
@@ -230,7 +230,7 @@ parameters:
 
     - name: "PV1 voltage sample by slave CPU"
       class: "voltage"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "V"
       scale: 0.1
       rule: 1
@@ -239,7 +239,7 @@ parameters:
 
     - name: "PV1 current sample by slave CPU"
       class: "current"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "A"
       scale: 0.1
       rule: 1
@@ -248,7 +248,7 @@ parameters:
 
     - name: "Countdown time"
       class: ""
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "s"
       scale: 1
       rule: 1
@@ -257,7 +257,7 @@ parameters:
 
     - name: "Inverter alert message"
       class: ""
-      state_class: ""      
+      state_class: ""
       uom: ""
       scale: 1
       rule: 1
@@ -266,7 +266,7 @@ parameters:
 
     - name: "Input mode"
       class: ""
-      state_class: ""      
+      state_class: ""
       uom: ""
       scale: 1
       rule: 1
@@ -275,7 +275,7 @@ parameters:
 
     - name: "Communication Board inner message"
       class: ""
-      state_class: ""      
+      state_class: ""
       uom: ""
       scale: 1
       rule: 1
@@ -284,7 +284,7 @@ parameters:
 
     - name: "Insulation of PV1+ to ground"
       class: ""
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: ""
       scale: 1
       rule: 1
@@ -293,7 +293,7 @@ parameters:
 
     - name: "Insulation of PV2+ to ground"
       class: ""
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: ""
       scale: 1
       rule: 1
@@ -302,7 +302,7 @@ parameters:
 
     - name: "Insulation of PV- to ground"
       class: ""
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: ""
       scale: 1
       rule: 1
@@ -311,12 +311,12 @@ parameters:
 
     - name: "Country"
       class: ""
-      state_class: ""      
+      state_class: ""
       uom: ""
       scale: 1
       rule: 1
       registers: [0x0027]
-      lookup: 
+      lookup:
       -  key: 0
          value: "Germany"
       -  key: 1
@@ -380,15 +380,15 @@ parameters:
       icon: ''
 
  - group: Alert
-   items: 
+   items:
     - name: "Fault 1"
       class: ""
-      state_class: ""      
+      state_class: ""
       uom: ""
       scale: 1
       rule: 1
       registers: [0x0001]
-      lookup: 
+      lookup:
       -  key: 0
          value: "No error"
       -  key: 1
@@ -423,16 +423,16 @@ parameters:
          value: "ID15 Hardware AC over current protection"
       -  key: 32768
          value: "ID16 Grid current is too high"
-      icon: 'mdi:wrench'  
+      icon: 'mdi:wrench'
 
     - name: "Fault 2"
       class: ""
-      state_class: ""      
+      state_class: ""
       uom: ""
       scale: 1
       rule: 1
       registers: [0x0002]
-      lookup: 
+      lookup:
       -  key: 0
          value: "No error"
       -  key: 1
@@ -467,16 +467,16 @@ parameters:
          value: "ID31"
       -  key: 32768
          value: "ID32"
-      icon: 'mdi:wrench'  
+      icon: 'mdi:wrench'
 
     - name: "Fault 3"
       class: ""
-      state_class: ""      
+      state_class: ""
       uom: ""
       scale: 1
       rule: 1
       registers: [0x0003]
-      lookup: 
+      lookup:
       -  key: 0
          value: "No error"
       -  key: 1
@@ -511,16 +511,16 @@ parameters:
          value: "ID47 Reserved"
       -  key: 32768
          value: "ID48 Reserved"
-      icon: 'mdi:wrench'  
+      icon: 'mdi:wrench'
 
     - name: "Fault 4"
       class: ""
-      state_class: ""      
+      state_class: ""
       uom: ""
       scale: 1
       rule: 1
       registers: [0x0004]
-      lookup: 
+      lookup:
       -  key: 0
          value: "No error"
       -  key: 1
@@ -555,16 +555,16 @@ parameters:
          value: "ID63 Reserved"
       -  key: 32768
          value: "ID64 Reserved"
-      icon: 'mdi:wrench'  
+      icon: 'mdi:wrench'
 
     - name: "Fault 5"
       class: ""
-      state_class: ""      
+      state_class: ""
       uom: ""
       scale: 1
       rule: 1
       registers: [0x0005]
-      lookup: 
+      lookup:
       -  key: 0
          value: "No error"
       -  key: 1
@@ -599,4 +599,4 @@ parameters:
          value: "ID79 Reserved"
       -  key: 32768
          value: "ID80 Reserved"
-      icon: 'mdi:wrench'  
+      icon: 'mdi:wrench'

@@ -1,4 +1,4 @@
-# Customizing 
+# Customizing
 
 The hart of this component is the parameter-definition file ex *deye_hybrid.yaml*. By changing the file, the behaviour is totally changed.
 
@@ -11,7 +11,7 @@ sensor:
     name: ...
     inverter_host: ...
     inverter_port: ...
-    inverter_serial: ... 
+    inverter_serial: ...
     scan_interval: ...
     lookup_file: custom_parameters.yaml
 ~~~
@@ -19,6 +19,7 @@ sensor:
 It has two sections:
 
 ## 1. Requests
+
 This section defines the requests that should be issued to the logger each time the component does a parameter update. The list below was created for a DEYE 5kW inverter, and could be customized for other models that are not 100% compatible with this inverter.
 
 ~~~ YAML
@@ -41,12 +42,13 @@ requests:
 This block specifies that the component should issue three requests to the logger, the first one requesting parameters 0x0003 up to 0x000E, then a second request for parmeters 0x003B up to 0x0070, and the last for parameters 0x000f4 up to 0x00f8. All of the requests will be sent using Modbus Function Code 0x03.
 
 ## 2. Parameters
+
 This section defines the induvidual parameter definitions. For example:
 
 ~~~ YAML
 parameters:
  - group: solar
-   items: 
+   items:
     - name: "PV1 Power"
       class: "power"
       state_class: "measurement"
@@ -61,7 +63,6 @@ parameters:
 The group just groups parameters that belong together. The induvidual parameter-items has to be placed in a group. The *items* parameters contains the parameter definitions that belong in the group.
 
 ### Parameter-item
-
 
 |field||description|
 |-|-|-|
@@ -81,8 +82,7 @@ The group just groups parameters that belong together. The induvidual parameter-
 ||max|Specifies the maximum value to accept|
 ||invalidate_all| Optional: invalidate complete dataset if specified. If not specified, it will only invalidate the specific parameter|
 
-
-Example yaml file for the example mentioned above:   
+Example yaml file for the example mentioned above:
 
 ~~~ YAML
     - name: "Total Production"
@@ -94,15 +94,15 @@ Example yaml file for the example mentioned above:
       registers: [0x003F,0x0040]
       icon: 'mdi:solar-power'
       validation:
-        min: 0.1 
+        min: 0.1
         invalidate_all:
-~~~ 
+~~~
 
 \# (see) https://developers.home-assistant.io/docs/core/entity/
 
 \## see https://developers.home-assistant.io/docs/core/entity/sensor/#entities-representing-a-total-amount
 
-\### The rule field specifies how to interpret the binary data. 
+\### The rule field specifies how to interpret the binary data.
 
 1. unsigned 16-bit value
 2. signed 16 bit value
@@ -110,6 +110,3 @@ Example yaml file for the example mentioned above:
 4. signed 32 bit value
 5. ascii value
 6. bit field
-
-
-

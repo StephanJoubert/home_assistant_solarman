@@ -2,7 +2,7 @@
 # Latest update: 08.09.2023
 # Microinverter SUN2000G3 (DEYE/VESDAS)
 # 4x MPPT, 4x inverter
-# 1x Logger, 4x Module, 
+# 1x Logger, 4x Module,
 
 requests:
   - start: 0x0001
@@ -11,7 +11,7 @@ requests:
 
 parameters:
   - group: solar
-    items: 
+    items:
     - name: "PV1 Voltage"
       class: "voltage"
       state_class: "measurement"
@@ -127,7 +127,7 @@ parameters:
 
     - name: "Grid Current"
       class: "current"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "A"
       scale: 0.1
       rule: 2
@@ -174,7 +174,7 @@ parameters:
       rule: 3
       registers: [0x0056, 0x0057]
       icon: 'mdi:home-lightning-bolt'
-      
+
     - name: "Radiator Temperature"
       class: "temperature"
       uom: "°C"

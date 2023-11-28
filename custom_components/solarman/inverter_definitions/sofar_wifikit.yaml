@@ -225,21 +225,21 @@ parameters:
 
     - name: "Battery Temperature"
       class: "temperature"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "°C"
       scale: 1
       rule: 1
       registers: [0x0211]
-      icon: 'mdi:thermometer'      
+      icon: 'mdi:thermometer'
 
     - name: "Battery Capacity"
       class: ""
-      state_class: ""      
+      state_class: ""
       uom: ""
       scale: 1
       rule: 1
       registers: [0x10B1]
-      icon: 'mdi:battery-high'      
+      icon: 'mdi:battery-high'
 
     - name: "Battery Max Charge Voltage"
       class: "voltage"
@@ -276,7 +276,7 @@ parameters:
       rule: 2
       registers: [0x10B7]
       icon: 'mdi:current-dc'
-      
+
     - name: "Battery Discharge Depth"
       class: "battery"
       state_class: "measurement"
@@ -284,7 +284,7 @@ parameters:
       scale: 1
       rule: 1
       registers: [0x10B9]
-      icon: 'mdi:battery-high'     
+      icon: 'mdi:battery-high'
 
     - name: "Battery Empty Voltage"
       class: "voltage"
@@ -306,7 +306,7 @@ parameters:
 
     - name: "Battery Type"
       class: ""
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: ""
       scale: 1
       rule: 1
@@ -321,7 +321,7 @@ parameters:
       # and need to use a custom inverter
       # definition with the commented lookups
       # below.
-      lookup: 
+      lookup:
       -  key: 0x0000
          value: "DARFON"
       -  key: 0x0001
@@ -349,15 +349,15 @@ parameters:
       #    value: "DEFAULT"
 
  - group: InverterStatus
-   items: 
+   items:
     - name: "Inverter Status"
       class: ""
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: ""
       scale: 1
       rule: 1
       registers: [0x200]
-      lookup: 
+      lookup:
       -  key: 0
          value: "Wait"
       -  key: 1
@@ -374,29 +374,29 @@ parameters:
          value: "Fault"
       -  key: 7
          value: "Permanent Fault"
-      icon: 'mdi:wrench'         
+      icon: 'mdi:wrench'
 
     - name: "Inverter Temperature"
       class: "temperature"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "°C"
       scale: 1
       rule: 1
       registers: [0x0238]
-      icon: 'mdi:thermometer'      
+      icon: 'mdi:thermometer'
 
     - name: "Inverter Heat-Sink Temperature"
       class: "temperature"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "°C"
       scale: 1
       rule: 1
       registers: [0x0239]
-      icon: 'mdi:thermometer'      
+      icon: 'mdi:thermometer'
 
     - name: "Inverter Bus Voltage"
       class: "voltage"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "V"
       scale: 0.1
       rule: 1
@@ -405,7 +405,7 @@ parameters:
 
     - name: "LLC Bus Voltage"
       class: "voltage"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "V"
       scale: 0.1
       rule: 1
@@ -414,7 +414,7 @@ parameters:
 
     - name: "Countdown Time"
       class: ""
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "s"
       scale: 1
       rule: 1
@@ -423,7 +423,7 @@ parameters:
 
     - name: "Inverter Alert Message"
       class: ""
-      state_class: ""      
+      state_class: ""
       uom: ""
       scale: 1
       rule: 1
@@ -432,7 +432,7 @@ parameters:
 
     - name: "Communication Board Inner Message"
       class: ""
-      state_class: ""      
+      state_class: ""
       uom: ""
       scale: 1
       rule: 1
@@ -441,12 +441,12 @@ parameters:
 
     - name: "Country"
       class: ""
-      state_class: ""      
+      state_class: ""
       uom: ""
       scale: 1
       rule: 1
       registers: [0x023A]
-      lookup: 
+      lookup:
       -  key: 0
          value: "Germany"
       -  key: 1
@@ -510,15 +510,15 @@ parameters:
       icon: ''
 
  - group: Alert
-   items: 
+   items:
     - name: "Fault 1"
       class: ""
-      state_class: ""      
+      state_class: ""
       uom: ""
       scale: 1
       rule: 1
       registers: [0x0201]
-      lookup: 
+      lookup:
       -  key: 0
          value: "No error"
       -  key: 1
@@ -553,16 +553,16 @@ parameters:
          value: "ID15 Hardware AC over current protection"
       -  key: 32768
          value: "ID16 Grid current is too high"
-      icon: 'mdi:wrench'  
+      icon: 'mdi:wrench'
 
     - name: "Fault 2"
       class: ""
-      state_class: ""      
+      state_class: ""
       uom: ""
       scale: 1
       rule: 1
       registers: [0x0202]
-      lookup: 
+      lookup:
       -  key: 0
          value: "No error"
       -  key: 1
@@ -597,16 +597,16 @@ parameters:
          value: "ID31"
       -  key: 32768
          value: "ID32"
-      icon: 'mdi:wrench'  
+      icon: 'mdi:wrench'
 
     - name: "Fault 3"
       class: ""
-      state_class: ""      
+      state_class: ""
       uom: ""
       scale: 1
       rule: 1
       registers: [0x0203]
-      lookup: 
+      lookup:
       -  key: 0
          value: "No error"
       -  key: 1
@@ -641,16 +641,16 @@ parameters:
          value: "ID47 Reserved"
       -  key: 32768
          value: "ID48 Reserved"
-      icon: 'mdi:wrench'  
+      icon: 'mdi:wrench'
 
     - name: "Fault 4"
       class: ""
-      state_class: ""      
+      state_class: ""
       uom: ""
       scale: 1
       rule: 1
       registers: [0x0204]
-      lookup: 
+      lookup:
       -  key: 0
          value: "No error"
       -  key: 1
@@ -685,16 +685,16 @@ parameters:
          value: "ID63 Reserved"
       -  key: 32768
          value: "ID64 Reserved"
-      icon: 'mdi:wrench'  
+      icon: 'mdi:wrench'
 
     - name: "Fault 5"
       class: ""
-      state_class: ""      
+      state_class: ""
       uom: ""
       scale: 1
       rule: 1
       registers: [0x0205]
-      lookup: 
+      lookup:
       -  key: 0
          value: "No error"
       -  key: 1
@@ -729,13 +729,13 @@ parameters:
          value: "ID79 Reserved"
       -  key: 32768
          value: "ID80 Reserved"
-      icon: 'mdi:wrench'  
+      icon: 'mdi:wrench'
 
  - group: InverterInformation
-   items: 
+   items:
     - name: "Production Code"
       class: ""
-      state_class: ""      
+      state_class: ""
       uom: ""
       scale: 1
       rule: 1
@@ -743,7 +743,7 @@ parameters:
 
     - name: "Serial Number"
       class: ""
-      state_class: ""      
+      state_class: ""
       uom: ""
       scale: 1
       rule: 5
@@ -752,7 +752,7 @@ parameters:
 
     - name: "Software Version"
       class: ""
-      state_class: ""      
+      state_class: ""
       uom: ""
       scale: 1
       rule: 5
@@ -761,7 +761,7 @@ parameters:
 
     - name: "Hardware Version"
       class: ""
-      state_class: ""      
+      state_class: ""
       uom: ""
       scale: 1
       rule: 5

@@ -1,4 +1,3 @@
-
 ################################################################################
 #   Solarman local interface.
 #
@@ -8,45 +7,46 @@
 ###############################################################################
 
 import logging
+
 import voluptuous as vol
-from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_NAME
+from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import *
-from .solarman import Inverter
 from .scanner import InverterScanner
+from .solarman import Inverter
 
 _LOGGER = logging.getLogger(__name__)
 _inverter_scanner = InverterScanner()
 
-def _do_setup_platform(hass: HomeAssistant, config, async_add_entities : AddEntitiesCallback):
-    _LOGGER.debug(f'sensor.py:async_setup_platform: {config}') 
-   
+
+def _do_setup_platform(hass: HomeAssistant, config, async_add_entities: AddEntitiesCallback):
+    _LOGGER.debug(f"sensor.py:async_setup_platform: {config}")
+
     inverter_name = config.get(CONF_NAME)
     inverter_host = config.get(CONF_INVERTER_HOST)
     if inverter_host == "0.0.0.0":
         inverter_host = _inverter_scanner.get_ipaddress()
-        
-   
+
     inverter_port = config.get(CONF_INVERTER_PORT)
     inverter_sn = config.get(CONF_INVERTER_SERIAL)
     if inverter_sn == 0:
         inverter_sn = _inverter_scanner.get_serialno()
-    
+
     inverter_mb_slaveid = config.get(CONF_INVERTER_MB_SLAVEID)
     if not inverter_mb_slaveid:
         inverter_mb_slaveid = DEFAULT_INVERTER_MB_SLAVEID
     lookup_file = config.get(CONF_LOOKUP_FILE)
-    path = hass.config.path('custom_components/solarman/inverter_definitions/')
+    path = hass.config.path("custom_components/solarman/inverter_definitions/")
 
     # Check input configuration.
     if inverter_host is None:
-        raise vol.Invalid('configuration parameter [inverter_host] does not have a value')
+        raise vol.Invalid("configuration parameter [inverter_host] does not have a value")
     if inverter_sn is None:
-        raise vol.Invalid('configuration parameter [inverter_serial] does not have a value')
+        raise vol.Invalid("configuration parameter [inverter_serial] does not have a value")
 
     inverter = Inverter(path, inverter_sn, inverter_host, inverter_port, inverter_mb_slaveid, lookup_file)
     #  Prepare the sensor entities.
@@ -58,24 +58,28 @@ def _do_setup_platform(hass: HomeAssistant, config, async_add_entities : AddEnti
             else:
                 hass_sensors.append(SolarmanSensor(inverter_name, inverter, sensor, inverter_sn))
         except BaseException as ex:
-            _LOGGER.error(f'Config error {ex} {sensor}')
+            _LOGGER.error(f"Config error {ex} {sensor}")
             raise
     hass_sensors.append(SolarmanStatus(inverter_name, inverter, "status_lastUpdate", inverter_sn))
     hass_sensors.append(SolarmanStatus(inverter_name, inverter, "status_connection", inverter_sn))
 
-    _LOGGER.debug(f'sensor.py:_do_setup_platform: async_add_entities')
+    _LOGGER.debug(f"sensor.py:_do_setup_platform: async_add_entities")
     _LOGGER.debug(hass_sensors)
 
     async_add_entities(hass_sensors)
 
+
 # Set-up from configuration.yaml
-async def async_setup_platform(hass: HomeAssistant, config, async_add_entities : AddEntitiesCallback, discovery_info=None):
-    _LOGGER.debug(f'sensor.py:async_setup_platform: {config}') 
+async def async_setup_platform(
+    hass: HomeAssistant, config, async_add_entities: AddEntitiesCallback, discovery_info=None
+):
+    _LOGGER.debug(f"sensor.py:async_setup_platform: {config}")
     _do_setup_platform(hass, config, async_add_entities)
-       
+
+
 # Set-up from the entries in config-flow
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback):
-    _LOGGER.debug(f'sensor.py:async_setup_entry: {entry.options}') 
+    _LOGGER.debug(f"sensor.py:async_setup_entry: {entry.options}")
     _do_setup_platform(hass, entry.options, async_add_entities)
 
 
@@ -84,7 +88,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
 #  It provides device_info to Home Assistant which allows grouping all the Entities under a single Device.
 #############################################################################################################
 
-class SolarmanSensor():
+
+class SolarmanSensor:
     """Solarman Device class."""
 
     def __init__(self, id: str = None, device_name: str = None, model: str = None, manufacturer: str = None):
@@ -116,6 +121,7 @@ class SolarmanSensor():
 #  It derives from the Entity class in HA and is suited for status values.
 #############################################################################################################
 
+
 class SolarmanStatus(SolarmanSensor, Entity):
     def __init__(self, inverter_name, inverter, field_name, sn):
         super().__init__(sn, inverter_name, inverter.lookup_file)
@@ -123,7 +129,7 @@ class SolarmanStatus(SolarmanSensor, Entity):
         self.inverter = inverter
         self._field_name = field_name
         self.p_state = None
-        self.p_icon = 'mdi:magnify'
+        self.p_icon = "mdi:magnify"
         self._sn = sn
         return
 
@@ -156,20 +162,20 @@ class SolarmanStatus(SolarmanSensor, Entity):
 #   Overrides the Status entity, supply the configured icon, and updates the inverter parameters
 #############################################################################################################
 
+
 class SolarmanSensorText(SolarmanStatus):
     def __init__(self, inverter_name, inverter, sensor, sn):
-        SolarmanStatus.__init__(self,inverter_name, inverter, sensor['name'], sn)
-        if 'icon' in sensor:
-            self.p_icon = sensor['icon']
+        SolarmanStatus.__init__(self, inverter_name, inverter, sensor["name"], sn)
+        if "icon" in sensor:
+            self.p_icon = sensor["icon"]
         else:
-            self.p_icon = ''
+            self.p_icon = ""
         return
 
-
     def update(self):
-    #  Update this sensor using the data.
-    #  Get the latest data and use it to update our sensor state.
-    #  Retrieve the sensor data from actual interface
+        #  Update this sensor using the data.
+        #  Get the latest data and use it to update our sensor state.
+        #  Retrieve the sensor data from actual interface
         self.inverter.update()
 
         val = self.inverter.get_current_val()
@@ -177,7 +183,7 @@ class SolarmanSensorText(SolarmanStatus):
             if self._field_name in val:
                 self.p_state = val[self._field_name]
             else:
-                _LOGGER.debug(f'No value recorded for {self._field_name}')
+                _LOGGER.debug(f"No value recorded for {self._field_name}")
 
 
 #############################################################################################################
@@ -185,32 +191,29 @@ class SolarmanSensorText(SolarmanStatus):
 #   Overrides the Text sensor and supply the device class, last_reset and unit of measurement
 #############################################################################################################
 
+
 class SolarmanSensor(SolarmanSensorText):
     def __init__(self, inverter_name, inverter, sensor, sn):
         SolarmanSensorText.__init__(self, inverter_name, inverter, sensor, sn)
-        self._device_class = sensor['class']
-        if 'state_class' in sensor:
-            self._state_class = sensor['state_class']
+        self._device_class = sensor["class"]
+        if "state_class" in sensor:
+            self._state_class = sensor["state_class"]
         else:
             self._state_class = None
-        self.uom = sensor['uom']
+        self.uom = sensor["uom"]
         return
 
     @property
     def device_class(self):
         return self._device_class
 
-
     @property
     def extra_state_attributes(self):
         if self._state_class:
-            return  {
-                'state_class': self._state_class
-            }
+            return {"state_class": self._state_class}
         else:
             return None
 
     @property
     def unit_of_measurement(self):
         return self.uom
-

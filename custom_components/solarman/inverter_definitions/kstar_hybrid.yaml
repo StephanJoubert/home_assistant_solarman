@@ -793,4 +793,3 @@ parameters:
         rule: 1
         registers: [ 3144 ]
         icon: 'mdi:home-lightning-bolt'
-

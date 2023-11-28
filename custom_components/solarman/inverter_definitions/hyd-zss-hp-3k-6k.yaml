@@ -184,7 +184,7 @@ parameters:
         class: 'energy'
         state_class: 'total_increasing'
         uom: 'kWh'
-        scale: 0.01        
+        scale: 0.01
         rule: 3
         registers: [0x0695,0x0694]
         icon: 'mdi:home-lightning-bolt'
@@ -193,7 +193,7 @@ parameters:
         class: 'energy'
         state_class: 'total_increasing'
         uom: 'kWh'
-        scale: 0.01        
+        scale: 0.01
         rule: 3
         registers: [0x0699,0x0698]
         icon: 'mdi:home-lightning-bolt'
@@ -217,7 +217,7 @@ parameters:
         rule: 2
         registers: [0x0485]
         icon: 'mdi:home-lightning-bolt'
-        
+
       - name: 'Active Power Load Total'
         class: 'power'
         state_class: 'measurement'
@@ -226,21 +226,21 @@ parameters:
         rule: 2
         registers: [0x0504]
         icon: 'mdi:home-lightning-bolt'
-        
+
       - name: 'Energy Purchase Today'
         class: 'energy'
         state_class: 'total_increasing'
         uom: 'kWh'
-        scale: 0.01        
+        scale: 0.01
         rule: 3
         registers: [0x068D,0x068C]
         icon: 'mdi:home-lightning-bolt'
-        
+
       - name: 'Energy Purchase Total'
         class: 'energy'
         state_class: 'total_increasing'
         uom: 'kWh'
-        scale: 0.1        
+        scale: 0.1
         rule: 3
         registers: [0x068F,0x068E]
         icon: 'mdi:home-lightning-bolt'
@@ -249,16 +249,16 @@ parameters:
         class: 'energy'
         state_class: 'total_increasing'
         uom: 'kWh'
-        scale: 0.01        
+        scale: 0.01
         rule: 3
         registers: [0x0691,0x0690]
         icon: 'mdi:home-lightning-bolt'
 
-      - name: 'Energy Selling Total'      
+      - name: 'Energy Selling Total'
         class: 'energy'
         state_class: 'total_increasing'
         uom: 'kWh'
-        scale: 0.1        
+        scale: 0.1
         rule: 3
         registers: [0x0693,0x0692]
         icon: 'mdi:home-lightning-bolt'

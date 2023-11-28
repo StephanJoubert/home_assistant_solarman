@@ -1,11 +1,13 @@
-import socket
-import yaml
 import logging
+import socket
 import struct
-from homeassistant.util import Throttle
 from datetime import datetime
-from .parser import ParameterParser
+
+import yaml
+from homeassistant.util import Throttle
+
 from .const import *
+from .parser import ParameterParser
 
 log = logging.getLogger(__name__)
 
@@ -15,6 +17,7 @@ CONTROL_CODE = [0x10, 0x45]
 SERIAL_NO = [0x00, 0x00]
 SEND_DATA_FIELD = [0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
 QUERY_RETRY_ATTEMPTS = 6
+
 
 class Inverter:
     def __init__(self, path, serial, host, port, mb_slaveid, lookup_file):
@@ -27,8 +30,8 @@ class Inverter:
         self.status_connection = "Disconnected"
         self.status_lastUpdate = "N/A"
         self.lookup_file = lookup_file
-        if not self.lookup_file or lookup_file == 'parameters.yaml':
-            self.lookup_file = 'deye_hybrid.yaml'
+        if not self.lookup_file or lookup_file == "parameters.yaml":
+            self.lookup_file = "deye_hybrid.yaml"
 
         with open(self.path + self.lookup_file) as f:
             self.parameter_definition = yaml.full_load(f)
@@ -40,9 +43,7 @@ class Inverter:
         for byte in data:
             crc ^= byte
             for _ in range(8):
-                crc = ((crc >> 1) ^ POLY
-                if (crc & 0x0001)
-                else crc >> 1)
+                crc = (crc >> 1) ^ POLY if (crc & 0x0001) else crc >> 1
         return crc
 
     def get_serial_hex(self):
@@ -52,18 +53,18 @@ class Inverter:
         return serial_bytes
 
     def get_read_business_field(self, start, length, mb_fc):
-        request_data = bytearray([self._mb_slaveid, mb_fc]) # Function Code
-        request_data.extend(start.to_bytes(2, 'big'))
-        request_data.extend(length.to_bytes(2, 'big'))
+        request_data = bytearray([self._mb_slaveid, mb_fc])  # Function Code
+        request_data.extend(start.to_bytes(2, "big"))
+        request_data.extend(length.to_bytes(2, "big"))
         crc = self.modbus(request_data)
-        request_data.extend(crc.to_bytes(2, 'little'))
+        request_data.extend(crc.to_bytes(2, "little"))
         return request_data
 
     def generate_request(self, start, length, mb_fc):
         packet = bytearray([START_OF_MESSAGE])
 
         packet_data = []
-        packet_data.extend (SEND_DATA_FIELD)
+        packet_data.extend(SEND_DATA_FIELD)
         buisiness_field = self.get_read_business_field(start, length, mb_fc)
         packet_data.extend(buisiness_field)
         length = packet_data.__len__()
@@ -72,9 +73,9 @@ class Inverter:
         packet.extend(SERIAL_NO)
         packet.extend(self.get_serial_hex())
         packet.extend(packet_data)
-        #Checksum
+        # Checksum
         checksum = 0
-        for i in range(1,len(packet),1):
+        for i in range(1, len(packet), 1):
             checksum += packet[i]
         packet.append(checksum & 0xFF)
         packet.append(END_OF_MESSAGE)
@@ -88,7 +89,7 @@ class Inverter:
         # Start with the outer V5 logger packet and work inwards towards the embedded modbus frame
 
         # Does the v5 packet start and end with what we expect?
-        if packet[0] != 0xa5 or packet[len(packet) - 1] != 0x15:
+        if packet[0] != 0xA5 or packet[len(packet) - 1] != 0x15:
             log.debug("unexpected v5 packet start/stop")
             return 0
         # Does the v5 packet have the correct checksum?
@@ -105,7 +106,7 @@ class Inverter:
             return 0
 
         # Move onto the encapsulated modbus frame
-        modbus_frame = packet[25:len(packet) - 2]
+        modbus_frame = packet[25 : len(packet) - 2]
 
         # Is the modbus CRC correct?
         if self.validate_modbus_crc(modbus_frame) == 0:
@@ -114,7 +115,6 @@ class Inverter:
 
         # Validation compelted successfully
         return 1
-
 
     def validate_modbus_crc(self, frame):
         # Calculate crc with all but the last 2 bytes of the frame (they contain the crc)
@@ -129,12 +129,11 @@ class Inverter:
                     calc_crc >>= 1
 
         # Compare calculated crc with the one supplied in the frame....
-        frame_crc, = struct.unpack('<H', frame[-2:])
+        (frame_crc,) = struct.unpack("<H", frame[-2:])
         if calc_crc == frame_crc:
             return 1
         else:
             return 0
-
 
     def validate_v5_checksum(self, packet):
         checksum = 0
@@ -147,7 +146,6 @@ class Inverter:
             return 1
         else:
             return 0
-
 
     def send_request(self, params, start, end, mb_fc, sock):
         result = 0
@@ -168,16 +166,15 @@ class Inverter:
             del request
         return result
 
-    @Throttle (MIN_TIME_BETWEEN_UPDATES)
-    def update (self):
+    @Throttle(MIN_TIME_BETWEEN_UPDATES)
+    def update(self):
         self.get_statistics()
         return
-
 
     def get_statistics(self):
         result = 1
         params = ParameterParser(self.parameter_definition)
-        requests = self.parameter_definition['requests']
+        requests = self.parameter_definition["requests"]
         log.debug(f"Starting to query for [{len(requests)}] ranges...")
 
         def connect_to_server():
@@ -191,9 +188,9 @@ class Inverter:
             sock = connect_to_server()
 
             for request in requests:
-                start = request['start']
-                end = request['end']
-                mb_fc = request['mb_functioncode']
+                start = request["start"]
+                end = request["end"]
+                mb_fc = request["mb_functioncode"]
                 log.debug(f"Querying [{start} - {end}]...")
 
                 attempts_left = QUERY_RETRY_ATTEMPTS
@@ -227,7 +224,9 @@ class Inverter:
             else:
                 self.status_connection = "Disconnected"
         except Exception as e:
-            log.warning(f"Querying inverter {self._serial} at {self._host}:{self._port} failed on connection start with exception [{type(e).__name__}]")
+            log.warning(
+                f"Querying inverter {self._serial} at {self._host}:{self._port} failed on connection start with exception [{type(e).__name__}]"
+            )
             self.status_connection = "Disconnected"
         finally:
             if sock:
@@ -238,4 +237,4 @@ class Inverter:
 
     def get_sensors(self):
         params = ParameterParser(self.parameter_definition)
-        return params.get_sensors ()
+        return params.get_sensors()

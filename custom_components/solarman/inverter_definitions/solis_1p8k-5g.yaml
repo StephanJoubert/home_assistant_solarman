@@ -201,4 +201,3 @@ parameters:
       rule: 3
       registers: [3009, 3008]
       icon: 'mdi:solar-power'
-

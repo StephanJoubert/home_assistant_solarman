@@ -5,25 +5,25 @@ requests:
   - start: 0x0003
     end: 0x0059
     mb_functioncode: 0x03
-  - start: 0x0202  
+  - start: 0x0202
     end: 0x022E
-    mb_functioncode: 0x03 
-  - start: 0x024A  
+    mb_functioncode: 0x03
+  - start: 0x024A
     end: 0x024F
-    mb_functioncode: 0x03  
+    mb_functioncode: 0x03
   - start: 0x0256
     end: 0x027C
-    mb_functioncode: 0x03    
-  - start: 0x0284  
+    mb_functioncode: 0x03
+  - start: 0x0284
     end: 0x028D
-    mb_functioncode: 0x03   
-  - start: 0x02A0  
+    mb_functioncode: 0x03
+  - start: 0x02A0
     end: 0x02A7
     mb_functioncode: 0x03
-  
+
 parameters:
  - group: solar
-   items: 
+   items:
     - name: "PV1 Power"
       class: "power"
       state_class: "measurement"
@@ -100,11 +100,11 @@ parameters:
       icon: 'mdi:solar-power'
 
  - group: Battery
-   items: 
+   items:
 
     - name: "Daily Battery Charge"
       class: "energy"
-      state_class: "total_increasing"      
+      state_class: "total_increasing"
       uom: "kWh"
       scale: 0.1
       rule: 1
@@ -112,7 +112,7 @@ parameters:
       icon: 'mdi:battery-plus'
     - name: "Daily Battery Discharge"
       class: "energy"
-      state_class: "total_increasing"      
+      state_class: "total_increasing"
       uom: "kWh"
       scale: 0.1
       rule: 1
@@ -121,7 +121,7 @@ parameters:
 
     - name: "Total Battery Charge"
       class: "energy"
-      state_class: "total_increasing"      
+      state_class: "total_increasing"
       uom: "kWh"
       scale: 0.1
       rule: 3
@@ -182,15 +182,15 @@ parameters:
       uom: "°C"
       scale: 0.1
       rule: 1
-      offset: 1000      
+      offset: 1000
       registers: [0x024A]
       icon: 'mdi:battery'
       validation:
         min: 1
         max: 99
- 
+
  - group: Grid
-   items: 
+   items:
     - name: "Total Grid Power"
       class: "measurement"
       state_class: "measurement"
@@ -217,7 +217,7 @@ parameters:
       rule: 1
       registers: [0x0257]
       icon: 'mdi:transmission-tower'
-      
+
     - name: "Grid Voltage L3"
       class: "voltage"
       state_class: "measurement"
@@ -225,7 +225,7 @@ parameters:
       scale: 0.1
       rule: 1
       registers: [0x0258]
-      icon: 'mdi:transmission-tower'  
+      icon: 'mdi:transmission-tower'
 
     - name: "Internal CT L1 Power"
       class: "power"
@@ -244,7 +244,7 @@ parameters:
       rule: 2
       registers: [0x025D]
       icon: 'mdi:transmission-tower'
-      
+
     - name: "Internal CT L3 Power"
       class: "power"
       state_class: "measurement"
@@ -252,7 +252,7 @@ parameters:
       scale: 1
       rule: 2
       registers: [0x025E]
-      icon: 'mdi:transmission-tower'  
+      icon: 'mdi:transmission-tower'
 
     - name: "External CT L1 Power"
       class: "power"
@@ -271,7 +271,7 @@ parameters:
       rule: 2
       registers: [0x0269]
       icon: 'mdi:transmission-tower'
-      
+
     - name: "External CT L3 Power"
       class: "power"
       state_class: "measurement"
@@ -280,7 +280,7 @@ parameters:
       rule: 2
       registers: [0x026A]
       icon: 'mdi:transmission-tower'
-      
+
     - name: "Daily Energy Bought"
       class: "energy"
       state_class: "total_increasing"
@@ -298,7 +298,7 @@ parameters:
       rule: 1
       registers: [0x020A,0x020B]
       icon: 'mdi:transmission-tower-export'
-      
+
     - name: "Daily Energy Sold"
       class: "energy"
       state_class: "total_increasing"
@@ -325,12 +325,12 @@ parameters:
       rule: 4
       registers: [0x020C,0x020D]
       icon: 'mdi:transmission-tower'
-      
+
  - group: Upload
-   items: 
+   items:
     - name: "Total Load Power"
       class: "power"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "W"
       scale: 1
       rule: 1
@@ -339,7 +339,7 @@ parameters:
 
     - name: "Load L1 Power"
       class: "power"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "W"
       scale: 1
       rule: 1
@@ -348,52 +348,52 @@ parameters:
 
     - name: "Load L2 Power"
       class: "power"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "W"
       scale: 1
       rule: 1
       registers: [0x028B]
       icon: 'mdi:lightning-bolt-outline'
-      
+
     - name: "Load L3 Power"
       class: "power"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "W"
       scale: 1
       rule: 1
       registers: [0x028C]
       icon: 'mdi:lightning-bolt-outline'
-      
+
     - name: "Load Voltage L1"
       class: "voltage"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "V"
       scale: 0.1
       rule: 1
       registers: [0x0284]
       icon: 'mdi:lightning-bolt-outline'
-      
+
     - name: "Load Voltage L2"
       class: "voltage"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "V"
       scale: 0.1
       rule: 1
       registers: [0x0285]
       icon: 'mdi:lightning-bolt-outline'
-      
+
     - name: "Load Voltage L3"
       class: "voltage"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "V"
       scale: 0.1
       rule: 1
       registers: [0x0286]
       icon: 'mdi:lightning-bolt-outline'
-      
+
     - name: "Daily Load Consumption"
       class: "energy"
-      state_class: "total_increasing"      
+      state_class: "total_increasing"
       uom: "kWh"
       scale: 0.1
       rule: 1
@@ -402,18 +402,18 @@ parameters:
 
     - name: "Total Load Consumption"
       class: "energy"
-      state_class: "total_increasing"      
+      state_class: "total_increasing"
       uom: "kWh"
       scale: 0.1
       rule: 3
       registers: [0x020F,0x0210]
       icon: 'mdi:lightning-bolt-outline'
-     
+
  - group: Inverter
    items:
     - name: "Current L1"
       class: "current"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "A"
       scale: 0.01
       rule: 2
@@ -428,7 +428,7 @@ parameters:
       rule: 2
       registers: [0x0277]
       icon: 'mdi:home-lightning-bolt'
-      
+
     - name: "Current L3"
       class: "current"
       uom: "A"
@@ -436,10 +436,10 @@ parameters:
       rule: 2
       registers: [0x0278]
       icon: 'mdi:home-lightning-bolt'
-      
+
     - name: "Inverter L1 Power"
       class: "power"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "W"
       scale: 1
       rule: 2
@@ -448,54 +448,54 @@ parameters:
 
     - name: "Inverter L2 Power"
       class: "power"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "W"
       scale: 1
       rule: 2
       registers: [0x027A]
       icon: 'mdi:home-lightning-bolt'
-      
+
     - name: "Inverter L3 Power"
       class: "power"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "W"
       scale: 1
       rule: 2
       registers: [0x027B]
       icon: 'mdi:home-lightning-bolt'
-      
+
     - name: "DC Temperature"
       class: "temperature"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "°C"
       scale: 0.1
       rule: 2
-      offset: 1000      
+      offset: 1000
       registers: [0x021C]
       icon: 'mdi:thermometer'
 
     - name: "AC Temperature"
       class: "temperature"
-      state_class: "measurement"      
+      state_class: "measurement"
       uom: "°C"
       scale: 0.1
       rule: 2
-      offset: 1000      
+      offset: 1000
       registers: [0x021D]
       icon: 'mdi:thermometer'
 
     - name: "Inverter ID"
       class: ""
-      state_class: ""      
+      state_class: ""
       uom: ""
       scale: 1
       rule: 5
       registers: [0x0003,0x0004,0x0005,0x0006,0x0007]
       isstr: true
-    
+
     - name: "Communication Board Version No."
       class: ""
-      state_class: ""      
+      state_class: ""
       uom: ""
       scale: 1
       rule: 1
@@ -504,7 +504,7 @@ parameters:
 
     - name: "Control Board Version No."
       class: ""
-      state_class: ""      
+      state_class: ""
       uom: ""
       scale: 1
       rule: 1
@@ -512,10 +512,10 @@ parameters:
       isstr: true
 
  - group: Alert
-   items: 
+   items:
     - name: "Alert"
       class: ""
-      state_class: ""      
+      state_class: ""
       uom: ""
       scale: 1
       rule: 6

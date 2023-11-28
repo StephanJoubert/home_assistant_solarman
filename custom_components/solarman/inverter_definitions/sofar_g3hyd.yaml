@@ -667,7 +667,7 @@ parameters:
         scale: 0.01
         rule: 2
         registers: [ 0x050F ]
-        icon: 'mdi:lightning-bolt-outline'  
+        icon: 'mdi:lightning-bolt-outline'
       - name: "Voltage_Output_S_EPS"
         class: "voltage"
         state_class: "measurement"
