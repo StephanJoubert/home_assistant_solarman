@@ -586,6 +586,9 @@ parameters:
         rule: 1
         registers: [0x0298, 0x029C]
         icon: "mdi:home-lightning-bolt"
+        validation:
+          min: 0
+          max: 12000
 
       - name: "Phase power of Gen port B"
         class: "power"
@@ -595,6 +598,9 @@ parameters:
         rule: 1
         registers: [0x0299, 0x029D]
         icon: "mdi:home-lightning-bolt"
+        validation:
+          min: 0
+          max: 12000
 
       - name: "Phase power of Gen port C"
         class: "power"
@@ -604,6 +610,9 @@ parameters:
         rule: 1
         registers: [0x029A, 0x029E]
         icon: "mdi:home-lightning-bolt"
+        validation:
+          min: 0
+          max: 12000
 
       - name: "Total Power of Gen port"
         class: "power"
@@ -613,6 +622,9 @@ parameters:
         rule: 1
         registers: [0x029B, 0x029F]
         icon: "mdi:home-l1ghtning-bolt"
+        validation:
+          min: 0
+          max: 12000
 
       - name: "Generator daily power generation"
         class: "energy"
