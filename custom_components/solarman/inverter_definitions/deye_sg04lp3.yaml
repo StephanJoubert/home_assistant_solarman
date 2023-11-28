@@ -5,6 +5,9 @@ requests:
   - start: 0x0003
     end: 0x0059
     mb_functioncode: 0x03
+  - start: 0x0066
+    end: 0x0066
+    mb_functioncode: 0x03
   - start: 0x0085
     end: 0x0085
     mb_functioncode: 0x03
@@ -24,7 +27,7 @@ requests:
     end: 0x028D
     mb_functioncode: 0x03
   - start: 0x0295
-    end: 0x029B
+    end: 0x029F
     mb_functioncode: 0x03
   - start: 0x02A0
     end: 0x02A7
@@ -118,6 +121,7 @@ parameters:
         rule: 1
         registers: [0x0202]
         icon: "mdi:battery-plus"
+
       - name: "Daily Battery Discharge"
         class: "energy"
         state_class: "total_increasing"
@@ -196,6 +200,15 @@ parameters:
         validation:
           min: 1
           max: 99
+
+      - name: "Battery Capacity"
+        class: "battery"
+        state_class: "measurement"
+        uom: "Ah"
+        scale: 1
+        rule: 1
+        registers: [0x0066]
+        icon: "mdi:battery"
 
   - group: Grid
     items:
@@ -571,7 +584,7 @@ parameters:
         uom: "W"
         scale: 1
         rule: 1
-        registers: [0x0298]
+        registers: [0x0298, 0x029C]
         icon: "mdi:home-lightning-bolt"
 
       - name: "Phase power of Gen port B"
@@ -580,7 +593,7 @@ parameters:
         uom: "W"
         scale: 1
         rule: 1
-        registers: [0x0299]
+        registers: [0x0299, 0x029D]
         icon: "mdi:home-lightning-bolt"
 
       - name: "Phase power of Gen port C"
@@ -589,7 +602,7 @@ parameters:
         uom: "W"
         scale: 1
         rule: 1
-        registers: [0x029A]
+        registers: [0x029A, 0x029E]
         icon: "mdi:home-lightning-bolt"
 
       - name: "Total Power of Gen port"
@@ -598,7 +611,7 @@ parameters:
         uom: "W"
         scale: 1
         rule: 1
-        registers: [0x029B]
+        registers: [0x029B, 0x029F]
         icon: "mdi:home-l1ghtning-bolt"
 
       - name: "Generator daily power generation"
