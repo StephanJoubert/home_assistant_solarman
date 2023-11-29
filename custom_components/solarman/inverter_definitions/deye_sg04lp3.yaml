@@ -5,8 +5,8 @@ requests:
   - start: 0x0003
     end: 0x0059
     mb_functioncode: 0x03
-  - start: 0x0066
-    end: 0x0066
+  - start: 0x0063
+    end: 0x006D
     mb_functioncode: 0x03
   - start: 0x0085
     end: 0x0085
@@ -113,6 +113,69 @@ parameters:
 
   - group: Battery
     items:
+      - name: "Battery Equalization V"
+        class: "voltage"
+        state_class: "measurement"
+        uom: "V"
+        scale: 0.01
+        rule: 1
+        registers: [0x0063]
+        icon: "mdi:battery"
+
+      - name: "Battery Absorption V"
+        class: "voltage"
+        state_class: "measurement"
+        uom: "V"
+        scale: 0.01
+        rule: 1
+        registers: [0x0064]
+        icon: "mdi:battery"
+
+      - name: "Battery Float V"
+        class: "voltage"
+        state_class: "measurement"
+        uom: "V"
+        scale: 0.01
+        rule: 1
+        registers: [0x0065]
+        icon: "mdi:battery"
+
+      - name: "Battery Capacity"
+        class: "battery"
+        state_class: "measurement"
+        uom: "Ah"
+        scale: 1
+        rule: 1
+        registers: [0x0066]
+        icon: "mdi:battery"
+
+      - name: "Battery Empty V"
+        class: "voltage"
+        state_class: "measurement"
+        uom: "V"
+        scale: 0.01
+        rule: 1
+        registers: [0x0066]
+        icon: "mdi:battery"
+
+      - name: "Battery Max A Charge"
+        class: "current"
+        state_class: "measurement"
+        uom: "A"
+        scale: 1
+        rule: 1
+        registers: [0x006C]
+        icon: "mdi:battery"
+
+      - name: "Battery Max A Discharge"
+        class: "current"
+        state_class: "measurement"
+        uom: "A"
+        scale: 1
+        rule: 1
+        registers: [0x006D]
+        icon: "mdi:battery"
+
       - name: "Daily Battery Charge"
         class: "energy"
         state_class: "total_increasing"
@@ -200,15 +263,6 @@ parameters:
         validation:
           min: 1
           max: 99
-
-      - name: "Battery Capacity"
-        class: "battery"
-        state_class: "measurement"
-        uom: "Ah"
-        scale: 1
-        rule: 1
-        registers: [0x0066]
-        icon: "mdi:battery"
 
   - group: Grid
     items:
