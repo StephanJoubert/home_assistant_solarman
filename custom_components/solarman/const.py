@@ -1,3 +1,4 @@
+import os
 from datetime import timedelta
 
 DOMAIN = 'solarman'
