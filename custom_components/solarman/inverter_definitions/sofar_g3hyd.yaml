@@ -1,25 +1,30 @@
 # Sofar G3 also HYD 5-20KTL-3PH
-# This works also for rebranded ZCS Azzurro 3-Phase inverters such as the 3PH HYD6000 ZSS
+# This works also for rebranded ZCS Azzurro 3-Phase inverters such as the 3PH HYD6000 ZSS, or single phase such as 1PH HY6000 ZSS HP
 # Note that this won't work if your ZCS inverter is connected via Connext, you have to be using a Wi-Fi or Ethernet Kit such as ZSM-WIFI-USB.
 requests:
-  - start: 0x0404
-    end: 0x0420
+  - start: 0x0404 # inverter
+    end: 0x042B
     mb_functioncode: 0x03
-  - start: 0x0484
+  - start: 0x0445 # serial number
+    end: 0x044C
+    mb_functioncode: 0x03
+  - start: 0x0484 # grid
     end: 0x04AF
     mb_functioncode: 0x03
-# off - grid info
-#  - start: 0x0504
-#    end: 0x051F
-#    mb_functioncode: 0x03
-  - start: 0x0584
+  - start: 0x0504 # off-grid
+    end: 0x051F
+    mb_functioncode: 0x03
+  - start: 0x0584 # dc
     end: 0x0589
     mb_functioncode: 0x03
-  - start: 0x0604
+  - start: 0x0604 # battery
     end: 0x060A # end of first battery after this continue battery pack 2,3,4
     mb_functioncode: 0x03
-  - start: 0x0684
+  - start: 0x0684 # generation
     end: 0x069B
+    mb_functioncode: 0x03
+  - start: 0x104D # battery dod and eod
+    end: 0x104E
     mb_functioncode: 0x03
 parameters:
 
@@ -51,6 +56,14 @@ parameters:
           - key: 7
             value: "self-charging"
         icon: 'mdi:wrench'
+      - name: "Power-on Countdown"
+        class: ""
+        uom: "s"
+        scale: 1
+        rule: 1
+        isstr: true
+        registers: [ 0x0417 ]
+        icon: 'mdi:timer'
       - name: "Ambient temperature 1"
         class: "temperature"
         uom: "°C"
@@ -128,6 +141,29 @@ parameters:
         rule: 2
         registers: [ 0x0422 ]
         icon: 'mdi:thermometer'
+      - name: "Generation Time Today"
+        class: "duration"
+        state_class: "measurement"
+        uom: "min"
+        scale: 1
+        rule: 1
+        registers: [ 0x0426 ]
+        icon: 'mdi:clock'
+      - name: "Insulation resistance"
+        class: ""
+        state_class: "measurement"
+        uom: "kΩ"
+        scale: 1
+        rule: 1
+        registers: [ 0x042B ]
+        icon: 'mdi:omega'
+      - name: "Serial Number"
+        class: ""
+        uom: ""
+        scale: 1
+        rule: 5
+        registers: [ 0x0445,0x0446,0x0447,0x0448,0x0449,0x044A,0x044B,0x044C ] # serial number 17th to 20th digits are in 0x0470 and 0x0471
+        icon: 'mdi:barcode'
 
   - group: InverterDC
     items:
@@ -293,6 +329,22 @@ parameters:
         scale: 1
         rule: 1
         registers: [ 0x0611 ]
+        icon: 'mdi:battery'
+      - name: "Battery DOD"
+        class: ""
+        state_class: "measurement"
+        uom: "%"
+        scale: 1
+        rule: 1
+        registers: [ 0x104D ]
+        icon: 'mdi:battery'
+      - name: "Battery EOD"
+        class: ""
+        state_class: "measurement"
+        uom: "%"
+        scale: 1
+        rule: 1
+        registers: [ 0x104E ]
         icon: 'mdi:battery'
 
   - group: GridAC
@@ -894,6 +946,10 @@ parameters:
             value: "ID03 Grid Over Frequency Protection"
           - key: 8
             value: "ID04 Grid Under Frequency Protection"
+          - key: 10
+            value: "LOOKUP" # off-grid
+          - key: 14
+            value: "ID03 Grid Over Frequency Protection" # also ID14 Grid voltage unbalance
           - key: 16
             value: "ID05 Leakage current fault"
           - key: 32
