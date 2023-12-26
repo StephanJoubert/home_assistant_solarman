@@ -17,8 +17,8 @@ requests:
   - start: 0x0584 # dc
     end: 0x0589
     mb_functioncode: 0x03
-  - start: 0x0604 # battery
-    end: 0x060A # end of first battery after this continue battery pack 2,3,4
+  - start: 0x0604 # battery 1
+    end: 0x060A # end of first battery, last battery (8th) ends in 0x063A
     mb_functioncode: 0x03
   - start: 0x0684 # generation
     end: 0x069B
@@ -273,62 +273,6 @@ parameters:
         scale: 1
         rule: 1
         registers: [ 0x060A ]
-        icon: 'mdi:battery'
-      - name: "Battery 2 Voltage"
-        class: "voltage"
-        state_class: "measurement"
-        uom: "V"
-        scale: 0.1
-        rule: 1
-        registers: [ 0x060B ]
-        icon: 'mdi:battery'
-      - name: "Battery 2 Current"
-        class: "current"
-        state_class: "measurement"
-        uom: "A"
-        scale: 0.01
-        rule: 2
-        registers: [ 0x060C ]
-        icon: 'mdi:current-dc'
-      - name: "Battery 2 Power"
-        class: "power"
-        state_class: "measurement"
-        uom: "W"
-        scale: 10
-        rule: 2
-        registers: [ 0x060D ]
-        icon: 'mdi:battery-charging'
-      - name: "Battery 2 Temperature"
-        class: "temperature"
-        state_class: "measurement"
-        uom: "°C"
-        scale: 1
-        rule: 2
-        registers: [ 0x060E ]
-        icon: 'mdi:battery'
-      - name: "Battery 2 SOC"
-        class: "battery"
-        state_class: "measurement"
-        uom: "%"
-        scale: 1
-        rule: 1
-        registers: [ 0x060F ]
-        icon: 'mdi:battery'
-      - name: "Battery 2 SOH"
-        class: "battery"
-        state_class: "measurement"
-        uom: "%"
-        scale: 1
-        rule: 1
-        registers: [ 0x0610 ]
-        icon: 'mdi:battery'
-      - name: "Battery 2 Number of Cycles"
-        class: ""
-        state_class: "measurement"
-        uom: "cycle"
-        scale: 1
-        rule: 1
-        registers: [ 0x0611 ]
         icon: 'mdi:battery'
       - name: "Battery DOD"
         class: ""
