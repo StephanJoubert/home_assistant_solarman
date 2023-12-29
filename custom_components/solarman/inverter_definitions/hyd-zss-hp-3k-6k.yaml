@@ -264,15 +264,6 @@ parameters:
         registers: [0x0485]
         icon: 'mdi:home-lightning-bolt'
         
-      - name: 'Active Power Load Total'
-        class: 'power'
-        state_class: 'measurement'
-        uom: 'W'
-        scale: 10
-        rule: 2
-        registers: [0x0504]
-        icon: 'mdi:home-lightning-bolt'
-        
       - name: 'Energy Purchase Today'
         class: 'energy'
         state_class: 'total_increasing'
@@ -307,6 +298,44 @@ parameters:
         scale: 0.1        
         rule: 3
         registers: [0x0693,0x0692]
+        icon: 'mdi:home-lightning-bolt'
+
+  - group: EPS
+    items:
+      - name: 'EPS Active Power Load Total'
+        class: 'power'
+        state_class: 'measurement'
+        uom: 'W'
+        scale: 10
+        rule: 2
+        registers: [0x0504]
+        icon: 'mdi:home-lightning-bolt'
+
+      - name: 'EPS Frequency'
+        class: 'frequency'
+        state_class: 'measurement'
+        uom: 'Hz'
+        scale: 0.01
+        rule: 1
+        registers: [0x0507]
+        icon: 'mdi:home-lightning-bolt'
+
+      - name: 'EPS Voltage'
+        class: "voltage"
+        state_class: "measurement"
+        uom: "V"
+        scale: 0.1
+        rule: 1
+        registers: [0x050A]
+        icon: 'mdi:home-lightning-bolt'
+
+      - name: 'EPS Current'
+        class: "current"
+        state_class: "measurement"
+        uom: "A"
+        scale: 0.01
+        rule: 1
+        registers: [ 0x050B ]
         icon: 'mdi:home-lightning-bolt'
 
   - group: Inverter
