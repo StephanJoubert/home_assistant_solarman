@@ -60,14 +60,6 @@ parameters:
           - key: 7
             value: "self-charging"
         icon: 'mdi:wrench'
-      - name: "Power-on Countdown"
-        class: ""
-        uom: "s"
-        scale: 1
-        rule: 1
-        isstr: true
-        registers: [ 0x0417 ]
-        icon: 'mdi:timer'
       - name: "Ambient temperature 1"
         class: "temperature"
         uom: "°C"
