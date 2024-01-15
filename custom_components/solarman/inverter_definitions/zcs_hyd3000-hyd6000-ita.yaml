@@ -1,0 +1,1971 @@
+# Configuration file for inverter family Zucchetti HYD 3000/HYD 6000 byStefanoGeri
+# Tested with my Zucchetti HYD6000 (not HP), May work for other devices
+# thanks to StephanJoubert for his precious repositories with which I was able to start working. 
+# you can use the code by copying it into the custom_parameters.yaml file or by inserting the file name into the const.py file
+
+# - name: ".........."  = sensor name/parameter identical to inverter_definitions "sofar_hyd3k-6k-es.yaml"
+# - name: ".........."  = sensor name/parameter identical to modbus guide
+# - name: ".........."  = sensore/parametro tradotto in italiano
+
+#   to use the name of the approval sensor, uncomment (#) the relevant line (solarman/modbus/italian)
+#   caution by changing the name of the sensor home assistant could lose the history of the relevant sensor
+#   pay attention to spaces and alignments to avoid compromising the functioning of the code
+#   per utilizzare il nome del sensore di gradimento togliere commento (#) alla riga relativa  (solarman/modbus/italiano)
+#   attenzione modificando il nome del sensore home assistant potrebbe perdere la storia del relativo sensore
+#   attenzione a spazi ed allineamenti per non compromettere il funzionamento del codice
+
+requests:
+# Stato dell'inverter [Inverter State]
+  - start: 0x0200
+    end:  0x0255
+    mb_functioncode: 0x03
+# Impostazioni dell'inverter [Inverter Settings]
+  - start: 0x10B0
+    end: 0x10BC
+    mb_functioncode: 0x04
+# Informazioni relative alla produzione dell'inverter [Inverter manufacture related information ]
+  - start: 0x1000
+    end: 0x100F
+    mb_functioncode: 0x04
+# Informazioni sull'inverter [Inverter Information]
+  - start: 0x2000
+    end: 0x200B
+    mb_functioncode: 0x04
+  
+parameters:
+
+# ------------------------------------------------------------------------------------------- 
+#  - group: actual
+ - group: attuale
+   items:
+    # - name: "Power Consumption"
+    # - name: "Load power"
+    - name: "attuale:energia consumata"
+      class: "power"
+      state_class: "measurement"
+      uom: "kW"
+      scale: 0.01
+      rule: 1
+      registers: [0x0213]
+      icon: 'mdi:home-lightning-bolt'
+      
+    # - name: "Battery Charge / Discharge current"
+    # - name: "Battery charge-discharge current"
+    - name: "attuale:corrente carica-scarica batterie" 
+      class: "current"
+      state_class: "measurement"
+      uom: "A"
+      scale: 0.01
+      rule: 2
+      registers: [0x020F]
+      icon: 'mdi:battery-charging-10'
+      
+    # - name: "Charge / Discharge Power"
+    # - name: "Battery charge-discharge power"
+    - name: "attuale:potenza carica-scarica " 
+      class: "power"
+      state_class: "measurement"
+      uom: "kW"
+      scale: 0.01
+      rule: 2
+      registers: [0x020D] # positive charge, negative discharge
+      icon: 'mdi:battery'
+     
+    # - name: "Feed in / out power"
+    # - name: "Grid power in/out "
+    - name: "attuale:potenza immessa/acquisita2"
+      class: "power"
+      state_class: "measurement"
+      uom: "kW"
+      scale: 0.01
+      rule: 2
+      registers: [0x0212]
+      icon: ''
+      
+    # - name: "Input/Output Power"  
+    # - name: "Input/Output Power" 
+    - name: "attuale:potenza immessa/acquisita1"
+      class: "power"
+      state_class: "measurement"
+      uom: "kW"
+      scale: 0.01
+      rule: 2
+      registers: [0x0214]
+      icon: 'mdi:lightning-bolt'      
+
+
+
+#  - group: Daily
+ - group: Oggi
+   items: 
+   
+    # - name: "Daily energy"
+    # - name: "Daily energy"
+    - name: "oggi:energia prodotta"
+      class: "energy"
+      state_class: "total_increasing"
+      uom: "kWh"
+      scale: 0.01
+      rule: 1
+      registers: [0x0218]
+      icon: 'mdi:solar-power' 
+      
+    # - name: "Today generation time"
+    # - name: "Today generation time"
+    - name: "oggi:durata produzione"
+      class: ""
+      state_class: "total_increasing"
+      uom: "min"
+      scale: 1
+      rule: 1
+      registers: [0x0243]
+      icon: 'mdi:clock-outline'     
+
+    # - name: "Load daily energy" 
+    # - name: "Today Power Consumption"    
+    - name: "oggi:energia consumata"
+      class: "energy"
+      state_class: "total_increasing"
+      uom: "kWh"
+      scale: 0.01
+      rule: 1
+      registers: [0x021B]
+      icon: 'mdi:lightning-bolt'
+
+    # - name: "Daily energy taken from the grid"
+    # - name: "Daily energy taken from the grid"
+    - name: "oggi:energia consumata da rete"
+      class: "energy"
+      state_class: "total_increasing"
+      uom: "kWh"
+      scale: 0.01
+      rule: 1
+      registers: [0x021A]
+      icon: 'mdi:transmission-tower-import'
+      
+    # - name: "Today Grid Return"
+    # - name: "Daily energy injected into the grid"
+    - name: "oggi:energia immessa in rete"
+      class: "energy"
+      state_class: "total_increasing"
+      uom: "kWh"
+      scale: 0.01
+      rule: 1
+      registers: [0x0219]
+      icon: 'mdi:transmission-tower-export'
+   
+    # - name: "Battery Daily Charge"
+    # - name: "Daily energy charging battery"
+    - name: "oggi:batt.energia caricata"
+      class: "energy"
+      state_class: "total_increasing"
+      uom: "kWh"
+      scale: 0.01
+      rule: 1
+      registers: [0x0224]
+      icon: 'mdi:battery-charging'
+
+    # - name: "Daily energy discharging battery"
+    # - name: "Battery Daily Discharge"
+    - name: "oggi:batt.energia scaricata"
+      class: "energy"
+      state_class: "total_increasing"
+      uom: "kWh"
+      scale: 0.01
+      rule: 1
+      registers: [0x0225]
+      icon: 'mdi:battery'
+
+
+
+        
+#  - group: Total
+ - group: Totali
+   items: 
+   
+    # - name: "Load total energy"
+    # - name: "Total Power Consumption"
+    - name: "totale:energia consumata"
+      class: "energy"
+      state_class: "total"
+      uom: "kWh"
+      scale: 1
+      rule: 3
+      registers: [0x0223,0x0222] # 0x0223 Load total energy Low; 0x0222 Load total energy High
+      icon: 'mdi:lightning-bolt' 
+
+    # - name: "Total energy taken from the grid"
+    # - name: "Total Grid Consumption"    
+    - name: "totale:Energia consumata da rete"
+      class: "energy"
+      state_class: "total"
+      uom: "kWh"
+      scale: 1
+      rule: 3
+      registers: [0x0221,0x0220] # 0x0221 = Total energy taken from the grid Low; 0x0220 = Total energy taken from the grid High
+      icon: 'mdi:transmission-tower-import'  
+      
+    # - name: "Total energy injected"     
+    # - name: "Total Grid Return"
+    - name: "totale:Energia immessa in rete"
+      class: "energy"
+      state_class: "total"
+      uom: "kWh"
+      scale: 1
+      rule: 3
+      registers: [0x021F,0x021E] # 0x021F = Total energy injected into the grid Low;0x021E = Total energy injected into the grid High
+      icon: 'mdi:transmission-tower-export'  
+ 
+    # - name: "Battery Total Energy Charged"
+    # - name: "Total energy charging battery Low"
+    - name: "totale: energia ricaricata batterie low"
+      class: "energy"
+      state_class: "total"
+      uom: "kWh"
+      scale: 1
+      rule: 1
+      registers: [0x0227]
+      icon: 'mdi:battery-charging-high'
+      
+    # - name: "Battery Total Energy Dischaged"
+    # - name: "Total energy discharging battery Low"
+    - name: "totale: batt. energia scaricata batterie low"
+      class: "energy"
+      state_class: "total"
+      uom: "kWh"
+      scale: 1
+      rule: 1
+      registers: [0x0229]
+      icon: 'mdi:battery-charging-outline'  
+
+    # - name: "Total energy"
+    # - name: "Total Production" 
+    - name: "totale:energia prodotta"
+      class: "energy"
+      state_class: "total"
+      uom: "kWh"
+      scale: 1
+      rule: 3
+      registers: [0x021D,0x021C] # 0x021D=Total energy Low, #0x021C=Total energy High
+      icon: 'mdi:solar-power' 
+
+    # - name: "Total energy charging battery"
+    # - name: "Battery Total Charge"
+    - name: "totale:batt. energia caricata"
+      class: "energy"
+      state_class: "total"
+      uom: "kWh"
+      scale: 1
+      rule: 3
+      registers: [0x0227,0x0226] # 0x0227 = Total energy charging battery Low;  0x0226 = Total energy charging battery High
+      icon: 'mdi:battery'
+
+    # - name: "Total energy charging battery High"
+    # - name: "Total energy charging battery High"
+    - name: "totale:batt. energia caricata(high)"
+      class: "energy"
+      state_class: "total"
+      uom: "kWh"
+      scale: 1
+      rule: 1
+      registers: [0x0226]
+      icon: 'mdi:battery-clock'
+      
+    # - name: "Total energy discharging battery"
+    # - name: "Battery Total Discharge" 
+    - name: "totale:batt. energia scaricata"
+      class: "energy"
+      state_class: "total"
+      uom: "kWh"
+      scale: 1
+      rule: 3
+      registers: [0x0229,0x0228] # 0x0229 = Total energy discharging battery Low;  0x0228 = Total energy discharging battery High
+      icon: 'mdi:battery'      
+      
+    # - name: "Total energy discharging battery High"
+    # - name: "energia totale scaricata High"
+    - name: "totale:batt. energia scaricata(high)"
+      class: "energy"
+      state_class: "total"
+      uom: "kWh"
+      scale: 1
+      rule: 1
+      registers: [0x0228]
+      icon: 'mdi:battery-clock-outline'
+      
+    # - name: "Total generation time"
+    # - name: "Total generation time"
+    - name: "totale:FV. durata produzione "
+      class: ""
+      state_class: "measurement"
+      uom: "h"
+      scale: 1
+      rule: 3
+      registers: [0x0245,0x0244]
+      icon: 'mdi:clock-outline'
+
+    # - name: "Total generating time high byte"
+    # - name: "Total generating time high byte"
+    - name: "totale:FV. tempo di produzione (high)"
+      class: ""
+      state_class: "total_increasing"
+      uom: "h"
+      scale: 1
+      rule: 1
+      registers: [0x0244]
+      icon: 'mdi:clock-outline'   
+      
+    # - name: "Total generating time low byte"
+    # - name: "Total generating time low byte"
+    - name: "totale:FV. tempo di produzione (low)"
+      class: ""
+      state_class: "total_increasing"
+      uom: "h"
+      scale: 1
+      rule: 1
+      registers: [0x0245]
+      icon: 'mdi:clock-outline'   
+      
+
+
+     
+#  - group: solar
+ - group: fotovoltaico
+   items:
+   
+ # - name: "PV power generation"
+    # - name: "PV Instant Generated PW"    
+    - name: "FV:potenza istantanea"
+      class: "power"
+      state_class: "measurement"
+      uom: "kW"
+      scale: 0.01
+      rule: 1
+      registers: [0x0215]
+      icon: 'mdi:solar-power'
+      
+    # - name: "PV1 Current"
+    # - name: "PV1 Current"    
+    - name: "FV:corrente stringa 1"
+      class: "current"
+      state_class: "measurement"
+      uom: "A"
+      scale: 0.01
+      rule: 1
+      registers: [0x0251]
+      icon: 'mdi:solar-power'
+      
+    # - name: "PV2 Current"
+    # - name: "PV2 Current"
+    - name: "FV:corrente stringa 2"
+      class: "current"
+      state_class: "measurement"
+      uom: "A"
+      scale: 0.01
+      rule: 1
+      registers: [0x0254]
+      icon: 'mdi:solar-power'
+
+    # - name: "PV1 Power"
+    # - name: "PV1 Power"
+    - name: "FV:potenza stringa 1"
+      class: "power"
+      state_class: "measurement"
+      uom: "kw"
+      scale: 0.01
+      rule: 1
+      registers: [0x0252]
+      icon: 'mdi:solar-power'
+      
+    # - name: "PV2 Power"
+    # - name: "PV2 Power"
+    - name: "FV:potenza stringa 2"
+      class: "power"             
+      state_class: "measurement"
+      uom: "kw"
+      scale: 0.01
+      rule: 1
+      registers: [0x0255]
+      icon: 'mdi:solar-power'
+      
+    # - name: "PV1 voltage"
+    # - name: "PV1 Voltage"    
+    - name: "FV:tensione stringa 1"
+      class: "voltage"
+      state_class: "measurement"
+      uom: "V"
+      scale: 0.1
+      rule: 1
+      registers: [0x0250]
+      icon: 'mdi:solar-power'
+
+    # - name: "PV2 Voltage"
+    # - name: "PV2 Voltage"
+    - name: "FV:tensione stringa 2"
+      class: "voltage"
+      state_class: "measurement"
+      uom: "V"
+      scale: 0.1
+      rule: 1
+      registers: [0x0253]
+      icon: 'mdi:solar-power'
+
+    # - name: "Insulation of PV1+ to ground"
+    # - name: "PV1+ insulation resistance to ground"
+    - name: "FV:resistenza stringa 1"
+      class: ""
+      state_class: "measurement"
+      uom: "Ohm"
+      scale: 1
+      rule: 1
+      registers: [0x0246]
+      icon: ''
+
+    # - name: "Insulation of PV2+ to ground"
+    # - name: "Insulation of PV2+ to ground"
+    - name: "FV:resistenza stringa 2"
+      class: ""
+      state_class: "measurement"
+      uom: "Ohm"
+      scale: 1
+      rule: 1
+      registers: [0x0247]
+      icon: ''
+      
+    # - name: "Insulation of PV- to ground"
+    # - name: "Insulation of PV- to ground"
+    - name: "FV:resistenza stringhe PV-"
+      class: ""
+      state_class: "measurement"
+      uom: "Ohm"
+      scale: 1
+      rule: 1
+      registers: [0x0248]
+      icon: ''
+
+
+    
+#  - group: Grid
+ - group: Rete Elettrica
+   items:
+
+#    - name: "Output active power"
+#    - name: "Output active power"
+#    - name: "Output active power"
+#      class: "power"
+#      state_class: "measurement"
+#      uom: "W"
+#      scale: 10
+#      rule: 1
+#      registers: [0x000C]
+#      icon: 'mdi:home-lightning-bolt'
+
+#    - name: "Output reactive power"
+#    - name: "Output reactive power"
+#    - name: "Output reactive power"
+#      class: ""
+#      state_class: "measurement"
+#      uom: "kVar"
+#      scale: 0.01
+#      rule: 1
+#      registers: [0x000D]
+#      icon: 'mdi:home-lightning-bolt'
+
+    # - name: "A phase current"
+    # - name: "Grid A Current"   
+    - name: "ReteAC:corrente"
+      class: "current"
+      state_class: "measurement"
+      uom: "A"
+      scale: 0.01
+      rule: 2
+      registers: [0x0207]
+      icon: 'mdi:home-lightning-bolt'
+      
+    # - name: "Grid frequency"
+    # - name: "Grid frequency"
+    - name: "ReteAC:frequenza"
+      class: "frequency"
+      state_class: "measurement"
+      uom: "Hz"
+      scale: 0.01
+      rule: 1
+      registers: [0x020C]
+      icon: 'mdi:sine-wave'
+
+    # - name: "A phase voltage"
+    # - name: "Grid A Voltage"
+    - name: "ReteAC:tensione"
+      class: "voltage"
+      state_class: "measurement"
+      uom: "V"
+      scale: 0.1
+      rule: 1
+      registers: [0x0206]
+      icon: 'mdi:home-lightning-bolt'
+      
+    # - name: "Grid R Voltage"
+    # - name: "Grid R Voltage"
+    - name: "Rete:tensione fase R "
+      class: "voltage"
+      state_class: "measurement"
+      uom: "V"
+      scale: 0.1
+      rule: 1
+      registers: [0x0230]
+      icon: 'mdi:transmission-tower'
+
+    # - name: "Grid S Voltage"
+    # - name: "Grid S Voltage"
+    - name: "Rete:tensione fase S"    
+      class: "voltage"
+      state_class: "measurement"
+      uom: "V"
+      scale: 0.1
+      rule: 1
+      registers: [0x0232]
+      icon: 'mdi:transmission-tower'
+      
+    # - name: "Grid T voltage"
+    # - name: "Grid T voltage"
+    - name: "Rete:ftensione fase T"   
+      class: "voltage"
+      state_class: "measurement"
+      uom: "V"
+      scale: 0.1
+      rule: 1
+      registers: [0x0234]
+      icon: 'mdi:transmission-tower'
+
+    # - name: "Grid R Current"
+    # - name: "Grid R Current"
+    - name: "Rete:corrente fase R"
+      class: "current"
+      state_class: "measurement"
+      uom: "A"
+      scale: 0.01
+      rule: 1
+      registers: [0x0231]
+      icon: 'mdi:current-ac'
+
+    # - name: "Grid S Current" 
+    # - name: "Grid S Current" 
+    - name: "Rete:corrente fase S"    
+      class: "current"
+      state_class: "measurement"
+      uom: "A"
+      scale: 0.01
+      rule: 1
+      registers: [0x0233]
+      icon: 'mdi:current-ac'
+
+    # - name: "Grid T current"
+    # - name: "Grid T current"
+    - name: "Rete:corrente fase T"
+      class: "current"
+      state_class: "measurement"
+      uom: "A"
+      scale: 0.01
+      rule: 1
+      registers: [0x0235]
+      icon: 'mdi:current-ac'
+
+
+
+ - group: batteries
+   items:
+
+    # - name: "Battery Type"
+    # - name: "Battery Type"
+    - name: "Batt:tipo"
+      class: ""
+      state_class: ""
+      uom: ""
+      scale: 1
+      rule: 1
+      registers: [0x10B0]
+      isstr: true
+      lookup:
+      -  key: 0
+        #  value: "tipe 0"
+        #  value: "tipe 0"
+         value: "tipo 0"
+      -  key: 1
+        #  value: "tipe 1"
+        #  value: "tipe 1"
+         value: "tipo 1"
+      -  key: 2
+        #  value: "tipe 2"
+        #  value: "tipe 2"
+         value: "tipo 2"
+      -  key: 3
+        #  value: "tipe 4"
+        #  value: "tipe 4"
+         value: "tipo 3"
+      -  key: 4
+        #  value: "tipe 4"
+        #  value: "tipe 4"
+         value: "tipo 4"
+      -  key: 5
+        #  value: "tipe 5"
+        #  value: "tipe 5"
+         value: "tipo 5"
+      -  key: 6
+        #  value: "tipe 6"
+        #  value: "tipe 6"
+         value: "tipo 6"
+      -  key: 7
+        #  value: "tipe 7"
+        #  value: "tipe 7"
+         value: "tipo 7"
+      icon: 'mdi:battery'
+
+    # - name: "Battery Capacity"
+    # - name: "Battery Capacity"
+    - name: "Batt:capacità"
+      class: ""
+      state_class: ""
+      uom: "Ah"
+      scale: 1
+      rule: 1
+      registers: [0x10B1]
+      icon: 'mdi:battery-high'
+      
+    # - name: "Battery Cicles"
+    # - name: "Battery Cicles"
+    - name: "Batt:cicli"
+      class: ""
+      state_class: ""
+      uom: "Charges"
+      scale: 1
+      rule: 1
+      registers: [0x022C]
+      icon: 'mdi:battery-sync' 
+  
+    # - name: "Battery Percentage"
+    # - name: "Battery SoC (status of charge)"
+    - name: "Batt:SOC (pecentuale di carica)"
+      class: "battery"
+      state_class: "measurement"
+      uom: "%"
+      scale: 1
+      rule: 1
+      registers: [0x0210]
+      icon: 'mdi:battery'
+      
+    # - name: "Battery health degree"
+    # - name: "Battery health degree"
+    - name: "Batt:SOH (stato degrado)"
+      class: "battery"
+      state_class: "measurement"
+      uom: "%"
+      scale: 1
+      rule: 1
+      registers: [0x0237]
+      icon: 'mdi:battery-heart-variant'
+      
+    # - name: "Battery temperature"
+    # - name: "Battery temperature"
+    - name: "Batt:temperatura"
+      class: "temperature"
+      state_class: "measurement"
+      uom: "°C"
+      scale: 1
+      rule: 1 #se non funziona cambia questo in 2
+      registers: [0x0211]
+      icon: 'mdi:battery-heart-outline' 
+
+#      - name: "Battery Power" # non corretto 
+#        class: "power"
+#        state_class: "measurement"
+#        uom: "kW"
+#        scale: 0.01
+#        rule: 2
+#        registers: [0x0237]
+#        icon: 'mdi:battery-charging-high'
+
+    # - name: "Battery Voltage"
+    # - name: "Battery cell voltage"
+    - name: "Batt:tensione"
+      class: "voltage"
+      state_class: "measurement"
+      uom: "V"
+      scale: 0.1
+      rule: 1
+      registers: [0x020E]
+      icon: 'mdi:battery'  
+
+    # - name: "Energy Management Model"
+    # - name: "Energy Management Model"
+    - name: "Batt:energy management model impostato"
+      class: ""
+      state_class: ""
+      uom: ""
+      scale: 1
+      rule: 1
+      registers: [0x10B2]
+      icon: 'mdi:battery'
+
+    # - name: "Max Charge Current"
+    # - name: "Max Charge Current"
+    - name: "Batt:massima corrente di carica"
+      class: ""
+      state_class: ""
+      uom: "A"
+      scale: 0.01
+      rule: 1
+      registers: [0x10B4]
+      icon: 'mdi:battery-alert-variant'
+      
+    # - name: "Max Discharge Current"
+    # - name: "Max Discharge Current"
+    - name: "Batt:massima corrente di scarica"
+      class: ""
+      state_class: ""
+      uom: "A"
+      scale: 0.01
+      rule: 1
+      registers: [0x10B7]
+      icon: 'mdi:battery-arrow-down'
+    
+    # - name: "Max Charge Voltage"
+    # - name: "Max Charge Voltage"
+    - name: "Batt:massima tensione di carica"
+      class: ""
+      state_class: ""
+      uom: "V"
+      scale: 0.1
+      rule: 1
+      registers: [0x10B3]
+      icon: 'mdi:mdi:battery-arrow-up'
+
+    # - name: "Min Discharge Voltage"
+    # - name: "Min Discharge Voltage"
+    - name: "Batt:minima tensione di scarica"
+      class: ""
+      state_class: ""
+      uom: "V"
+      scale: 0.1
+      rule: 1
+      registers: [0x10B6]
+      icon: 'mdi:battery-arrow-down'
+
+    # - name: "Over Voltage Protection"
+    # - name: "Over Voltage Protection"
+    - name: "Batt:protezione sovratensione"
+      class: ""
+      state_class: ""
+      uom: "V"
+      scale: 0.1
+      rule: 1
+      registers: [0x10B5]
+      icon: 'mdi:battery'      
+      
+    # - name: "Undervoltage Protection"
+    # - name: "Undervoltage Protection"
+    - name: "Batt:protezione sottotensione"
+      class: ""
+      state_class: ""
+      uom: "V"
+      scale: 0.1
+      rule: 1
+      registers: [0x10B8]
+      icon: 'mdi:battery'
+      
+    # - name: "Discharge Depth"
+    # - name: "Discharge Depth"
+    - name: "Batt:profondità di scarica massima "
+      class: ""
+      state_class: ""
+      uom: "%"
+      scale: 1
+      rule: 1
+      registers: [0x10B9]
+      icon: 'mdi:battery'
+
+    # - name: "Periods Of Discharge Time"
+    # - name: "Periods Of Discharge Time"
+    - name: "Batt:tempo di scaricamento"
+      class: ""
+      state_class: ""
+      uom: "h"
+      scale: 1
+      rule: 1
+      registers: [0x10BA]
+      icon: 'mdi:battery' 
+
+    # - name: "Empty Battery Voltage"
+    # - name: "Empty Battery Voltage"
+    - name: "Batt:tensione batteria scarica"
+      class: ""
+      state_class: ""
+      uom: "V"
+      scale: 0.01
+      rule: 1
+      registers: [0x10BB]
+      icon: 'mdi:battery'      
+      
+    # - name: "Full Battery Voltage"
+    # - name: "Full Battery Voltage"
+    - name: "Batt:tensione batteria carica"
+      class: ""
+      state_class: ""
+      uom: "V"
+      scale: 0.01
+      rule: 1
+      registers: [0x10BC]
+      icon: 'mdi:battery'    
+
+
+ 
+ - group: Inverter status
+   items:
+   
+    # - name: "Operating status"
+    # - name: "Inverter status"
+    - name: "Inverter:Stato"
+      class: ""
+      uom: ""
+      scale: 1
+      rule: 1
+      registers: [0x0200]
+      isstr: true
+      lookup:
+      -  key: 0
+        #  value: "Stand-by"
+        #  value: "WaitState"
+         value: "Stand-by"
+      -  key: 1
+        #  value: "Self-Checking"
+        #  value: "CheckState"
+         value: "Autocontrollo"
+      -  key: 2
+        #  value: "Normal"
+        #  value: "NormalState"
+         value: "Funzionamento Normale"
+      -  key: 3
+        #  value: "Discharging Check State"
+        #  value: "Discharging Check State"
+         value: "Controllo stato di scaricamento"
+      -  key: 4
+        #  value: "Discharging State"
+        #  value: "Discharging State"
+         value: "Scaricamento"
+      -  key: 5
+        #  value: "EPS State"
+        #  value: "Emergency power supply status"
+         value: "EPS (anti black-out)"
+      -  key: 6
+        #  value: "Fault State"
+        #  value: "Recoverable fault condition"
+         value: "In Errore"
+      -  key: 7
+        #  value: "permanent fault state"
+        #  value: "Permanent fault state"
+         value: "guasto permanente"
+      icon: 'mdi:state-machine' 
+
+    # - name: "Inverter inner temperature"
+    # - name: "Inverter internal temperature"
+    - name: "Inverter:temperatura interna"
+      class: "temperature"
+      state_class: "measurement"
+      uom: "°C"
+      scale: 1
+      rule: 2
+      registers: [0x0238]
+      icon: 'mdi:thermometer'
+      
+    # - name: "Inverter module temperature"
+    # - name: "Heat sink temperature"
+    - name: "Inverter:temperatura radiatore"
+      class: "temperature"
+      uom: "°C"
+      scale: 1
+      rule: 2
+      registers: [0x0239]
+      icon: 'mdi:thermometer'
+         
+   
+
+ - group: Inverter config
+   items:
+
+    # - name: "Inverter bus voltage"
+    # - name: "Bus voltage"
+    - name: "Inverter:bus tensione"
+      class: "voltage"
+      state_class: "measurement"
+      uom: "V"
+      scale: 0.1
+      rule: 2
+      registers: [0x022D]
+      icon: 'mdi:home-lightning-bolt'
+
+    # - name: "PV1 voltage sample by slave CPU  # not found in modbus guide
+    # - name: "PV1 voltage sample by slave CPU" # not found in modbus guide      
+#    - name: "Inverter:tensione PV1 rilevata dalla dalla CPU"  # not found in modbus guide
+#      class: "voltage"
+#      state_class: "measurement"
+#      uom: "V"
+#      scale: 0.1
+#      rule: 1
+#      registers: [0x001E]
+#      icon: 'mdi:home-lightning-bolt'
+
+    # - name: "PV1 current sample by slave CPU"  # not found in modbus guide
+    # - name: "PV1 current sample by slave CPU"  # not found in modbus guide
+#    - name: "Inverter:corrente PV1 rilevata dalla dalla CPU"   # not found in modbus guide
+#      class: "current"
+#      state_class: "measurement"
+#      uom: "A"
+#      scale: 0.1
+#      rule: 1
+#      registers: [0x001F]
+#      icon: 'mdi:home-lightning-bolt'
+
+    # - name: "Countdown time"
+    # - name: "Countdown time"
+    - name: "Inverter:countdown time"
+      class: ""
+      state_class: "measurement"
+      uom: "s"
+      scale: 1
+      rule: 1
+      registers: [0x022A]
+      icon: ''
+      
+    # - name: "Input mod  # not found in modbus guide
+    # - name: "Input mod  # not found in modbus guide
+#    - name: "Inverter:modalità di immissione"  # not found in modbus guide
+#      class: ""
+#      state_class: ""
+#      uom: ""
+#      scale: 1
+#      rule: 1
+#      registers: [0x0022]
+#      icon: ''
+
+
+   # - name: "Country Standard"
+   # - name: "Country Safety National Form"    
+    - name: "Inverter config:paese"
+      class: ""
+      uom: ""
+      scale: 1
+      rule: 1
+      registers: [0x023A]
+      isstr: true
+      lookup:
+      -  key: 0
+         value: "Germany"
+      -  key: 1
+         value: "CEI0-21 Internal"
+      -  key: 2
+         value: "Australia"
+      -  key: 3
+         value: "Spain RD1699"
+      -  key: 4
+         value: "Turkey"
+      -  key: 5
+         value: "Denmark"
+      -  key: 6
+         value: "Greece"
+      -  key: 7
+         value: "Netherland"
+      -  key: 8
+         value: "Belgium"
+      -  key: 9
+         value: "UK-G59"
+      -  key: 10
+         value: "China"
+      -  key: 11
+         value: "France"
+      -  key: 12
+         value: "Poland"
+      -  key: 13
+         value: "Germany BDEW"
+      -  key: 14
+         value: "Germany VDE0126"
+      -  key: 15
+         value: "Italy CEI0-16"
+      -  key: 16
+         value: "UK-G83"
+      -  key: 17
+         value: "Greece Islands"
+      -  key: 18
+         value: "EU EN50438"
+      -  key: 19
+         value: "EU EN61727"
+      -  key: 20
+         value: "Korea"
+      -  key: 21
+         value: "Sweden"
+      -  key: 22
+         value: "Europe General"
+      -  key: 23
+         value: "CEI0-21 External"
+      -  key: 24
+         value: "Cyprus"
+      -  key: 25
+         value: "India"
+      -  key: 26
+         value: "Philippines"
+      -  key: 27
+         value: "New Zeland"
+      -  key: 28
+         value: "Reserve"
+      -  key: 29
+         value: "Slovakia VSD"
+      -  key: 30
+         value: "Slovakia SSE"
+      -  key: 31
+         value: "Slovakia ZSD"
+      -  key: 32
+         value: "CEI0-21 In Areti"
+      -  key: 33
+         value: "Ukraine"
+      icon: ''
+      
+    # - name: "Input Mode"
+    # - name: "Input Mode"
+    - name: "Inverter config:modalità ingresso"
+      class: ""
+      uom: ""
+      scale: 1
+      rule: 1
+      registers: [0x0249]
+      isstr: true
+      lookup:
+      -  key: 0
+        #  value: "parallel mode"
+         value: "modalità parallela"
+      -  key: 1
+        #  value: "independent mode"
+         value: "modalità indipendente"
+      icon: 'mdi:state-machine'
+
+    # - name: "Energy Management Model"  
+    # - name: "Energy Management Model" 
+    - name: "Inverter config:modalità gestione energetica"
+      class: ""
+      state_class: ""
+      uom: ""
+      scale: 1
+      rule: 1
+      registers: [0x10B2]
+      icon: ''      
+
+
+
+ - group: Other energy
+   items:
+    # - name: "Buck Current"
+    # - name: "Buck Current"
+    - name: "Inverter:corrente buck"
+      class: "current"
+      state_class: "measurement"
+      uom: "A"
+      scale: 0.01
+      rule: 1
+      registers: [0x022F]
+      icon: 'mdi:home-lightning-bolt'
+      
+    # - name: "Generation Current"
+    # - name: "Generation Current"
+    - name: "Inverter:corrente generata"
+      class: "current"
+      state_class: "measurement"
+      uom: "A"
+      scale: 0.01
+      rule: 1
+      registers: [0x0236]
+      icon: 'mdi:lightning-bolt'
+
+    # - name: "LLC Bus voltage"
+    # - name: "LLC Bus voltage"
+    - name: "Inverter:LLC Bus tensione"
+      class: "voltage"
+      state_class: "measurement"
+      uom: "V"
+      scale: 0.1
+      rule: 2
+      registers: [0x022E]
+      icon: 'mdi:home-lightning-bolt'
+      
+    # - name: "Current DC component"
+    # - name: "DCI Current"     
+    - name: "Inverter:DCI corrente "
+      class: "current"
+      state_class: "measurement"
+      uom: "mA"
+      scale: 1
+      rule: 1
+      registers: [0x023B]
+      icon: 'mdi:lightning-bolt'
+
+    # - name: "DCI Voltage"
+    # - name: "Voltage DC component"
+    - name: "Inverter:DCI tensione"  
+      class: "voltage"
+      state_class: "measurement"
+      uom: "V"
+      scale: 0.1
+      rule: 1
+      registers: [0x023C]
+      icon: 'mdi:lightning-bolt'
+
+
+
+
+ - group: EPS
+   items:
+
+# - name: "EPS output voltage"
+    # - name: "EPS output voltage"
+    - name: "EPS:tensione uscita"
+      class: "voltage"
+      state_class: "measurement"
+      uom: "V"
+      scale: 0.1
+      rule: 1
+      registers: [0x0216]
+      icon: 'mdi:home-lightning-bolt'
+
+    # - name: "EPS power output"
+    # - name: "EPS power output"
+    - name: "EPS:potenza uscita" 
+      class: "power"             
+      state_class: "measurement"
+      uom: "kW" 
+      scale: 0.01
+      rule: 1
+      registers: [0x0217]
+      icon: 'mdi:home-lightning-bolt'   
+
+
+
+
+ - group: Inverter mess
+   items:
+   
+    # - name: "Communication Board inner message"
+    # - name: "Communication board inner message"
+    - name: "Inverter avviso: messaggio della scheda di comunicazione interna"
+      class: ""
+      state_class: ""
+      uom: ""
+      scale: 1
+      rule: 1
+      registers: [0x0242]
+      isstr: true
+      lookup:
+      -  key: 0
+        #  value: "reserved"
+         value: reservato"
+      -  key: 1
+        #  value: "WiFi Fault"
+         value: "Guasto WIFI senza ID"
+      -  key: 2
+        #  value: "reserved"
+         value: "reserved"
+      -  key: 4
+        #  value: "reserved"
+         value: "reserved"
+      -  key: 8
+        #  value: "reserved"
+         value: "reserved"
+      -  key: 16
+        #  value: "reserved"
+         value: "reserved"
+      -  key: 32
+        #  value: "reserved"
+         value: "reserved"   
+      icon: ''
+
+
+
+ - group: Inverter Alert
+   items:
+
+    # - name: "Inverter alert message"
+    # - name: "Inverter alert message"   
+    - name: "Inverter:allarmi"
+      class: ""
+      state_class: ""
+      uom: ""
+      scale: 1
+      rule: 1
+      registers: [0x022B]
+      isstr: true
+      lookup:
+      -  key: 0
+        #  value: "No error"
+         value: "nessun errore"
+      -  key: 1
+        #  value: "ID01 The power grid voltage is too high"
+         value: "ID01 la tensione della rete elettrica è troppo alta"
+      -  key: 2
+        #  value: "ID02 The power grid voltage is too low"
+         value: "ID02 la tensione delle rete elettrica è troppo bassa"
+      -  key: 3
+        #  value: "ID03 The power grid frequency is too high"
+         value: "ID03 la frequenza della rete elettrica è troppo bassa"
+      -  key: 4
+        #  value: "ID04 The power grid frequency is too low"
+         value: "ID04 la frequenza della rete elettrica è troppo bassa"
+      -  key: 5
+        #  value: "ID05 The battery voltage is too high"
+         value: "ID05 la tensione delle batterie è troppo alta"
+      -  key: 7
+        #  value: "ID07 GridLVRT fault"
+         value: "ID07 GridLVRT fault"
+      -  key: 8
+        #  value: "ID08 The PV voltage is too high"
+         value: "ID08 la tensione di produzione fotovoltaica è troppo alta"
+      -  key: 9
+        #  value: "ID09 LLCBus voltage is too high and has triggered hardware protection"
+         value: "ID09 LLCBus voltage is too high and has triggered hardware protection"
+      -  key: 10
+        #  value: "ID10 Boost voltage is too high and has triggered hardware protection"
+         value: "ID10 Boost voltage is too high and has triggered hardware protection"
+      -  key: 11
+        #  value: "ID11 BuckBoost current is too high and has triggered hardware protection"
+         value: "ID11 BuckBoost current is too high and has triggered hardware protection"
+      -  key: 12
+        #  value: "ID12 The battery current is too high and has triggered hardware protection"
+         value: "ID12 The battery current is too high and has triggered hardware protection"
+      -  key: 13
+        #  value: "ID13 The GFCI sampling value between the master DSP and slave DSP is not consistent"
+         value: "ID13 The GFCI sampling value between the master DSP and slave DSP is not consistent"
+      -  key: 14
+        #  value: "ID14 The PV current is too high and has triggered hardware protection"
+         value: "ID14 The PV current is too high and has triggered hardware protection"
+      -  key: 15
+        #  value: "ID15 The grid current is too high and has triggered hardware protection"
+         value: "ID15 La corrente di rete è troppo elevata e ha attivato la protezione hardware"
+      -  key: 16
+        #  value: "ID16 Input current is not balanced"
+         value: "ID16 La corrente in ingresso non è bilanciata"
+      -  key: 17
+        #  value: "ID17 Grid current sampling error"
+         value: "ID17 Errore di campionamento della corrente di rete"
+      -  key: 18
+        #  value: "ID18 DCI sampling error"
+         value: "ID18 DCI sampling error"
+      -  key: 19
+        #  value: "ID19 Grid voltage sampling error"
+         value: "ID19 errore di campionamento della tensione di rete"
+      -  key: 20
+        #  value: "ID20 GFCI sampling error"
+         value: "ID20 GFCI sampling error"
+      -  key: 21
+        #  value: "ID21 Master chip fault"
+         value: "ID21 Master chip fault"
+      -  key: 22
+        #  value: "ID22 Auxiliary voltage error"
+         value: "ID22 Errore tensione ausiliaria"
+      -  key: 25
+        #  value: "ID25 LLCBus voltage is too high"
+         value: "ID25 LLCBus voltage is too high"
+      -  key: 26
+        #  value: "ID26 Bus voltage is too high and has triggered software protection"
+         value: "ID26 La tensione del bus è troppo elevata e ha attivato la protezione del software"
+      -  key: 27
+        #  value: "ID27 Battery current is too high"
+         value: "ID27 La corrente della batteria è troppo elevata"
+      -  key: 28
+        #  value: "ID28 The DCI is too high"
+         value: "ID28 The DCI is too high"
+      -  key: 29
+        #  value: "ID29 The grid current is too high"
+         value: "ID29 La corrente di rete è troppo elevata"
+      -  key: 30
+        #  value: "ID30 Bunk current is too high"
+         value: "ID30 Bunk current is too high"
+      -  key: 31
+        #  value: "ID31 The output current is too high"
+         value: "ID31 La corrente in uscita è troppo alta"
+      -  key: 32
+        #  value: "ID32 The input current is too high"
+         value: "ID32 La corrente in ingresso è troppo alta"
+      -  key: 33
+        #  value: "ID33 Incorrect input mode"
+         value: "ID33 Modalità di input errata"
+      -  key: 48
+        #  value: "ID48 The GFCI sampling value between the master DSP and slave DSP is not consistent"
+         value: "ID48 The GFCI sampling value between the master DSP and slave DSP is not consistent"
+      -  key: 49
+        #  value: "ID49 The grid voltage sampling value between the master DSP and slave DSP is no consistent"
+         value: "ID49 The grid voltage sampling value between the master DSP and slave DSP is no consistent"
+      -  key: 50
+        #  value: "ID50 The grid frequency sampling value between the master DSP and slave DSP is no consistent"
+         value: "ID50 The grid frequency sampling value between the master DSP and slave DSP is no consistent"
+      -  key: 51
+        #  value: "ID51 The DCI sampling value between the master DSP and slave DSP is no consistent"
+         value: "ID51 The DCI sampling value between the master DSP and slave DSP is no consistent"
+      -  key: 52
+        #  value: "ID52 HYD-ES inverter can't communicate with Lithium battery BMS correctly"
+         value: "ID52 HYD-ES l'inverter non riesce a comunicare con la batteria al litio BMS correttamente"
+      -  key: 53
+        #  value: "ID53 SPI communication fault"
+         value: "ID53 SPI communication fault"
+      -  key: 54
+        #  value: "ID54 SCI communication fault"
+         value: "ID54 SCI communication fault"
+      -  key: 55
+        #  value: "ID55 Relays fault"
+         value: "ID55 Guasto ai relè"
+      -  key: 56
+        #  value: "ID56 Insulation resistance is too low"
+         value: "ID56 La resistenza di isolamento è troppo bassa"
+      -  key: 57
+        #  value: "ID57 Battery temperature is too high"
+         value: "ID57 La temperatura della batteria è troppo alta"
+      -  key: 58
+        #  value: "ID58 Heat sink temperature is too high"
+         value: "ID58 La temperatura del dissipatore di calore è troppo alta"
+      -  key: 59
+        #  value: "ID59 Environment temperature is too high"
+         value: "ID59 La temperatura ambiente è troppo alta"
+      -  key: 60
+        #  value: "ID60 PE connectFault"
+         value: "ID60 PE connectFault"
+      -  key: 65
+        #  value: "ID65 The grid current is too high and has caused unrecoverable hardware fault"
+         value: "ID65 La corrente di rete è troppo elevata e ha causato un guasto hardware irreversibile"
+      -  key: 66
+        #  value: "ID66 The bus voltage is too high and has caused unrecoverable fault"
+         value: "ID66 La tensione del bus è troppo alta e ha causato un guasto irreversibile"
+      -  key: 67
+        #  value: "ID67 Unrecoverable fault of battery overcurrent in EPS mode"
+         value: "ID67 Guasto irreversibile di sovracorrente della batteria in modalità EPS"
+      -  key: 68
+        #  value: "ID68 The input current is unbalanced and has triggered an unrecoverable fault"
+         value: "ID68 La corrente di ingresso è sbilanciata e ha innescato un guasto irreversibile"
+      -  key: 70
+        #  value: "ID70 The grid current is too high and has triggered an unrecoverable fault"
+         value: "ID70 La corrente di rete è troppo elevata e ha causato un guasto irreparabile"
+      -  key: 73
+        #  value: "ID73 The input current is too high and has triggered an unrecoverable fault"
+         value: "ID73 La corrente di ingresso è troppo elevata e ha innescato un guasto irreversibile"
+      -  key: 74
+        #  value: "ID74 Incorrect input mode"
+         value: "ID74 Modalità di input errata"
+      -  key: 75
+        #  value: "ID75 Unrecoverable EEPROM write"
+         value: "ID75 Scrittura EEPROM irrecuperabile"
+      -  key: 76
+        #  value: "ID76 Unrecoverable EEPROM read"
+         value: "ID76 Lettura EEPROM irrecuperabile"
+      -  key: 77
+        #  value: "ID77 Relay has triggered permanent fault"
+         value: "ID77 Relay has triggered permanent fault"
+      -  key: 81
+        #  value: "ID81 Internal temperature is too high"
+         value: "ID81 La temperatura interna è troppo alta"
+      -  key: 82
+        #  value: "ID82 AC frequency is too high"
+         value: "ID82 la AC frequenza è troppo alta"
+      -  key: 83
+        #  value: "ID83 Remote power derate"
+         value: "ID83 Declassamento della potenza remota"
+      -  key: 84
+        #  value: "ID84 Switch OFF HYD series inverter remotely"
+         value: "ID84 Inverter della serie HYD spegnento da remoto"
+      -  key: 85
+        #  value: "ID85 SOC <= 1 - DOD or Low battery voltage"
+         value: "ID85 SOC <= 1 - DOD or Bassa tensione della batteria"
+      -  key: 86
+        #  value: "ID86 Battery voltage is too low and caused HYD series inverter to switch OFF"
+         value: "ID86 La tensione della batteria è troppo bassa e ha causato lo spegnimento dell'inverter della serie HYD"
+      -  key: 94
+        #  value: "ID94 Software version is not consistent"
+         value: "ID94 La versione del software non è coerente"
+      -  key: 95
+        #  value: "ID95 The communication board EEPROM is faulty"
+         value: "ID95 The communication board EEPROM is faulty"
+      -  key: 96
+        #  value: "ID96 RTC clock chip fault"
+         value: "ID96 RTC clock chip fault"
+      -  key: 98
+        #  value: "ID98 SD card fault"
+         value: "ID98 Guasto della scheda SD"
+      -  key: 100
+        #  value: "ID100 Battery overcurrent discharging protection"
+         value: "ID100 Protezione da sovracorrente di scarica della batteria"
+      -  key: 101
+        #  value: "ID101 Discharging short circuit protection"
+         value: "ID101 Protezione da Cortocircuito di scarica"
+      -  key: 102
+        #  value: "ID102 Battery high voltage protection"
+         value: "ID102 Protezione da sovratensione della batteria"
+      -  key: 103
+        #  value: "ID103 Battery low voltage protection"
+         value: "ID103 Protezione da sottotensione della batteria"
+      -  key: 104
+        #  value: "ID104 Battery high temperature protection while discharging"
+         value: "ID104 Protezione da elevata temperatura della batteria durante la scarica"
+      -  key: 105
+        #  value: "ID105 Battery high temperature protection while charging"
+         value: "ID105 Protezione da elevata temperatura della batteria durante la carica"
+      -  key: 106
+        #  value: "ID106 Battery low temperature protection while discharging"
+         value: "ID106 Protezione da bassa temperatura della batteria durante la scarica"
+      -  key: 107
+        #  value: "ID107 Battery low temperature protection while charging"
+         value: "ID107 Protezione da bassa temperatura della batteria durante la carica"
+      icon: 'mdi:alert'
+
+
+    # - name: "Fault 1"  
+    # - name: "Fault 1"
+    # - name: "Failure information Table 1"
+    - name: "inverter guasti:Tab 1"
+      class: ""
+      state_class: ""
+      uom: ""
+      scale: 1
+      rule: 1
+      registers: [0x0201]
+      isstr: true
+      lookup:
+      -  key: 0
+        #  value: "No error"
+         value: "Nessun errore"
+      -  key: 1
+        #  value: "ID01 Grid Over Voltage Protection"
+         value: "ID01 Protezione da sovratensione della rete"
+      -  key: 2
+        #  value: "ID02 Grid Under Voltage Protection"
+         value: "ID02 Protezione sottotensione della rete"
+      -  key: 4
+        #  value: "ID03 Grid Over Frequency Protection"
+         value: "ID03 Protezione da sovrafrequenza della rete"
+      -  key: 8
+        #  value: "ID04 Grid Under Frequency Protection"
+         value: "ID04 Protezione da sottofrequenza della rete"
+      -  key: 16
+        #  value: "ID05 Battery Over Voltage"
+         value: "ID05 Sovratensione della batteria"
+      -  key: 32
+        #  value: "ID06"
+         value: "ID06"
+      -  key: 64
+        #  value: "ID07"
+         value: "ID07"
+      -  key: 128
+        #  value: "ID08"
+         value: "ID08"
+      -  key: 256
+        #  value: "ID09 LLCBus Over Voltage Hardware"
+         value: "ID09 LLCBus Over Voltage Hardware"
+      -  key: 512
+        #  value: "ID10 Bus Over Voltage Hardware"
+         value: "ID10 Bus Over Voltage Hardware"
+      -  key: 1024
+        #  value: "ID11 BuckBoost over Current Hardware"
+         value: "ID11 BuckBoost over Current Hardware"
+      -  key: 2048
+        #  value: "ID12 Battery over Current Hardware"
+         value: "ID12 Battery over Current Hardware"
+      -  key: 4096
+        #  value: "ID13"
+         value: "ID13"
+      -  key: 8192
+        #  value: "ID14"
+         value: "ID14"
+      -  key: 16384
+        #  value: "ID15 Output Current Hardware"
+         value: "ID15 Output Current Hardware"
+      -  key: 32768
+        #  value: "ID16"
+         value: "ID16"
+      icon: 'mdi:wrench'
+ 
+
+ 
+    # - name: "Fault 2"
+    # - name: "Failure information Table 2"
+    - name: "Inverter guasti:Tab 2"
+      class: ""
+      state_class: ""
+      uom: ""
+      scale: 1
+      rule: 1
+      registers: [0x0202]
+      isstr: true
+      lookup:
+      -  key: 0
+        #  value: "No error"
+         value: Nessun errore"
+      -  key: 1
+        #  value: "ID17 Grid current sampling error"
+         value: "ID17 Errore di campionamento della corrente di rete"
+      -  key: 2
+        #  value: "ID18 DCI sampling error"
+         value: "ID18 DCI sampling error"
+      -  key: 4
+        #  value: "ID19 Grid voltage sampling error"
+         value: "ID19 Errore di campionamento della tensione di rete"
+      -  key: 8
+        #  value: "ID20"
+         value: "ID20"
+      -  key: 16
+        #  value: "ID21 Main chip fault"
+         value: "ID21 Difetto del chip principale"
+      -  key: 32
+        #  value: "ID22 Hardware auxiliary power fault"
+         value: "ID22 Hardware auxiliary power fault"
+      -  key: 64
+        #  value: "ID23"
+         value: "ID23"
+      -  key: 128
+        #  value: "ID24"
+         value: "ID24"
+      -  key: 256
+        #  value: "ID25 LLCBus Over Current protection"
+         value: "ID25 LLCBus Over Current protection"
+      -  key: 512
+        #  value: "ID26 Bus over voltage protection"
+         value: "ID26 Bus over voltage protection"
+      -  key: 1024
+        #  value: "ID27 Battery Over Current protection"
+         value: "ID27 Protezione da sovracorrente della batteria"
+      -  key: 2048
+        #  value: "ID28 Dci Over Current Protection"
+         value: "ID28 Dci Over Current Protection"
+      -  key: 4096
+        #  value: "ID29 Output over current software"
+         value: "ID29 Output over current software"
+      -  key: 8192
+        #  value: "ID30 Buck Over Current"
+         value: "ID30 Buck Over Current"
+      -  key: 16384
+        #  value: "ID31 Output over current protection"
+         value: "ID31 Output over current protection"
+      -  key: 32768
+        #  value: "ID32 The input current is too high"
+         value: "ID32 La corrente in ingresso è troppo alta"
+      icon: 'mdi:wrench'
+
+
+
+    # - name: "Fault 3"
+    # - name: "Fault 3"
+    # - name: "Failure information Table 3"
+    - name: "Inverter guasti:Tab 3"
+      class: ""
+      state_class: ""
+      uom: ""
+      scale: 1
+      rule: 1
+      registers: [0x0203]
+      isstr: true
+      lookup:
+      -  key: 0
+        #  value: "No error"
+         value: "Nessun errore"
+      -  key: 1
+        #  value: "ID33 Reserved"
+         value: "ID33 Reserved"
+      -  key: 2
+        #  value: "ID34 Reserved"
+         value: "ID34 Reserved"
+      -  key: 4
+        #  value: "ID35 Reserved"
+         value: "ID35 Reserved"
+      -  key: 8
+        #  value: "ID36 Reserved"
+         value: "ID36 Reserved"
+      -  key: 16
+        #  value: "ID37 Reserved" 
+         value: "ID37 Reserved"
+      -  key: 32
+        #  value: "ID38 Reserved"
+         value: "ID38 Reserved"
+      -  key: 64
+        #  value: "ID39 Reserved"
+         value: "ID39 Reserved"
+      -  key: 128
+        #  value: "ID40 Reserved"
+         value: "ID40 Reserved"
+      -  key: 256
+        #  value: "ID41 Reserved"
+         value: "ID41 Reserved"
+      -  key: 512
+         value: "ID42 Reserved"
+        #  value: "ID42 Reserved"
+      -  key: 1024
+        #  value: "ID43 Reserved"
+         value: "ID43 Reserved"
+      -  key: 2048
+         value: "ID44 Reserved"
+        #  value: "ID44 Reserved"
+      -  key: 4096
+        #  value: "ID45 Reserved"
+         value: "ID45 Reserved"
+      -  key: 8192
+        #  value: "ID46 Reserved"
+         value: "ID46 Reserved"
+      -  key: 16384
+        #  value: "ID47 Reserved"
+         value: "ID47 Reserved"
+      -  key: 32768
+        #  value: "ID48 Reserved"
+         value: "ID48 Reserved"
+      icon: 'mdi:wrench'
+
+
+      
+    # - name: "Fault 4"      
+    # - name: "Fault 4"
+    - name: "Inverter Guasti:Tab 4"
+      class: ""
+      state_class: ""
+      uom: ""
+      scale: 1
+      rule: 1
+      registers: [0x0204]
+      isstr: true
+      lookup:
+      -  key: 0
+        #  value: "No error"
+         value: Nessun errore"
+      -  key: 1
+        #  value: "ID49 Grid voltage sampling value between master and slave DSP vary widely"
+         value: "ID49 Grid voltage sampling value between master and slave DSP vary widely"
+      -  key: 2
+        #  value: "ID50 Grid frequency sampling value between master and slave DSP vary widely"
+         value: "ID50 Grid frequency sampling value between master and slave DSP vary widely"
+      -  key: 4
+        #  value: "ID51 DCI sampling value between master and slave DSP vary widely"
+         value: "ID51 DCI sampling value between master and slave DSP vary widely"
+      -  key: 8
+        #  value: "ID52 GFCI sampling value between master and slave DSP vary widely"
+         value: "ID52 GFCI sampling value between master and slave DSP vary widely"
+      -  key: 16
+        #  value: "ID53 Communication failure between master and slave DSP failure"
+         value: "ID53 Communication failure between master and slave DSP failure"
+      -  key: 32
+        #  value: "ID53 Communication failure between slave and communication board"
+         value: "ID53 Communication failure between slave and communication board"
+      -  key: 64
+        #  value: "ID55 Relay fault"
+         value: "ID55 Relay fault"
+      -  key: 128
+        #  value: "ID56"
+         value: "ID56"
+      -  key: 256
+        #  value: "ID57 Inverter temp is too high"
+         value: "ID57 Inverter temp is too high"
+      -  key: 512
+        #  value: "ID58 Boost temp is too high"
+         value: "ID58 Boost temp is too high"
+      -  key: 1024
+        #  value: "ID59 Environment temp is too high"
+         value: "ID59 Environment temp is too high"
+      -  key: 2048
+         value: "ID60"
+      -  key: 4096
+        #  value: "ID61 Reserved"
+         value: "ID61 Reserved"
+      -  key: 8192
+        #  value: "ID62 Reserved"
+         value: "ID62 Reserved"
+      -  key: 16384
+        #  value: "ID63 Reserved"
+         value: "ID63 Reserved"
+      -  key: 32768
+        #  value: "ID64 Reserved"
+         value: "ID64 Reserved"
+      icon: 'mdi:wrench'
+
+
+
+    # - name: "Fault 5"
+    # - name: "Fault 5"
+    - name: "Inverter guasti:Tab 5"
+      class: ""
+      state_class: ""
+      uom: ""
+      scale: 1
+      rule: 1
+      registers: [0x0205]
+      isstr: true
+      lookup:
+      -  key: 0
+        #  value: "No error"
+         value: Nessun errore"
+      -  key: 1
+        #  value: "ID65 Grid current is too high and causes unrecoverable fault"
+         value: "ID65 Grid current is too high and causes unrecoverable fault"
+      -  key: 2
+        #  value: "ID66 Bus voltage is too high and causes unrecoverable fault"
+         value: "ID66 Bus voltage is too high and causes unrecoverable fault"
+      -  key: 4
+        #  value: "ID67 EPS Mode Battery Over current,and has cause unrecoverable fault"
+         value: "ID67 EPS Mode Battery Over current,and has cause unrecoverable fault"
+      -  key: 8
+        #  value: "ID68"
+         value: "ID68"
+      -  key: 16
+        #  value: "ID69"
+         value: "ID69"
+      -  key: 32
+        #  value: "ID70 The Output current is too high,and has cause unrecoverable fault"
+         value: "ID70 The Output current is too high,and has cause unrecoverable fault"
+      -  key: 64
+        #  value: "ID71"
+         value: "ID71"
+      -  key: 128
+        #  value: "ID72 Reserved"
+         value: "ID72 Reserved"
+      -  key: 256
+        #  value: "ID73 Reserved"
+         value: "ID73 Reserved"
+      -  key: 512
+        #  value: "ID74"
+         value: "ID74"
+      -  key: 1024
+        #  value: "ID75 Error writing from EEPROM"      
+         value: "ID75 Error writing from EEPROM"
+      -  key: 2048
+        #  value: "ID76 Error reading to EEPROM"
+         value: "ID76 Error reading to EEPROM"
+      -  key: 4096
+        #  value: "ID77 Relay fauilure causes unrecoverable fault"
+         value: "ID77 Relay fauilure causes unrecoverable fault"
+      -  key: 8192
+        #  value: "ID78 Reserved"
+         value: "ID78 Reserved"
+      -  key: 16384
+        #  value: "ID79 Reserved"
+         value: "ID79 Reserved"
+      -  key: 32768
+        #  value: "ID80 Reserved"
+         value: "ID80 Reserved"
+      icon: 'mdi:wrench'
+
+# ------------------------------------------------------------------------------------
+#  - group: Lithium battery failure ## works in progress
+#   items:
+
+    # - name: "Lithium battery failure information 1"
+    # - name: "Lithium battery failure information 1"
+    # - name: "Informazioni sui guasti della batteria al litio 1"
+    #   class: ""
+    #   state_class: ""
+    #   uom: ""
+    #   scale: 1
+    #   rule: 1
+    #   registers: [0X023D]
+    #   icon: 'mdi:battery'
+
+    # - name: "Lithium battery failure information 2"
+    # - name: "Lithium battery failure information 2"
+    # - name: "Informazioni sui guasti della batteria al litio 2"
+    #   class: ""
+    #   state_class: ""
+    #   uom: ""
+    #   scale: 1
+    #   rule: 1
+    #   registers: [0X023E]
+    #   icon: 'mdi:battery'
+
+    # - name: "Lithium battery failure information 3"
+    # - name: "Lithium battery failure information 3"
+    # - name: "Informazioni sui guasti della batteria al litio 3"
+    #   class: ""
+    #   state_class: ""
+    #   uom: ""
+    #   scale: 1
+    #   rule: 1
+    #   registers: [0X023F]
+    #   icon: 'mdi:battery'
+      
+    # - name: "Lithium battery failure information 4"
+    # - name: "Lithium battery failure information 4"
+    # - name: "Informazioni sui guasti della batteria al litio 4"
+    #   class: ""
+    #   state_class: ""
+    #   uom: ""
+    #   scale: 1
+    #   rule: 1
+    #   registers: [0X0240]
+    #   icon: 'mdi:battery'
+
+    # - name: "Lithium battery failure information 5"
+    # - name: "Lithium battery failure information 5"
+    # - name: "Informazioni sui guasti della batteria al litio 5"
+    #   class: ""
+    #   state_class: ""
+    #   uom: ""
+    #   scale: 1
+    #   rule: 1
+    #   registers: [0X0241]
+    #   icon: 'mdi:battery'
+ 
+# ------------------------------------------------------------------------------------
+#  - group: reserved  ## works in progress
+#   items:
+   
+    # - name: "reserved"
+    # - name: "reserved"
+#    - name: "riservato"
+#      class: ""
+#      state_class: ""
+#      uom: ""
+#      scale: 1
+#      rule: 1
+#      registers: [0x0208]
+#      icon: ''
+
+    # - name: "reserved"
+    # - name: "reserved"
+#    - name: "riservato"
+#      class: ""
+#      state_class: ""
+#      uom: ""
+#      scale: 1
+#      rule: 1
+#      registers: [0x0209]
+#      icon: ''
+      
+    # - name: "reserved"
+    # - name: "reserved"
+#    - name: "riservato"
+#      class: ""
+#      state_class: ""
+#      uom: ""
+#      scale: 1
+#      rule: 1
+#      registers: [0x020A]
+#      icon: ''
+
+    # - name: "reserved"
+    # - name: "reserved"
+#    - name: "riservato"
+#      class: ""
+#      state_class: ""
+#      uom: ""
+#      scale: 1
+#      rule: 1
+#      registers: [0x020B]
+#      icon: ''
+
+
+    # - name: "reserved"
+    # - name: "reserved"
+#    - name: "riservato 0x024A"
+#      class: ""
+#      state_class: ""
+#      uom: ""
+#      scale: 1
+#      rule: 1
+#      registers: [0x024A]
+#      icon: ''
+
+    # - name: "reserved"
+    # - name: "reserved"
+#    - name: "riservato 0x024B"
+#      class: ""
+#      state_class: ""
+#      uom: ""
+#      scale: 1
+#      rule: 1
+#      registers: [0x024B]
+#      icon: ''
+
+    # - name: "reserved"
+    # - name: "reserved"
+#    - name: "riservato"
+#      class: ""
+#      state_class: ""
+#      uom: ""
+#      scale: 1
+#      rule: 1
+#      registers: [0x024C]
+#      icon: ''
+
+    # - name: "reserved"
+    # - name: "reserved"
+#    - name: "riservato"
+#      class: ""
+#      state_class: ""
+#      uom: ""
+#      scale: 1
+#      rule: 1
+#      registers: [0x024D]
+#      icon: ''
+
+    # - name: "reserved"
+    # - name: "reserved"
+#    - name: "riservato"
+#      class: ""
+#      state_class: ""
+#      uom: ""
+#      scale: 1
+#      rule: 1
+#      registers: [0x024E]
+#      icon: ''
+
+    # - name: "reserved"
+    # - name: "reserved"
+#    - name: "riservato"
+#      class: ""
+#      state_class: ""
+#      uom: ""
+#      scale: 1
+#      rule: 1
+#      registers: [0x024F]
+#      icon: ''
+
+#*******************************************************#
+# Informazioni sull'inverter [Inverter Information]
+#*******************************************************#
+#  - group: InverterInformation 
+# - group: Informazioni inverter
+#   items:
+   
+   # - name: "Inverter Info: Production Code"
+    - name: "Inverter Info:Codice prodotto"
+      class: ""
+      state_class: ""     
+      uom: ""
+      scale: 1
+      rule: 1
+      registers: [0x2000]
+      isstr: true
+      icon: ''
+
+    # - name: "Inverter Info: Software Version"   
+    - name: "Inverter Info:Versione Software"
+      class: ""
+      state_class: ""      
+      uom: ""
+      scale: 1
+      rule: 5
+      registers: [0x2008,0x2009]
+      isstr: true
+      icon: ''
+
+    # - name: "Inverter Info: Hardware Version"  
+    - name: "Inverter Info:versione hardware"  
+      class: ""
+      state_class: ""      
+      uom: ""
+      scale: 1
+      rule: 5
+      registers: [0x200A,0x200B]
+      isstr: true
+
+    # - name: "Inverter Info: Serial Number" 
+    - name: "Inverter Info:numero seriale"
+      class: ""
+      state_class: ""      
+      uom: ""
+      scale: 1
+      rule: 5
+      registers: [0x2001,0x2002,0x2003,0x2004,0x2005,0x2006,0x2007]
+      isstr: true
