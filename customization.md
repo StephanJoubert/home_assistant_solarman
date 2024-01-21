@@ -71,7 +71,7 @@ The group just groups parameters that belong together. The induvidual parameter-
 |uom||The *unit_of_measurement* field of the home-assistant entity #|
 |icon||The *icon* field of the home-assistant entity #|
 || **The fields below define how the value from the logger is parsed** |
-|scale||Scaling factor for the value read from the logger|
+|scale||Scaling factor for the value read from the logger (default: 1)|
 |rule||Method to interpret the data from the logger ###|
 |mask||A mask to filter only used bit fields. This is especialy useful for flag fields|
 |registers||Array of register fields that comprises the value. If the value is placed in a number of registers, this  array will contain more than one item.|

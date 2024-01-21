@@ -55,7 +55,7 @@ class ParameterParser:
 
     def try_parse_signed (self, rawData, definition, start, length):
         title = definition['name']
-        scale = definition['scale']
+        scale = definition['scale'] if 'scale' in definition else 1
         value = 0
         found = True
         shift = 0
@@ -92,7 +92,7 @@ class ParameterParser:
     
     def try_parse_unsigned (self, rawData, definition, start, length):
         title = definition['name']
-        scale = definition['scale']
+        scale = definition['scale'] if 'scale' in definition else 1
         value = 0
         found = True
         shift = 0
