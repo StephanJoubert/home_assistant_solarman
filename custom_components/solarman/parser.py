@@ -78,6 +78,9 @@ class ParameterParser:
                 value = (value - maxint) * scale
             else:
                 value = value * scale
+
+            if ('scale_division' in definition) and (definition['scale_division'] > 0):
+                value //= definition['scale_division']
                 
             if 'validation' in definition:
                 if not self.do_validate(title, value, definition['validation']):
@@ -116,6 +119,9 @@ class ParameterParser:
                     value = value - definition['offset']  
                                    
                 value = value * scale
+
+                if ('scale_division' in definition) and (definition['scale_division'] > 0):
+                    value //= definition['scale_division']
                 
                 if 'validation' in definition:
                     if not self.do_validate(title, value, definition['validation']):

@@ -79,6 +79,7 @@ The group just groups parameters that belong together. The induvidual parameter-
 |icon||The *icon* field of the home-assistant entity #|
 || **The fields below define how the value from the logger is parsed** |
 |scale||Scaling factor for the value read from the logger (default: 1)|
+|scale_division||If specified, divides the result of the scaling by this number (e.g. if the value of the register is in minutes and you want the home-assistant entity in hours, use `scale_division: 60` and `uom: "h"`)
 |rule||Method to interpret the data from the logger (see the table below)|
 |mask||A mask to filter only used bit fields; this is especialy useful for flag fields|
 |registers||Array of register fields that comprises the value; if the value is placed in a number of registers, this array will contain more than one item (note: order is important)|
