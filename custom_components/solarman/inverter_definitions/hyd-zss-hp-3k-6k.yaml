@@ -2,23 +2,32 @@
 # with LSW-3 WiFi logger with SN 27xxxxxxxx and FW LSW3_15_270A_1.53:
 
 requests:
-  - start: 0x0400
-    end: 0x042B
+  - start: 0x0404
+    end: 0x0410
     mb_functioncode: 0x03
-  - start: 0x0482
-    end: 0x04A4
+  - start: 0x0418
+    end: 0x041A
+    mb_functioncode: 0x03    
+  - start: 0x042b
+    end: 0x042b
     mb_functioncode: 0x03
-  - start: 0x0582
+  - start: 0x0484
+    end: 0x048d
+    mb_functioncode: 0x03    
+  - start: 0x04AF
+    end: 0x04AF
+    mb_functioncode: 0x03      
+  - start: 0x0504
+    end: 0x0504
+    mb_functioncode: 0x03
+  - start: 0x0584
     end: 0x0589
     mb_functioncode: 0x03
   - start: 0x0604
     end: 0x060A
     mb_functioncode: 0x03
-  - start: 0x0682
+  - start: 0x0683
     end: 0x069B
-    mb_functioncode: 0x03
-  - start: 0x0504
-    end: 0x0504
     mb_functioncode: 0x03
 
 parameters:
@@ -174,8 +183,8 @@ parameters:
       - name: "Battery Power"
         class: "power"
         state_class: "measurement"
-        uom: "KW"
-        scale: 0.01
+        uom: "W"
+        scale: 10
         rule: 2
         registers: [0x0606]
         icon: 'mdi:battery-charging-high'
@@ -200,6 +209,24 @@ parameters:
 
   - group: Grid
     items:
+      - name: "Grid Power"
+        class: "power"
+        state_class: "measurement"
+        uom: "W"
+        scale: 10
+        rule: 2
+        registers: [0x0488]
+        icon: 'mdi:transmission-tower'
+        
+      - name: 'Grid Voltage'
+        class: 'voltage'
+        state_class: 'measurement'
+        uom: 'V'
+        scale: 0.1
+        rule: 1
+        registers: [0x048d]
+        icon: 'mdi:transmission-tower'        
+        
       - name: 'Grid Frequency'
         class: 'frequency'
         state_class: 'measurement'
@@ -207,7 +234,7 @@ parameters:
         scale: 0.01
         rule: 1
         registers: [0x0484]
-        icon: 'mdi:home-lightning-bolt'
+        icon: 'mdi:transmission-tower'
 
       - name: 'Active Power Output Total'
         class: 'power'
@@ -217,7 +244,16 @@ parameters:
         rule: 2
         registers: [0x0485]
         icon: 'mdi:home-lightning-bolt'
-        
+
+      - name: 'Home Consumption'
+        class: 'power'
+        state_class: 'measurement'
+        uom: 'W'
+        scale: 10
+        rule: 2
+        registers: [0x04AF]
+        icon: 'mdi:home-lightning-bolt'
+                
       - name: 'Active Power Load Total'
         class: 'power'
         state_class: 'measurement'
@@ -312,7 +348,7 @@ parameters:
       - name: 'Insulation Resistance'
         class: ''
         state_class: 'measurement'
-        uom: 'Ω'
+        uom: 'kΩ'
         scale: 1
         rule: 1
         registers: [0x042B]

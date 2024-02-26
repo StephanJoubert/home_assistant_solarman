@@ -74,7 +74,8 @@ class Inverter:
                 start = request['start']
                 end = request['end']
                 mb_fc = request['mb_functioncode']
-                log.debug(f"Querying [{start} - {end}]...")
+                range_string = f"{start}-{end} (0x{start:04X}-0x{end:04X})"
+                log.debug(f"Querying [{range_string}]...")
 
                 attempts_left = QUERY_RETRY_ATTEMPTS
                 while attempts_left > 0:
@@ -85,15 +86,15 @@ class Inverter:
                         result = 1
                     except Exception as e:
                         result = 0
-                        log.warning(f"Querying [{start} - {end}] failed with exception [{type(e).__name__}: {e}]")
+                        log.warning(f"Querying [{range_string}] failed with exception [{type(e).__name__}: {e}]")
                         self.disconnect_from_server()
                     if result == 0:
-                        log.warning(f"Querying [{start} - {end}] failed, [{attempts_left}] retry attempts left")
+                        log.warning(f"Querying [{range_string}] failed, [{attempts_left}] retry attempts left")
                     else:
-                        log.debug(f"Querying [{start} - {end}] succeeded")
+                        log.debug(f"Querying [{range_string}] succeeded")
                         break
                 if result == 0:
-                    log.warning(f"Querying registers [{start} - {end}] failed, aborting.")
+                    log.warning(f"Querying registers [{range_string}] failed, aborting.")
                     break
 
             if result == 1:
