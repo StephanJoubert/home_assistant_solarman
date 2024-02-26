@@ -150,7 +150,7 @@ Once the component is running, it will add the following entities to Home Assist
 
 # Status Entities
 
-Apart from the inverter-parameters, it will also add status entities to view the status of the solarman component.
+Apart from the inverter-parameters, it will also add status entities to view the status of the solarman component (in the **Diagnostic** category).
 ![Component-status](./component_status.png)
 
 # Energy Dashboard

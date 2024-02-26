@@ -12,7 +12,7 @@ import re
 import voluptuous as vol
 from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import CONF_NAME
+from homeassistant.const import CONF_NAME, EntityCategory
 from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
@@ -63,8 +63,8 @@ def _do_setup_platform(hass: HomeAssistant, config, async_add_entities : AddEnti
         except BaseException as ex:
             _LOGGER.error(f'Config error {ex} {sensor}')
             raise
-    hass_sensors.append(SolarmanStatus(inverter_name, inverter, "status_lastUpdate", inverter_sn))
-    hass_sensors.append(SolarmanStatus(inverter_name, inverter, "status_connection", inverter_sn))
+    hass_sensors.append(SolarmanStatusDiag(inverter_name, inverter, "status_lastUpdate", inverter_sn))
+    hass_sensors.append(SolarmanStatusDiag(inverter_name, inverter, "status_connection", inverter_sn))
 
     _LOGGER.debug(f'sensor.py:_do_setup_platform: async_add_entities')
     _LOGGER.debug(hass_sensors)
@@ -160,6 +160,14 @@ class SolarmanStatus(SolarmanSensor, Entity):
     def update(self):
         self.p_state = getattr(self.inverter, self._field_name, None)
 
+#############################################################################################################
+# This is the the same of SolarmanStatus, but it has EntityCategory setup to Diagnostic.
+#############################################################################################################
+
+class SolarmanStatusDiag(SolarmanStatus):
+    def __init__(self, inverter_name, inverter, field_name, sn):
+        super().__init__(inverter_name, inverter, field_name, sn)
+        self._attr_entity_category = EntityCategory.DIAGNOSTIC
 
 #############################################################################################################
 #  Entity displaying a text field read from the inverter
