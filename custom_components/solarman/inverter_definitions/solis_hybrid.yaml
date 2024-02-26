@@ -1,7 +1,7 @@
 # Solis Single Phase Hybrid
 # RHI-(3-6)K-48ES-5G
 # Modbus information retrieved from:
-# https://www.scss.tcd.ie/coghlan/Elios4you/RS485_MODBUS-Hybrid-BACoghlan-201811228-1854.pdf
+# https://www.scss.tcd.ie/Brian.Coghlan/Elios4you/RS485_MODBUS-Hybrid-BACoghlan-201811228-1854.pdf
 
 requests:
   - start: 33029
@@ -13,6 +13,9 @@ requests:
   - start: 33206
     end:  33282
     mb_functioncode: 0x04
+  - start: 43140
+    end: 43150
+    mb_functioncode: 0x03
 
 parameters:
  - group: InverterStatus
@@ -840,3 +843,95 @@ parameters:
       rule: 1
       registers: [33144]
       icon: 'mdi:battery-arrow-down'
+
+ - group: TimedCharge
+   items: 
+    - name: "Timed Charge Current"
+      class: ""
+      state_class: "measurement"
+      uom: "A"
+      scale: 0.1
+      rule: 1
+      registers: [43141]
+      icon: 'mdi:wrench-clock'
+
+    - name: "Timed Discharge Current"
+      class: ""
+      state_class: "measurement"
+      uom: "A"
+      scale: 0.1
+      rule: 1
+      registers: [43142]
+      icon: 'mdi:wrench-clock'
+
+    - name: "Timed Charge Start Hour"
+      class: ""
+      state_class: "measurement"
+      uom: "H"
+      scale: 1
+      rule: 1
+      registers: [43143]
+      icon: 'mdi:wrench-clock'
+
+    - name: "Timed Charge Start Minute"
+      class: ""
+      state_class: "measurement"
+      uom: "M"
+      scale: 1
+      rule: 1
+      registers: [43144]
+      icon: 'mdi:wrench-clock'
+
+    - name: "Timed Charge End Hour"
+      class: ""
+      state_class: "measurement"
+      uom: "H"
+      scale: 1
+      rule: 1
+      registers: [43145]
+      icon: 'mdi:wrench-clock'
+
+    - name: "Timed Charge End Minute"
+      class: ""
+      state_class: "measurement"
+      uom: "M"
+      scale: 1
+      rule: 1
+      registers: [43146]
+      icon: 'mdi:wrench-clock'
+
+    - name: "Timed Discharge Start Hour"
+      class: ""
+      state_class: "measurement"
+      uom: "H"
+      scale: 1
+      rule: 1
+      registers: [43147]
+      icon: 'mdi:wrench-clock'
+
+    - name: "Timed Discharge Start Minute"
+      class: ""
+      state_class: "measurement"
+      uom: "M"
+      scale: 1
+      rule: 1
+      registers: [43148]
+      icon: 'mdi:wrench-clock'
+
+    - name: "Timed Discharge End Hour"
+      class: ""
+      state_class: "measurement"
+      uom: "H"
+      scale: 1
+      rule: 1
+      registers: [43149]
+      icon: 'mdi:wrench-clock'
+
+    - name: "Timed Discharge End Minute"
+      class: ""
+      state_class: "measurement"
+      uom: "M"
+      scale: 1
+      rule: 1
+      registers: [43150]
+      icon: 'mdi:wrench-clock'
