@@ -7,9 +7,6 @@ requests:
   - start: 2999
     end:  3044
     mb_functioncode: 0x04
-  - start: 4999
-    end:  4999
-    mb_functioncode: 0x04
 
 
 parameters:
@@ -38,15 +35,6 @@ parameters:
             value: "Power-PF"
           - key: 6
             value: "Rule21Volt–watt"
-
-    - name: "Grid status"
-      class: ""
-      state_class: ""
-      uom: ""
-      scale: 1
-      rule: 1
-      registers: [4999]
-      icon: 'mdi:home-lightning-bolt'
 
     - name: "Inverter Temperature"
       class: "temperature"
