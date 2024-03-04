@@ -11,7 +11,7 @@ write_holding_register:
       selector:
         number:
           min: 0
-          max: 65535 
+          max: 65535
           mode: box
 
     value:
@@ -36,7 +36,7 @@ write_multiple_holding_registers:
       selector:
         number:
           min: 0
-          max: 65535 
+          max: 65535
           mode: box
 
     values:
@@ -48,6 +48,4 @@ write_multiple_holding_registers:
         - 3
       required: true
       selector:
-       object:
-
-  
+        object:
