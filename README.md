@@ -14,11 +14,11 @@ Feel free to discuss the integration by joining the [Discord server](https://dis
 
 ## HACS
 
-This method is prefered.
+This method is preferred.
 
 ## Manual
 
-For this, it is highly recomended to use the "Samba share" add-on (you will need to enable advanced mode in your user profile).
+For this, it is highly recommended to use the "Samba share" add-on (you will need to enable advanced mode in your user profile).
 
 Clone or download the repo, and copy the "solarman" folder in "custom_components" to the "custom_components" folder in home assistant.
 
