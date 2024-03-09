@@ -55,7 +55,7 @@ class ParameterParser:
 
     def try_parse_signed (self, rawData, definition, start, length):
         title = definition['name']
-        scale = definition['scale']
+        scale = definition['scale'] if 'scale' in definition else 1
         value = 0
         found = True
         shift = 0
@@ -78,6 +78,9 @@ class ParameterParser:
                 value = (value - maxint) * scale
             else:
                 value = value * scale
+
+            if ('scale_division' in definition) and (definition['scale_division'] > 0):
+                value //= definition['scale_division']
                 
             if 'validation' in definition:
                 if not self.do_validate(title, value, definition['validation']):
@@ -92,7 +95,7 @@ class ParameterParser:
     
     def try_parse_unsigned (self, rawData, definition, start, length):
         title = definition['name']
-        scale = definition['scale']
+        scale = definition['scale'] if 'scale' in definition else 1
         value = 0
         found = True
         shift = 0
@@ -116,6 +119,9 @@ class ParameterParser:
                     value = value - definition['offset']  
                                    
                 value = value * scale
+
+                if ('scale_division' in definition) and (definition['scale_division'] > 0):
+                    value //= definition['scale_division']
                 
                 if 'validation' in definition:
                     if not self.do_validate(title, value, definition['validation']):

@@ -4,11 +4,11 @@ Home Assistant component for interacting with Solarman data collectors used with
 
 It has been created with a 5kW DEYE/SUNSYNK inverter and since integrated with a variety of other inverters that uses the Solarman data collector.
 
-This component uses Pysolarman by Jonathan McCrohan for the underlying protocol, and also provides service-access to the library for advanced users. See [advanced](advanced.md) 
+This component uses Pysolarman by Jonathan McCrohan for the underlying protocol, and also provides service-access to the library for advanced users. See [advanced](advanced.md).
 
 # Discord
 
-Feel free to discuss the integration by joining the [Discord server.](https://discord.gg/3HQJXR7qRd)
+Feel free to discuss the integration by joining the [Discord server](https://discord.gg/3HQJXR7qRd).
 
 # Installation
 
@@ -54,13 +54,13 @@ Once logged in, expand the "Device information" and note the Device serial numbe
 
 # Configuration
 
-This integration can be configured using config-flow, or by manually configuring using the configuraiton.yaml file. Both methods are described below:
+This integration can be configured using config-flow, or by manually configuring using the configuration.yaml file. Both methods are described below:
 
 ## Automatic (config flow)
 
-1. After the installation of this component, click on the "Configuration" tab on the left, then on "Devices & Services"
+1. After the installation of this component, click on the "Configuration" tab on the left, then on "Devices & Services".
 2. Select the "Integrations" tab on the top of the screen, then on the "+ ADD INTEGRATION" button on the left-hand corner.
-3. Select the solarman integration
+3. Select the solarman integration.
    ![Solarman](./flow_select.png)
 
 4.Configure the entity by filling in the details.
@@ -68,7 +68,7 @@ This integration can be configured using config-flow, or by manually configuring
 
 ## Manual Configuration (configuration.yaml)
 
-In your configuration.yaml file, add the solarman platform under "sensor"
+In your configuration.yaml file, add the solarman platform under "sensor".
 
 ### Example:
 
@@ -100,28 +100,28 @@ sensor:
 
 ### Lookup Files
 
-| Lookup File             | Inverters supported                      | Notes                                                        |
-|-------------------------|------------------------------------------|--------------------------------------------------------------|
-| deye_hybrid.yaml        | DEYE/Sunsynk/SolArk Hybrid inverters     | used when no lookup specified                                |
-| deye_sg04lp3.yaml       | DEYE/Sunsynk/SolArk Hybrid 8/12K-SG04LP3 | e.g. 12K-SG04LP3-EU                                          |
-| deye_string.yaml        | DEYE/Sunsynk/SolArk String inverters     | e.g. SUN-4/5/6/7/8/10/12K-G03 Plus                           |
-| deye_2mppt.yaml         | DEYE Microinverter with 2 MPPT Trackers  | e.g. SUN600G3-EU-230 / SUN800G3-EU-230 / SUN1000G3-EU-230    |
-| deye_4mppt.yaml         | DEYE Microinverter with 4 MPPT Trackers  | e.g. SUN1300G3-EU-230 / SUN1600G3-EU-230 / SUN2000G3-EU-230  |
-| sofar_lsw3.yaml         | SOFAR Inverters                          |
+| Lookup File             | Inverters supported                      | Notes                                                            |
+|-------------------------|------------------------------------------|------------------------------------------------------------------|
+| deye_hybrid.yaml        | DEYE/Sunsynk/SolArk Hybrid inverters     | used when no lookup specified                                    |
+| deye_sg04lp3.yaml       | DEYE/Sunsynk/SolArk Hybrid 8/12K-SG04LP3 | e.g. 12K-SG04LP3-EU                                              |
+| deye_string.yaml        | DEYE/Sunsynk/SolArk String inverters     | e.g. SUN-4/5/6/7/8/10/12K-G03 Plus                               |
+| deye_2mppt.yaml         | DEYE Microinverter with 2 MPPT Trackers  | e.g. SUN600G3-EU-230 / SUN800G3-EU-230 / SUN1000G3-EU-230        |
+| deye_4mppt.yaml         | DEYE Microinverter with 4 MPPT Trackers  | e.g. SUN1300G3-EU-230 / SUN1600G3-EU-230 / SUN2000G3-EU-230      |
+| sofar_lsw3.yaml         | SOFAR Inverters                          |                                                                  |
 | sofar_g3hyd.yaml        | SOFAR Hybrid Three-Phase inverter        | HYD 6000 or rebranded (three-phase), ex. ZCS Azzurro 3PH HYD-ZSS |
-| sofar_hyd3k-6k.yaml     | SOFAR Hybrid Single-Phase inverter       | HYD 6000 or rebranded (single-phase), ex. ZCS Azzurro HYD-ZSS|
-| solis_hybrid.yaml       | SOLIS Hybrid inverter                    |
-| solid_1p8k-5g.yaml      | SOLIS 1P8K-5G                            |
-| zcs_azzurro-ktl-v3.yaml | ZCS Azzurro KTL-V3 inverters             | ZCS Azzurro 3.3/4.4/5.5/6.6 KTL-V3 (rebranded Sofar KTLX-G3) |
+| sofar_hyd3k-6k.yaml     | SOFAR Hybrid Single-Phase inverter       | HYD 6000 or rebranded (single-phase), ex. ZCS Azzurro HYD-ZSS    |
+| solis_hybrid.yaml       | SOLIS Hybrid inverter                    |                                                                  |
+| solid_1p8k-5g.yaml      | SOLIS 1P8K-5G                            |                                                                  |
+| zcs_azzurro-ktl-v3.yaml | ZCS Azzurro KTL-V3 inverters             | ZCS Azzurro 3.3/4.4/5.5/6.6 KTL-V3 (rebranded Sofar KTLX-G3)     |
 
 # Auto-discovery
 
 The component has the option to auto-discover the logger IP and serial number.
 
-To use auto discovery, the IP should be specified as 0.0.0.0 and/or the serial as 0
+To use auto discovery, the IP should be specified as 0.0.0.0 and/or the serial as 0.
 
 NOTE:
-This should be used as a temporary or debug measure since the discovery only happens when the component starts and, if the logger is inaccessible at that point, the entities will unavailable until restart. This will not be the case when the IP and serial was specified.
+This should be used as a temporary or debug measure since the discovery only happens when the component starts and, if the logger is inaccessible at that point, the entities will unavailable until restart. This will not be the case when the IP and serial number were specified.
 
 ## Manual
 
@@ -145,20 +145,20 @@ sensor:
 
 # Entities
 
-Once the component is running, it will add the following entities to Home Assistant
+Once the component is running, it will add the following entities to Home Assistant.
 ![Entities](./entities.png)
 
 # Status Entities
 
-Apart from the inverter-parameters, it will also add status entities to view the status of the solarman component.
+Apart from the inverter-parameters, it will also add status entities to view the status of the solarman component (in the **Diagnostic** category).
 ![Component-status](./component_status.png)
 
 # Energy Dashboard
 
 The entities includes the device classes to enable it to be added to the [Energy Dashboard](https://www.home-assistant.io/blog/2021/08/04/home-energy-management/) introduced with Home Assistant Core 2021.8.
 
-To configure the energy dashboard with the infirmation provided by this component, see [configuring energy dashboard](energy.md)
+To configure the energy dashboard with the infirmation provided by this component, see [configuring energy dashboard](energy.md).
 
 # Customization
 
-This integration was tested against the DEYE 5kW inverter, and it is possible that the parameter-definitions for other inverters may differ. If you want to try your hand at it, refer to [customizing parameters.yaml](customization.md)
+This integration was tested against the DEYE 5kW inverter, and it is possible that the parameter-definitions for other inverters may differ. If you want to try your hand at it, refer to [customizing parameters.yaml](customization.md)/
