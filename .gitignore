@@ -127,9 +127,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-# vscode 
-.vscode/
-.vs/
-custom_components/solarman/localtest__init__.py
-custom_components/solarman/local_test_solarman.py
