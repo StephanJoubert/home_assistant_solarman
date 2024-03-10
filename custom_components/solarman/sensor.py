@@ -38,7 +38,7 @@ def _do_setup_platform(hass: HomeAssistant, config, async_add_entities : AddEnti
     inverter_sn = config.get(CONF_INVERTER_SERIAL)
     if inverter_sn == 0:
         inverter_sn = _inverter_scanner.get_serialno()
-    
+
     inverter_mb_slaveid = config.get(CONF_INVERTER_MB_SLAVEID)
     if not inverter_mb_slaveid:
         inverter_mb_slaveid = DEFAULT_INVERTER_MB_SLAVEID
@@ -70,10 +70,10 @@ def _do_setup_platform(hass: HomeAssistant, config, async_add_entities : AddEnti
     _LOGGER.debug(hass_sensors)
 
     async_add_entities(hass_sensors)
-    # Register the services with home assistant.    
-    register_services (hass, inverter)
-    
-    
+    # Register the services with home assistant.
+    register_services (hass)
+
+
     
     
     
@@ -156,6 +156,10 @@ class SolarmanStatus(SolarmanSensor, Entity):
     def state(self):
         #  Return the state of the sensor.
         return self.p_state
+    
+    def inverter(self):
+        #  Return the inverter of the sensor. """
+        return self.inverter
 
     def update(self):
         self.p_state = getattr(self.inverter, self._field_name, None)

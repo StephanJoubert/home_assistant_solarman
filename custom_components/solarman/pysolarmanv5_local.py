@@ -132,7 +132,9 @@ class PySolarmanV5:
         self.v5_offsettime = bytes.fromhex("00000000")
         self.v5_checksum = bytes.fromhex("00")  # placeholder value
         self.v5_end = bytes.fromhex("15")
-        self.v5_header_len = 12 # v5_start(1) + v5_length(2) + v5_controlcode(2) + v5_serial(2) + v5_loggerserial(4) + v5_frametype(1)
+        self.v5_header_len = 11 # v5_start(1) + v5_length(2) + v5_controlcode(2) + v5_serial(2) + v5_loggerserial(4)
+        self.v5_frame_len_without_payload = self.v5_header_len + 2 #Header + v5_checksum(1) + v5_end(1)
+        self.v5_payloadheader_len = 14 # frametype(1) + status(1) + totalWorkingTime(4) + powerOnTime(4) + offsetTime(4)
 
     @staticmethod
     def _calculate_v5_frame_checksum(frame, length):
@@ -235,7 +237,6 @@ class PySolarmanV5:
         """
        
         modbus_frame = b""
-        frame_len_without_payload_len = 13
         v5_start = int.from_bytes(self.v5_start, byteorder="big")
 
         self.log.debug("_v5_frame_decoder: Check frame buffer len: %i", len(v5_frame))
@@ -273,27 +274,27 @@ class PySolarmanV5:
                 continue
 
             (payload_len,) = struct.unpack("<H", v5_frame[1:3])
-            if frame_len < (frame_len_without_payload_len + payload_len + 3):
-                self.log.debug("_v5_frame_decoder: V5 frame not complete.")
+            if frame_len < (self.v5_frame_len_without_payload + payload_len):
+                self.log.debug(f"_v5_frame_decoder: V5 frame not complete. frame length={frame_len} expected length={self.v5_frame_len_without_payload + payload_len}")
                 return b"" #need to wait for more bytes to be received
             
-            if (v5_frame[frame_len_without_payload_len + payload_len - 1] != int.from_bytes(self.v5_end, byteorder="big")):
+            if (v5_frame[self.v5_frame_len_without_payload + payload_len - 1] != int.from_bytes(self.v5_end, byteorder="big")):
                 self.log.debug("_v5_frame_decoder: V5 frame contains invalid end value")
                 v5_frame.pop()
                 continue
 
-            if v5_frame[frame_len_without_payload_len + payload_len - 2] != self._calculate_v5_frame_checksum(v5_frame, frame_len_without_payload_len + payload_len):
+            if v5_frame[self.v5_frame_len_without_payload + payload_len - 2] != self._calculate_v5_frame_checksum(v5_frame, self.v5_frame_len_without_payload + payload_len):
                 self.log.debug("_v5_frame_decoder: V5 frame contains invalid V5 checksumd")
                 v5_frame.pop()
                 continue
 
-            if ((payload_len - frame_len_without_payload_len) <= 5):
-                self.log.debug("_v5_frame_decoder: V5 frame no RTU frame (too short)")
-                v5_frame.pop()
-                continue
-
-            modbus_frame = v5_frame[25 : frame_len_without_payload_len + payload_len - 2]
-            self.log.debug("_v5_frame_decoder: V5 frame found:" + modbus_frame.hex(" "))
+            if ((payload_len-self.v5_payloadheader_len) < 5):
+                self.log.debug("_v5_frame_decoder: V5 frame contains invalid RTU (to small)- > create RTU error frame")
+                modbus_frame = b'\x01\x80\x02\xC0\x01'
+            else:                
+                modbus_frame = v5_frame[self.v5_header_len + self.v5_payloadheader_len : self.v5_frame_len_without_payload + payload_len - 2]
+            
+            self.log.debug("_v5_frame_decoder: V5 frame found (hex): " + modbus_frame.hex(" "))
             break
 
         return modbus_frame
