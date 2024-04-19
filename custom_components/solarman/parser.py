@@ -36,6 +36,8 @@ class ParameterParser:
             self.try_parse_datetime(rawData,definition, start, length)
         elif rule == 9:
             self.try_parse_time(rawData,definition, start, length)
+        elif rule == 10:
+            self.try_parse_signed(rawData,definition, start, length, True)
         return
     
     def do_validate(self, title, value, rule):
@@ -53,7 +55,7 @@ class ParameterParser:
         
         return True
 
-    def try_parse_signed (self, rawData, definition, start, length):
+    def try_parse_signed (self, rawData, definition, start, length, signed_magnitude_integer = False):
         title = definition['name']
         scale = definition['scale'] if 'scale' in definition else 1
         value = 0
@@ -73,9 +75,12 @@ class ParameterParser:
         if found:
             if 'offset' in definition:
                 value = value - definition['offset']       
-                      
-            if value > maxint/2:
-                value = (value - maxint) * scale
+
+            if value > (maxint >> 1):
+                if (signed_magnitude_integer):
+                    value = -(value & (maxint >> 1)) * scale
+                else:
+                    value = (value - maxint) * scale
             else:
                 value = value * scale
 
@@ -92,7 +97,7 @@ class ParameterParser:
                 self.result[title] = value
 
         return
-    
+
     def try_parse_unsigned (self, rawData, definition, start, length):
         title = definition['name']
         scale = definition['scale'] if 'scale' in definition else 1
