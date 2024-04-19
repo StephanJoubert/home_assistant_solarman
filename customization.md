@@ -113,15 +113,16 @@ Example yaml file for the mentioned above:
 ### Rule
 The `rule` field specifies how to interpret the binary data contained in the register(s).
 
-| Rule # | Description           | Example                                                                                                                |
-|--------|-----------------------|------------------------------------------------------------------------------------------------------------------------|
-|    1   | Unsigned 16-bit value |                                                                                                                        |
-|    2   | Signed 16 bit value   |                                                                                                                        |
-|    3   | Unsigned 32 bit value |                                                                                                                        |
-|    4   | Signed 32 bit value   |                                                                                                                        |
-|    5   | ASCII value           |                                                                                                                        |
-|    6   | Bit field             |                                                                                                                        |
-|    7   | Version               |                                                                                                                        |
-|    8   | Date Time             |                                                                                                                        |
-|    9   | Time                  | Time value as string<ul><li>Example 1: Register Value 2200 => Time Value: 22:00</li><li>Example 2: Register value: 400 => 04:00</li></ul>|
+| Rule # | Description            | Example                                                                                                                |
+|--------|------------------------|------------------------------------------------------------------------------------------------------------------------|
+|    1   | Unsigned 16 bit value  |                                                                                                                        |
+|    2   | Signed 16 bit value    |                                                                                                                        |
+|    3   | Unsigned 32 bit value  |                                                                                                                        |
+|    4   | Signed 32 bit value    |                                                                                                                        |
+|    5   | ASCII value            |                                                                                                                        |
+|    6   | Bit field              |                                                                                                                        |
+|    7   | Version                |                                                                                                                        |
+|    8   | Date Time              |                                                                                                                        |
+|    9   | Time                   | Time value as string<ul><li>Example 1: Register Value 2200 => Time Value: 22:00</li><li>Example 2: Register value: 400 => 04:00</li></ul>|
+|   10   | Signed magnitude value |                                                                                                                        |
 
