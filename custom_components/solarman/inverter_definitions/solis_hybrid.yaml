@@ -4,7 +4,7 @@
 # https://www.scss.tcd.ie/Brian.Coghlan/Elios4you/RS485_MODBUS-Hybrid-BACoghlan-201811228-1854.pdf
 
 requests:
-  - start: 33029
+  - start: 33022
     end:  33095
     mb_functioncode: 0x04
   - start: 33116
@@ -319,6 +319,15 @@ parameters:
       rule: 2
       registers: [33093]
       icon: 'mdi:thermometer'
+
+    - name: "Inverter Datetime Array"
+      class: ""
+      state_class: ""
+      uom: ""
+      scale: 1
+      rule: 10
+      registers: [33022,33023,33024,33025,33026,33027]
+      icon: 'mdi:calendar-clock'
 
 # Sensors below are outside of modbus request ranges.
 # If enabling, ensure to amend the request start register.
