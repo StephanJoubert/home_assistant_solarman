@@ -31,6 +31,8 @@ class Inverter:
         with open(self.path + self.lookup_file) as f:
             self.parameter_definition = yaml.full_load(f)
 
+        self.params = ParameterParser(self.parameter_definition)
+
 
     def connect_to_server(self):
         if self._modbus:
@@ -46,14 +48,14 @@ class Inverter:
             finally:
                 self._modbus = None
 
-    def send_request(self, params, start, end, mb_fc):
+    def send_request(self, start, end, mb_fc):
         length = end - start + 1
         match mb_fc:
             case 3:
                 response  = self._modbus.read_holding_registers(register_addr=start, quantity=length)
             case 4:
                 response  = self._modbus.read_input_registers(register_addr=start, quantity=length)
-        params.parse(response, start, length)        
+        self.params.parse(response, start, length)        
 
 
     @Throttle (MIN_TIME_BETWEEN_UPDATES)
@@ -64,7 +66,7 @@ class Inverter:
 
     def get_statistics(self):
         result = 1
-        params = ParameterParser(self.parameter_definition)
+        self.params.clear_result()
         requests = self.parameter_definition['requests']
         log.debug(f"Starting to query for [{len(requests)}] ranges...")
 
@@ -82,7 +84,7 @@ class Inverter:
                     attempts_left -= 1
                     try:
                         self.connect_to_server()
-                        self.send_request(params, start, end, mb_fc)
+                        self.send_request(start, end, mb_fc)
                         result = 1
                     except Exception as e:
                         result = 0
@@ -101,7 +103,7 @@ class Inverter:
                 log.debug(f"All queries succeeded, exposing updated values.")
                 self.status_lastUpdate = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
                 self.status_connection = "Connected"
-                self._current_val = params.get_result()
+                self._current_val = self.params.get_result()
             else:
                 self.status_connection = "Disconnected"
                 # Clear cached previous results to not report stale and incorrect data
@@ -118,8 +120,7 @@ class Inverter:
         return self._current_val
 
     def get_sensors(self):
-        params = ParameterParser(self.parameter_definition)
-        return params.get_sensors ()
+        return self.params.get_sensors()
 
 # Service calls
     def service_write_holding_register(self, register, value):
