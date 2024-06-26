@@ -13,7 +13,7 @@ class ParameterParser:
             for j in i['items']:
                 regs = j['registers']
                 for reg in regs:
-                    d[reg] = (j, regs[-1])
+                    d[reg] = (j, max(regs))
         return d
 
     def parse (self, rawData, start, length):
