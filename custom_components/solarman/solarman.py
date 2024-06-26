@@ -25,12 +25,21 @@ class Inverter:
         self.status_connection = "Disconnected"
         self.status_lastUpdate = "N/A"
         self.lookup_file = lookup_file
+        self.last_update = {}
         if not self.lookup_file or lookup_file == 'parameters.yaml':
             self.lookup_file = 'deye_hybrid.yaml'
 
         with open(self.path + self.lookup_file) as f:
             self.parameter_definition = yaml.full_load(f)
 
+    def should_update_range(self, start, end, interval):
+        if (start, end) not in self.last_update:
+            return True
+        last_update = self.last_update[(start, end)]
+        return (datetime.now() - last_update).total_seconds() > interval
+
+    def mark_range_updated(self, start, end):
+        self.last_update[(start, end)] = datetime.now()
 
     def connect_to_server(self):
         if self._modbus:
@@ -74,7 +83,15 @@ class Inverter:
                 start = request['start']
                 end = request['end']
                 mb_fc = request['mb_functioncode']
+                interval = request.get('interval', 0)
                 range_string = f"{start}-{end} (0x{start:04X}-0x{end:04X})"
+
+                if not self.should_update_range(start, end, interval):
+                    log.debug(f"Skipping [{range_string}]...")
+                    continue
+                else:
+                    self.mark_range_updated(start, end)
+                
                 log.debug(f"Querying [{range_string}]...")
 
                 attempts_left = QUERY_RETRY_ATTEMPTS
