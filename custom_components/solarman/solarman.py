@@ -32,10 +32,8 @@ class Inverter:
         with open(self.path + self.lookup_file) as f:
             self.parameter_definition = yaml.full_load(f)
 
-<<<<<<< HEAD
         self.params = ParameterParser(self.parameter_definition)
 
-=======
     def should_update_range(self, start, end, interval):
         if (start, end) not in self.last_update:
             return True
@@ -44,7 +42,6 @@ class Inverter:
 
     def mark_range_updated(self, start, end):
         self.last_update[(start, end)] = datetime.now()
->>>>>>> feature/intervals
 
     def connect_to_server(self):
         if self._modbus:
