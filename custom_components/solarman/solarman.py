@@ -66,17 +66,13 @@ class Inverter:
                 response  = self._modbus.read_input_registers(register_addr=start, quantity=length)
         self.params.parse(response, start, length)        
 
+    
+    def get_requests(self):
+        return self.parameter_definition['requests']
 
-    @Throttle (MIN_TIME_BETWEEN_UPDATES)
-    def update (self):
-        self.get_statistics()
-        return
-
-
-    def get_statistics(self):
+    def get_statistics(self, requests):
         result = 1
-        self.params.clear_result()
-        requests = self.parameter_definition['requests']
+        #requests = self.parameter_definition['requests']
         log.debug(f"Starting to query for [{len(requests)}] ranges...")
 
         try:

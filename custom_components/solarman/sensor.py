@@ -13,9 +13,12 @@ import voluptuous as vol
 from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_NAME, EntityCategory
+from homeassistant.core import callback
 from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
+from .coordinator import SolarmanSensorCoordinator
 from .const import *
 from .solarman import Inverter
 from .scanner import InverterScanner
@@ -45,6 +48,12 @@ def _do_setup_platform(hass: HomeAssistant, config, async_add_entities : AddEnti
     lookup_file = config.get(CONF_LOOKUP_FILE)
     path = hass.config.path('custom_components/solarman/inverter_definitions/')
 
+    rbi = requests_by_interval(inverter)
+    coordinators = [SolarmanSensorCoordinator(hass, _LOGGER, inverter_name, k, v, inverter) for k, v in rbi.items()]
+
+    #Min key
+    min_coord = rbi[min(rbi.keys())]
+
     # Check input configuration.
     if inverter_host is None:
         raise vol.Invalid('configuration parameter [inverter_host] does not have a value')
@@ -57,14 +66,14 @@ def _do_setup_platform(hass: HomeAssistant, config, async_add_entities : AddEnti
     for sensor in inverter.get_sensors():
         try:
             if "isstr" in sensor:
-                hass_sensors.append(SolarmanSensorText(inverter_name, inverter, sensor, inverter_sn))
+                hass_sensors.append(SolarmanSensorText(find_coordinator(coordinators, sensor["registers"][0]), inverter_name, inverter, sensor, inverter_sn))
             else:
-                hass_sensors.append(SolarmanSensor(inverter_name, inverter, sensor, inverter_sn))
+                hass_sensors.append(SolarmanSensor(find_coordinator(coordinators, sensor["registers"][0]), inverter_name, inverter, sensor, inverter_sn))
         except BaseException as ex:
             _LOGGER.error(f'Config error {ex} {sensor}')
             raise
-    hass_sensors.append(SolarmanStatusDiag(inverter_name, inverter, "status_lastUpdate", inverter_sn))
-    hass_sensors.append(SolarmanStatusDiag(inverter_name, inverter, "status_connection", inverter_sn))
+    hass_sensors.append(SolarmanStatusDiag(min_coord, inverter_name, inverter, "status_lastUpdate", inverter_sn))
+    hass_sensors.append(SolarmanStatusDiag(min_coord, inverter_name, inverter, "status_connection", inverter_sn))
 
     _LOGGER.debug(f'sensor.py:_do_setup_platform: async_add_entities')
     _LOGGER.debug(hass_sensors)
@@ -73,9 +82,21 @@ def _do_setup_platform(hass: HomeAssistant, config, async_add_entities : AddEnti
     # Register the services with home assistant.    
     register_services (hass, inverter)
     
+def find_coordinator(coordinators, register):
+    for c in coordinators:
+        for requests in c.requests:
+            if requests['start'] <= register and requests['end'] > register:
+                return c
     
-    
-    
+def requests_by_interval(inverter):
+    tmp = {}
+    requests = inverter.get_requests()
+    for r in requests:
+        interval = max(r.get('interval', 0), MIN_TIME_BETWEEN_UPDATES)
+        if interval not in tmp:
+            tmp[interval] = []
+        tmp[interval].append(r)
+        
     
 
 # Set-up from configuration.yaml
@@ -126,9 +147,10 @@ class SolarmanSensor():
 #  It derives from the Entity class in HA and is suited for status values.
 #############################################################################################################
 
-class SolarmanStatus(SolarmanSensor, Entity):
-    def __init__(self, inverter_name, inverter, field_name, sn):
+class SolarmanStatus(SolarmanSensor, CoordinatorEntity):
+    def __init__(self, coordinator, inverter_name, inverter, field_name, sn):
         super().__init__(sn, inverter_name, inverter.lookup_file)
+        super(CoordinatorEntity).__init__(coordinator)
         self._inverter_name = inverter_name
         self.inverter = inverter
         self._field_name = field_name
@@ -156,17 +178,20 @@ class SolarmanStatus(SolarmanSensor, Entity):
     def state(self):
         #  Return the state of the sensor.
         return self.p_state
-
-    def update(self):
+    
+    @callback
+    def _handle_coordinator_update(self) -> None:
+        """Handle updated data from the coordinator."""
         self.p_state = getattr(self.inverter, self._field_name, None)
+        self.async_write_ha_state()
 
 #############################################################################################################
 # This is the the same of SolarmanStatus, but it has EntityCategory setup to Diagnostic.
 #############################################################################################################
 
 class SolarmanStatusDiag(SolarmanStatus):
-    def __init__(self, inverter_name, inverter, field_name, sn):
-        super().__init__(inverter_name, inverter, field_name, sn)
+    def __init__(self, coordinator, inverter_name, inverter, field_name, sn):
+        super().__init__(coordinator, inverter_name, inverter, field_name, sn)
         self._attr_entity_category = EntityCategory.DIAGNOSTIC
 
 #############################################################################################################
@@ -175,8 +200,8 @@ class SolarmanStatusDiag(SolarmanStatus):
 #############################################################################################################
 
 class SolarmanSensorText(SolarmanStatus):
-    def __init__(self, inverter_name, inverter, sensor, sn):
-        SolarmanStatus.__init__(self,inverter_name, inverter, sensor['name'], sn)
+    def __init__(self, coordinator, inverter_name, inverter, sensor, sn):
+        SolarmanStatus.__init__(self, coordinator, inverter_name, inverter, sensor['name'], sn)
         if 'icon' in sensor:
             self.p_icon = sensor['icon']
         else:
@@ -207,8 +232,8 @@ class SolarmanSensorText(SolarmanStatus):
 #############################################################################################################
 
 class SolarmanSensor(SolarmanSensorText):
-    def __init__(self, inverter_name, inverter, sensor, sn):
-        SolarmanSensorText.__init__(self, inverter_name, inverter, sensor, sn)
+    def __init__(self, coordinator, inverter_name, inverter, sensor, sn):
+        SolarmanSensorText.__init__(self, coordinator, inverter_name, inverter, sensor, sn)
         self._device_class = sensor['class']
         if 'state_class' in sensor:
             self._state_class = sensor['state_class']
