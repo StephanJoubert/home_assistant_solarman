@@ -3,17 +3,36 @@ import struct
 class ParameterParser:
     def __init__(self, lookups):
         self.result = {}
-        self._lookups = lookups 
+        self._lookups = lookups
+        self._lookups_dict = self.__pre_compute_lookups() 
         return
 
-    def parse (self, rawData, start, length):
+    def __pre_compute_lookups(self):
+        d = {}
         for i in self._lookups['parameters']:
             for j in i['items']:
-                self.try_parse_field(rawData, j, start, length)        
+                regs = j['registers']
+                for reg in regs:
+                    d[reg] = (j, max(regs))
+        return d
+
+    def parse (self, rawData, start, length):
+        i = start
+        while i < start + length:
+            if i in self._lookups_dict:
+                j, end = self._lookups_dict[i]
+                self.try_parse_field(rawData, j, start, length)
+                i = end
+            
+            i += 1    
         return
 
     def get_result(self):
         return self.result
+    
+    def clear_result(self):
+        self.result = {}
+        return
 
 
     def try_parse_field (self, rawData, definition, start, length):
