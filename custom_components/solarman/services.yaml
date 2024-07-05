@@ -1,8 +1,17 @@
-write_holding_register:
-  name: Write Holding Register (Modbus Function Code 6)
-  description: NOTE USE WITH CARE!
+read_holding_register:
+  name: Read Holding Register (Modbus Function Code 3)
+  description: Read a single register value
 
   fields:
+    device:
+      name: Device
+      description: The Device
+      example: "inverter_roof"
+      required: true
+      selector:
+        device:
+          filter:
+            - integration: solarman
     register:
       name: Register
       description: Modbus register address
@@ -14,6 +23,65 @@ write_holding_register:
           max: 65535 
           mode: box
 
+read_multiple_holding_registers:
+  name: Read Multiple Holding Registers (Modbus Function Code 3)
+  description: Read values from multiple consecutive registers at once.
+
+  fields:
+    device:
+      name: Device
+      description: The Device
+      example: "inverter_roof"
+      required: true
+      selector:
+        device:
+          filter:
+            - integration: solarman           
+    register:
+      name: Register
+      description: Modbus register address
+      example: "16384"
+      required: true
+      selector:
+        number:
+          min: 0
+          max: 65535 
+          mode: box
+    count:
+      name: Count
+      description: Count of registers to read
+      example: "4"
+      required: true
+      selector:
+        number:
+          min: 1
+          max: 65535 
+          mode: box
+
+write_holding_register:
+  name: Write Holding Register (Modbus Function Code 6)
+  description: NOTE USE WITH CARE! (Some devices might not accept Code 6 in this case try to use 'Write Multiple Holding Registers')
+
+  fields:
+    device:
+      name: Device
+      description: The Device
+      example: "inverter_roof"
+      required: true
+      selector:
+        device:
+          filter:
+            - integration: solarman
+    register:
+      name: Register
+      description: Modbus register address
+      example: "16384"
+      required: true
+      selector:
+        number:
+          min: 0
+          max: 65535 
+          mode: box
     value:
       name: Values
       description: Value to write
@@ -25,9 +93,18 @@ write_holding_register:
 
 write_multiple_holding_registers:
   name: Write Multiple Holding Registers (Modbus Function Code 16)
-  description: NOTE USE WITH CARE!
+  description: NOTE USE WITH CARE! (Some devices might not accept Code 16 in this case try to use 'Write Holding Register')
 
   fields:
+    device:
+      name: Device
+      description: The Device
+      example: "inverter_roof"
+      required: true
+      selector:
+        device:
+          filter:
+            - integration: solarman
     register:
       name: Register
       description: Modbus register address
@@ -38,7 +115,6 @@ write_multiple_holding_registers:
           min: 0
           max: 65535 
           mode: box
-
     values:
       name: Values
       description: Values to write
