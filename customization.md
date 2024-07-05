@@ -124,4 +124,5 @@ The `rule` field specifies how to interpret the binary data contained in the reg
 |    7   | Version               |                                                                                                                        |
 |    8   | Date Time             |                                                                                                                        |
 |    9   | Time                  | Time value as string<ul><li>Example 1: Register Value 2200 => Time Value: 22:00</li><li>Example 2: Register value: 400 => 04:00</li></ul>|
+|   10   | Raw                   | Similar to Bit field without hex conversion. Useful where you need to read multiple  registers atomically              |
 
