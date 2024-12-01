@@ -192,7 +192,7 @@ parameters:
         scale: 0.1
         rule: 1
         registers: [0x0203]
-        icon: "mdi:battery-plus"
+        icon: "mdi:battery-minus"
 
       - name: "Total Battery Charge"
         class: "energy"
