@@ -1,0 +1,380 @@
+requests:
+  - start: 0x1690
+    end: 0x16A7
+    mb_functioncode: 0x03
+  - start: 0x227E
+    end: 0x228E
+    mb_functioncode: 0x03
+  - start: 0x3110
+    end: 0x3182
+    mb_functioncode: 0x03
+  - start: 0x1234
+    end: 0x1239
+    mb_functioncode: 0x03
+
+
+# 3521465636
+parameters:
+  - group: solar
+    items:
+      - name: "PV1 Voltage"
+        class: "voltage"
+        state_class: "measurement"
+        uom: "V"
+        scale: 0.1
+        rule: 1
+        registers: [0x1690]
+        icon: "mdi:solar-power"
+      - name: "PV1 Current"
+        class: "current"
+        uom: "A"
+        scale: 0.1
+        rule: 1
+        registers: [0x1691]
+        icon: "mdi:solar-power"
+      - name: "PV2 Voltage"
+        class: "voltage"
+        state_class: "measurement"
+        uom: "V"
+        scale: 0.1
+        rule: 1
+        registers: [0x1692]
+        icon: "mdi:solar-power"
+      - name: "PV2 Current"
+        class: "current"
+        uom: "A"
+        scale: 0.1
+        rule: 1
+        registers: [0x1693]
+        icon: "mdi:solar-power"
+      
+      - name: "PV1 Power"
+        class: "power"
+        state_class: "measurement"
+        uom: "W"
+        scale: 1
+        rule: 1
+        registers: [0x227F]
+        icon: "mdi:solar-power"
+
+      - name: "PV2 Power"
+        class: "power"
+        state_class: "measurement"
+        uom: "W"
+        scale: 1
+        rule: 1
+        registers: [0x2281]
+        icon: "mdi:solar-power"
+
+      - name: "PV Daily Production"
+        class: "energy"
+        state_class: "measurement"
+        uom: "kWh"
+        scale: 0.001
+        rule: 3
+        registers: [0x3153,0x3154]
+        icon: "mdi:solar-power"
+
+      - name: "PV Total Production"
+        class: "energy"
+        state_class: "total_increasing"
+        uom: "kWh"
+        scale: 0.001
+        rule: 3
+        registers: [0x3165,0x3166]
+        icon: "mdi:solar-power"
+
+  - group: Grid
+    items:
+      - name: "Grid power factor"
+        class: ""
+        state_class: ""
+        uom: ""
+        scale: 1
+        rule: 1
+        registers: [0x16A1]
+        icon: "mdi:transmission-tower"
+
+      - name: "Grid Voltage A"
+        class: "voltage"
+        state_class: "measurement"
+        uom: "V"
+        scale: 0.1
+        rule: 1
+        registers: [0x3110]
+        icon: "mdi:transmission-tower"
+      - name: "Grid Voltage B"
+        class: "voltage"
+        state_class: "measurement"
+        uom: "V"
+        scale: 0.1
+        rule: 1
+        registers: [0x3113]
+        icon: "mdi:transmission-tower"
+      - name: "Grid Voltage C"
+        class: "voltage"
+        state_class: "measurement"
+        uom: "V"
+        scale: 0.1
+        rule: 1
+        registers: [0x3116]
+        icon: "mdi:transmission-tower"
+
+      - name: "Grid Current A"
+        class: "current"
+        state_class: "measurement"
+        uom: "A"
+        scale: 0.1
+        rule: 1
+        registers: [0x3111]
+        icon: "mdi:current-ac"
+      - name: "Grid Current B"
+        class: "current"
+        state_class: "measurement"
+        uom: "A"
+        scale: 0.1
+        rule: 1
+        registers: [0x3114]
+        icon: "mdi:current-ac"
+      - name: "Grid Current C"
+        class: "current"
+        state_class: "measurement"
+        uom: "A"
+        scale: 0.1
+        rule: 1
+        registers: [0x3117]
+        icon: "mdi:current-ac"
+      
+      - name: "Grid Frequency"
+        class: "frequency"
+        state_class: "measurement"
+        uom: "Hz"
+        scale: 0.01
+        rule: 1
+        registers: [0x3119]
+        icon: 'mdi:sine-wave'
+      # # Unknown parse type "parserRuleType": 4, "byteOrderType": 0,
+      # - name: "Grid output power"
+      #   class: "power"
+      #   state_class: "measurement"
+      #   uom: "W"
+      #   scale: 1
+      #   rule: 4
+      #   registers: [0x2282, 0x2283, 0x2284,0x2285, 0x2286, 0x2287, 0x2288, 0x2289, 0x228A, 0x228B]
+      #   icon: 'mdi:transmission-tower'
+      # Manual solution - Only first 2 signed bytes
+      - name: "Grid output power"
+        class: "power"
+        state_class: "measurement"
+        uom: "W" 
+        scale: 1
+        rule: 4
+        registers: [0x2285,0x2284]
+        icon: 'mdi:transmission-tower'
+
+      - name: "Grid Daily Energy Bought"
+        class: "energy"
+        state_class: "total_increasing"
+        uom: "kWh"
+        scale: 0.001
+        rule: 1
+        registers: [0x316B,0x316C]
+        icon: 'mdi:transmission-tower-export'
+      - name: "Grid Total Energy Bought"
+        class: "energy"
+        state_class: "total_increasing"
+        uom: "kWh"
+        scale: 0.001
+        rule: 1
+        registers: [0x317D,0x317E]
+        icon: 'mdi:transmission-tower-export'
+      - name: "Grid Daily Energy Sold"
+        class: "energy"
+        state_class: "total_increasing"
+        uom: "kWh"
+        scale: 0.001
+        rule: 1
+        registers: [0x3155,0x3156]
+        icon: 'mdi:transmission-tower-import'
+      - name: "Grid Total Energy Sold"
+        class: "energy"
+        state_class: "total_increasing"
+        uom: "kWh"
+        scale: 0.001
+        rule: 1
+        registers: [0x3167,0x3168]
+        icon: 'mdi:transmission-tower-import'
+
+  - group: Battery
+    items: 
+    - name: "Battery Voltage"
+      class: "voltage"
+      state_class: "measurement"
+      uom: "V"
+      scale: 0.1
+      rule: 1
+      registers: [0x3140]
+      icon: 'mdi:battery'
+    - name: "Battery Current"
+      class: "current"
+      state_class: "measurement"
+      uom: "A"
+      scale: 0.01
+      rule: 2
+      registers: [0x3141]
+      icon: 'mdi:battery'
+    - name: "Battery Power"
+      class: "power"
+      state_class: "measurement"
+      uom: "W"
+      scale: 1
+      rule: 2
+      registers: [0x314A]
+      icon: 'mdi:battery'
+
+    - name: "Battery SOC"
+      class: "battery"
+      state_class: "measurement"
+      uom: "%"
+      scale: 0.1
+      rule: 1
+      registers: [0x3145]
+      icon: 'mdi:battery'
+
+    - name: "Battery Temperature"
+      class: "temperature"
+      state_class: "measurement"
+      uom: "°C"
+      scale: 0.1
+      rule: 2      
+      registers: [0x3146]
+      icon: 'mdi:battery'
+
+    - name: "Battery Daily Discharge"
+      class: "energy"
+      state_class: "total_increasing"      
+      uom: "kWh"
+      scale: 0.001
+      rule: 3
+      registers: [0x316F,0x3170]
+      icon: 'mdi:battery-minus'
+
+    - name: "Battery Total Discharge"
+      class: "energy"
+      state_class: "total_increasing"      
+      uom: "kWh"
+      scale: 0.001
+      rule: 3
+      registers: [0x3181,0x3182]
+      icon: 'mdi:battery-plus'
+
+    - name: "Battery Daily Charge"
+      class: "energy"
+      state_class: "total_increasing"      
+      uom: "kWh"
+      scale: 0.001
+      rule: 3
+      registers: [0x316D,0x316E]
+      icon: 'mdi:battery-plus'
+
+    - name: "Battery Total Charge"
+      class: "energy"
+      state_class: "total_increasing"
+      uom: "kWh"
+      scale: 0.001
+      rule: 3
+      registers: [0x317F,0x3180]
+      icon: 'mdi:battery-minus'
+
+  - group: Load
+    items:
+      - name: "Load Voltage A"
+        class: "voltage"
+        state_class: "measurement"
+        uom: "V"
+        scale: 0.1
+        rule: 1
+        registers: [0x3120]
+        icon: "mdi:lightning-bolt-outline"
+    
+
+      - name: "Load Current A"
+        class: "current"
+        state_class: "measurement"
+        uom: "A"
+        scale: 0.1
+        rule: 1
+        registers: [0x3121]
+        icon: "mdi:lightning-bolt-outline"
+      
+      - name: "Load Voltage B"
+        class: "voltage"
+        state_class: "measurement"
+        uom: "V"
+        scale: 0.1
+        rule: 1
+        registers: [0x3124]
+        icon: "mdi:lightning-bolt-outline"
+    
+      - name: "Load Current B"
+        class: "current"
+        state_class: "measurement"
+        uom: "A"
+        scale: 0.1
+        rule: 1
+        registers: [0x3125]
+        icon: "mdi:lightning-bolt-outline"
+
+      - name: "Load power"
+        class: "power"
+        state_class: "measurement"
+        uom: "W" 
+        scale: 1
+        rule: 1
+        registers: [0x2289]  # [0x2288,0x2289]
+        icon: 'mdi:transmission-tower'
+
+      - name: "Daily Load Consumption"
+        class: "energy"
+        state_class: "total_increasing"
+        uom: "kWh"
+        scale: 0.001
+        rule: 2
+        registers: [0x3157,0x3158]
+        icon: "mdi:lightning-bolt-outline"
+
+      - name: "Total Load Consumption"
+        class: "energy"
+        state_class: "total_increasing"
+        uom: "kWh"
+        scale: 0.001
+        rule: 3
+        registers: [0x3169,0x3170]
+        icon: "mdi:lightning-bolt-outline"
+      
+  - group: Inverter
+    items:
+      - name: "Inverter ID"
+        class: ""
+        state_class: ""
+        uom: ""
+        scale: 1
+        rule: 5
+        registers: [0x1234, 0x1235, 0x1236, 0x1237, 0x1238, 0x1239]
+        isstr: true
+      - name: "Inverter Temperature"
+        class: "temperature"
+        state_class: "measurement"
+        uom: "°C"
+        scale: 0.1
+        rule: 2      
+        registers: [0x16A6]
+        icon: 'mdi:battery'
+      - name: "Environment Temperature"
+        class: "temperature"
+        state_class: "measurement"
+        uom: "°C"
+        scale: 0.1
+        rule: 2      
+        registers: [0x16A7]
+        icon: 'mdi:battery'
