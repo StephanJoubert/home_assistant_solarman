@@ -1,3 +1,14 @@
+# IMPORTANT
+This project is no longer actively maintained and has been archived.
+
+For users looking for an actively maintained Solarman integration for Home Assistant, I recommend the following alternative project: https://github.com/davidrapan/ha-solarman
+
+This independent project was inspired by the original integration and offers additional features and ongoing development.
+
+Thank you to everyone who has used, supported, and contributed to this project over the years.
+
+The source code and documentation will remain available for reference.
+
 # Solarman integration
 
 Home Assistant component for interacting with Solarman data collectors used with a variety of inverters. The integration allows Home Assistant to connect in direct-mode over the local network to the collector to extract the information, and no cables are required.
