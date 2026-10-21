@@ -119,6 +119,7 @@ sensor:
 | deye_2mppt.yaml         | DEYE Microinverter with 2 MPPT Trackers  | e.g. SUN600G3-EU-230 / SUN800G3-EU-230 / SUN1000G3-EU-230        |
 | deye_4mppt.yaml         | DEYE Microinverter with 4 MPPT Trackers  | e.g. SUN1300G3-EU-230 / SUN1600G3-EU-230 / SUN2000G3-EU-230      |
 | sofar_lsw3.yaml         | SOFAR Inverters                          |                                                                  |
+| sofar_4ktlm-g3.yaml    | SOFAR 4KTLM-G3 (single-phase, 2 MPPT)    | tested with LSW3_15_270A_1.68; block-aligned G3 reads             |
 | sofar_g3hyd.yaml        | SOFAR Hybrid Three-Phase inverter        | HYD 6000 or rebranded (three-phase), ex. ZCS Azzurro 3PH HYD-ZSS |
 | sofar_hyd3k-6k.yaml     | SOFAR Hybrid Single-Phase inverter       | HYD 6000 or rebranded (single-phase), ex. ZCS Azzurro HYD-ZSS    |
 | solis_hybrid.yaml       | SOLIS Hybrid inverter                    |                                                                  |
