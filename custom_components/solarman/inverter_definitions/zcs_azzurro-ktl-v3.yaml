@@ -125,6 +125,60 @@ parameters:
         registers: [0x0485]
         icon: 'mdi:home-lightning-bolt'
 
+      - name: 'L1 Voltage'
+        class: 'voltage'
+        state_class: 'measurement'
+        uom: 'V'
+        scale: 0.1
+        rule: 1
+        registers: [0x048D]
+        icon: 'mdi:solar-power'
+        
+      - name: 'L1 Current'
+        class: 'current'
+        state_class: 'measurement'
+        uom: 'A'
+        scale: 0.01
+        rule: 1
+        registers: [0x048E]
+        icon: 'mdi:solar-power'
+        
+      - name: 'L2 Voltage'
+        class: 'voltage'
+        state_class: 'measurement'
+        uom: 'V'
+        scale: 0.1
+        rule: 1
+        registers: [0x0498]
+        icon: 'mdi:solar-power'
+        
+      - name: 'L2 Current'
+        class: 'current'
+        state_class: 'measurement'
+        uom: 'A'
+        scale: 0.01
+        rule: 1
+        registers: [0x0499]
+        icon: 'mdi:solar-power'
+        
+      - name: 'L3 Voltage'
+        class: 'voltage'
+        state_class: 'measurement'
+        uom: 'V'
+        scale: 0.1
+        rule: 1
+        registers: [0x04A3]
+        icon: 'mdi:solar-power'
+        
+      - name: 'L3 Current'
+        class: 'current'
+        state_class: 'measurement'
+        uom: 'A'
+        scale: 0.01
+        rule: 1
+        registers: [0x04A4]
+        icon: 'mdi:solar-power'
+        
   - group: Inverter
     items:
       - name: 'Inverter status'
